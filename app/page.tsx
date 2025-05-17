@@ -3,6 +3,7 @@ import { useTheme } from "@/lib/contexts/ThemeContext"
 import Link from "next/link"
 import Image from "next/image"
 import CustomButton from "@/components/CustomButton"
+import PWAInit from "./pwa-init"
 
 export default function Home() {
   const { isDarkMode } = useTheme()
@@ -11,23 +12,37 @@ export default function Home() {
     <div
       className={`flex-1 h-screen px-10 pb-8 ${isDarkMode ? "dark" : ""}`}
       style={{
-        backgroundImage: `url(${isDarkMode ? "/images/home-bg-dark.png" : "/images/home-bg-light.png"})`,
+        backgroundImage: `url(${
+          isDarkMode ? "/images/home-bg-dark.png" : "/images/home-bg-light.png"
+        })`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
       <div className="flex flex-col min-h-screen pb-8">
         <div className="items-center mt-20 text-center">
-          <h1 className={`text-6xl text-center font-bold ${isDarkMode ? "text-white" : "text-light-text"}`}>
+          <h1
+            className={`text-6xl text-center font-bold ${
+              isDarkMode ? "text-white" : "text-light-text"
+            }`}
+          >
             Bet With
           </h1>
-          <h1 className="text-6xl text-center text-primary-400 font-bold">Friends</h1>
+          <h1 className="text-6xl text-center text-primary-400 font-bold">
+            Friends
+          </h1>
         </div>
 
         <div className="flex-1"></div>
 
         <div className="items-center justify-center mb-16 flex">
-          <Image src="/images/icon.png" alt="App Icon" width={200} height={200} className="object-contain" />
+          <Image
+            src="/images/icon.png"
+            alt="App Icon"
+            width={200}
+            height={200}
+            className="object-contain"
+          />
         </div>
 
         {/* Buttons side by side */}
@@ -53,5 +68,5 @@ export default function Home() {
         </div>
       </div>
     </div>
-  )
+  );
 }

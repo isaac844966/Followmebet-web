@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { format, parseISO } from "date-fns";
 import type { FixtureItem as FixtureItemType } from "@/lib/services/fixtureService";
 import { LiveFixtureData } from "@/hooks/use-live-fixture-data";
@@ -35,6 +36,7 @@ export default function FixtureItem({
   liveFixtureData,
   onCreateBet,
 }: FixtureItemProps) {
+  const router = useRouter();
   const matchTime = fixture.time ? format(parseISO(fixture.time), "HH:mm") : "";
   const matchDate = fixture.time ? format(parseISO(fixture.time), "d MMM") : "";
   const cardBackground = isDarkMode ? "bg-[#1A1942]" : "bg-[#f1f5f9]";
@@ -50,6 +52,26 @@ export default function FixtureItem({
   const liveData = fixture.eventCode
     ? getLiveFixtureData(fixture.eventCode)
     : null;
+
+  const handleViewCommentary = () => {
+    if (!fixture.eventCode) return;
+
+    router.push(
+      `/commentary?eventCode=${
+        fixture.eventCode
+      }&team1Name=${encodeURIComponent(
+        fixture.item1.name
+      )}&team2Name=${encodeURIComponent(
+        fixture.item2.name
+      )}&team1Logo=${encodeURIComponent(
+        fixture.item1.logoUrl || ""
+      )}&team2Logo=${encodeURIComponent(
+        fixture.item2.logoUrl || ""
+      )}&category=${encodeURIComponent(
+        fixture.category || ""
+      )}&categoryId=${encodeURIComponent(categoryId)}`
+    );
+  };
 
   if (fixture.betStatus === "ON") {
     return (
@@ -90,7 +112,10 @@ export default function FixtureItem({
   } else {
     // This is for fixtures with betStatus "OFF" showing live data
     return (
-      <div className={`${cardBackground} rounded-lg mb-1 overflow-hidden`}>
+      <div
+        className={`${cardBackground} rounded-lg mb-1 overflow-hidden cursor-pointer hover:opacity-90 transition-opacity`}
+        onClick={handleViewCommentary}
+      >
         <div className="p-3 flex items-center justify-between">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">

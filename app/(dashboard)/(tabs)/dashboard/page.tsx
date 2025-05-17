@@ -9,6 +9,7 @@ import Image from "next/image";
 import { Info, RefreshCw, Settings, Bell } from "lucide-react";
 import CustomButton from "@/components/CustomButton";
 import { fetchUserProfile } from "@/lib/services/authService";
+import { initializeFirebaseMessaging } from "@/lib/services/updateNotifictionToken";
 
 const Dashboard = () => {
   const { isDarkMode } = useTheme();
@@ -19,7 +20,9 @@ const Dashboard = () => {
   const isLoading = !user || !user.firstname;
 
   const [refreshing, setRefreshing] = useState(false);
-
+    useEffect(() => {
+      initializeFirebaseMessaging();
+    }, []);
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
     await fetchUserProfile();

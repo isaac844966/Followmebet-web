@@ -1,9 +1,9 @@
 "use client";
 
 import type React from "react";
-
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { ChevronRight } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 interface ActionItemProps {
   title: string;
@@ -12,6 +12,7 @@ interface ActionItemProps {
   onPress?: () => void;
   bgColor?: string;
   containerStyle?: React.CSSProperties;
+  loading?: boolean;
 }
 
 const ActionItem: React.FC<ActionItemProps> = ({
@@ -21,6 +22,7 @@ const ActionItem: React.FC<ActionItemProps> = ({
   onPress,
   bgColor,
   containerStyle,
+  loading = false,
 }) => {
   const { isDarkMode } = useTheme();
 
@@ -33,6 +35,7 @@ const ActionItem: React.FC<ActionItemProps> = ({
       onClick={onPress}
       className={`${defaultBgColor} rounded-lg p-6 py-7 mb-2 flex items-center justify-between w-full`}
       style={containerStyle}
+      disabled={loading}
     >
       <div className="flex items-center">
         {icon}
@@ -51,7 +54,14 @@ const ActionItem: React.FC<ActionItemProps> = ({
             {actionText}
           </span>
         )}
-        <ChevronRight size={12} color={isDarkMode ? "white" : "#1E1F68"} />
+        {loading ? (
+          <Loader2 size={16} className="animate-spin text-gray-400" />
+        ) : (
+          <ChevronRight
+            size={12}
+            className={isDarkMode ? "text-white" : "text-[#1E1F68]"}
+          />
+        )}
       </div>
     </button>
   );

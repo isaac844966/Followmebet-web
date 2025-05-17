@@ -1,0 +1,58 @@
+"use client";
+
+import type React from "react";
+
+type AmountSelectorProps = {
+  selectedAmount: number;
+  onSelectAmount: (amount: number) => void;
+  isDarkMode: boolean;
+};
+
+const AmountSelector: React.FC<AmountSelectorProps> = ({
+  selectedAmount,
+  onSelectAmount,
+  isDarkMode,
+}) => {
+  const textColor = isDarkMode ? "text-white" : "text-black";
+  const cardBackground = isDarkMode ? "bg-[#1A1942]" : "bg-[#f1f5f9]";
+  const activeButtonBg = isDarkMode ? "bg-[#2E3192]" : "bg-[#2E3192]";
+  const inactiveButtonBg = isDarkMode ? "bg-[#27274d]" : "bg-[#E8E8FF]";
+  const activeButtonText = "text-white";
+  const inactiveButtonText = isDarkMode ? "text-white" : "text-black";
+
+  const amountOptions: number[] = [1000, 5000, 10000, 50000];
+
+  return (
+    <div className="mb-10">
+      <p className={`${textColor} text-base font-medium mb-2`}>Select Amount</p>
+
+      <div
+        className={`grid grid-cols-4 gap-1 px-2 py-3 rounded-lg ${cardBackground} border-[0.3px] border-gray-500`}
+      >
+        {amountOptions.map((amount) => (
+          <button
+            key={amount}
+            className={`py-3 rounded-md ${
+              selectedAmount === amount
+                ? `${activeButtonBg} border-[0.3px] border-gray-600`
+                : inactiveButtonBg
+            }`}
+            onClick={() => onSelectAmount(amount)}
+          >
+            <span
+              className={`${
+                selectedAmount === amount
+                  ? activeButtonText
+                  : inactiveButtonText
+              } text-center text-sm font-medium`}
+            >
+              ₦{amount.toLocaleString()}
+            </span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default AmountSelector;

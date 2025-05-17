@@ -25,8 +25,7 @@ export default function CreateBetPage() {
   const { liveFixtureData } = useLiveFixtureData();
 
   // Theme colors
-  const backgroundColor = isDarkMode ? "bg-[#1E1F68]" : "bg-[#F4F4F4]";
-  const subBackground = isDarkMode ? "bg-[#0B0B3F]" : "bg-white";
+  const backgroundColor = isDarkMode ? "bg-[#0B0B3F]" : "bg-white";
   const textColor = isDarkMode ? "text-white" : "text-gray-800";
   const secondaryTextColor = isDarkMode ? "text-gray-300" : "text-gray-500";
 
@@ -501,7 +500,7 @@ export default function CreateBetPage() {
   };
 
   return (
-    <div className={`flex-1 min-h-screen ${backgroundColor}`}>
+    <div className={`flex-1 min-h-screen `}>
       {/* Fixed Header */}
       <div className="sticky top-0 z-10">
         <WalletHeader
@@ -514,7 +513,7 @@ export default function CreateBetPage() {
           }
         />
 
-        <div className={`${subBackground}`}>
+        <div className={`${backgroundColor}`}>
           {/* Tabs */}
           <div className="mt-2">
             <NestedTabNavigation
@@ -537,7 +536,7 @@ export default function CreateBetPage() {
       </div>
 
       {/* Main Content */}
-      <div className={`${subBackground} flex-1 pt-2 pb-20`}>
+      <div className={`${backgroundColor} flex-1 pt-2 pb-20`}>
         {initialLoading ? (
           <div className="flex-1 flex justify-center items-center py-20">
             <Loader2 className="h-8 w-8 text-primary animate-spin" />
@@ -551,7 +550,7 @@ export default function CreateBetPage() {
               renderEmpty()
             ) : (
               <div className="space-y-4 pb-20">
-                {getCurrentFixtures().map((category) => (
+                {getCurrentFixtures().map((category:FixtureCategory) => (
                   <div key={category.id} className="mb-2">
                     <div className="flex items-center mb-2 px-4">
                       <h3 className={`${textColor} font-medium text-sm`}>
@@ -560,7 +559,7 @@ export default function CreateBetPage() {
                     </div>
 
                     <div className="space-y-2 px-4">
-                      {category.items.map((fixture) => (
+                      {category?.items.map((fixture:FixtureItem) => (
                         <FixtureItemComponent
                           key={fixture.id}
                           fixture={fixture}

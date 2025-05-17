@@ -58,9 +58,7 @@ export const login = async (credentials: LoginCredentials): Promise<void> => {
 
     // Then update the store
     useAuthStore.getState().login(token);
-
-    // Wait a moment to ensure token is properly set before fetching user
-    await new Promise((resolve) => setTimeout(resolve, 100));
+;
 
     try {
       await fetchUserProfile();

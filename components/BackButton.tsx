@@ -40,11 +40,11 @@ const BackButton: React.FC<BackButtonProps> = ({
       router.back()
     }
   }
-
+  const backgroundColor = isDarkMode ? "bg-[#0B0B3F]" : "bg-white";
   const defaultIconColor = iconColor || (isDarkMode ? "#FFFFFF" : "#000")
 
   return (
-    <div className="flex items-center  mb-4 px-2">
+    <div className={`flex items-center  pb-8  ${backgroundColor} pt-4`}>
       <button onClick={handlePress} style={containerStyle} className="flex items-center  active:opacity-70">
         <ChevronLeft size={iconSize} color={defaultIconColor} />
         {showTitle && (
