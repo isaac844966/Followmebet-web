@@ -77,16 +77,16 @@ const Login = () => {
         type={modalState.type}
       />
 
-      <div className="flex-1 px-6 pt-32 max-w-md mx-auto">
+      <div className="flex-1 px-3 pt-28 max-w-md mx-auto">
         <div className="mb-8">
           <h1
             className={`${
               isDarkMode ? "text-white" : "text-black"
-            } text-3xl font-bold mb-4`}
+            } text-3xl sm:2xl xs:text-xl font-bold mb-4 xs:mb-2`}
           >
             Welcome back!
           </h1>
-          <p className={`${isDarkMode ? "text-gray-400" : "text-primary-600"}`}>
+          <p className={`${isDarkMode ? "text-gray-400" : "text-primary-600"} text-md xs:text-sm`}>
             Sign in to your account
           </p>
         </div>

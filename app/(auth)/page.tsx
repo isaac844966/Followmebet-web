@@ -1,11 +1,11 @@
-"use client"
-import { useTheme } from "@/lib/contexts/ThemeContext"
-import Link from "next/link"
-import Image from "next/image"
-import CustomButton from "@/components/CustomButton"
+"use client";
+import { useTheme } from "@/lib/contexts/ThemeContext";
+import Link from "next/link";
+import Image from "next/image";
+import CustomButton from "@/components/CustomButton";
 
 export default function Home() {
-  const { isDarkMode } = useTheme()
+  const { isDarkMode } = useTheme();
 
   return (
     <div
@@ -21,20 +21,18 @@ export default function Home() {
       <div className="flex flex-col min-h-screen pb-8">
         <div className="items-center mt-20 text-center">
           <h1
-            className={`text-6xl text-center font-bold ${
+            className={`text-6xl xs:text-4xl text-center font-bold ${
               isDarkMode ? "text-white" : "text-light-text"
             }`}
           >
             Bet With
           </h1>
-          <h1 className="text-6xl text-center text-primary-400 font-bold">
+          <h1 className="text-6xl xs:text-4xl text-center text-primary-400 font-bold">
             Friends
           </h1>
         </div>
 
-        <div className="flex-1"></div>
-
-        <div className="items-center justify-center mb-16 flex">
+        <div className="items-center justify-center mb-8 mt-52 xs:mt-32 flex">
           <Image
             src="/app-icon.png"
             alt="App Icon"
@@ -45,7 +43,7 @@ export default function Home() {
         </div>
 
         {/* Buttons side by side */}
-        <div className="w-full flex justify-between space-x-4 gap-2">
+        <div className="w-full flex justify-between space-x-4 ">
           <Link href="/signup" className="flex-1">
             <CustomButton
               title="Sign Up"
@@ -59,7 +57,7 @@ export default function Home() {
               title="Login"
               variant="outline"
               size="lg"
-              className={`w-full border py-4  items-center ${
+              className={`w-full border py-4 items-center ${
                 isDarkMode ? "border-white" : "border-light-text bg-white"
               }`}
             />

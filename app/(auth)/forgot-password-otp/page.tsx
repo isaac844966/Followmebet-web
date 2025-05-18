@@ -12,7 +12,7 @@ import BackButton from "@/components/BackButton";
 import OtpInput from "@/components/OtpInput";
 import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 import StatusModal from "@/components/StatusModal";
 import { useStatusModal } from "@/lib/contexts/useStatusModal";
 
@@ -43,8 +43,7 @@ const ForgetPasswordOTP = () => {
           setPhoneNumber(mobile);
         }
       } catch (error) {
-        console.error("Error fetching mobile number:", error);
-        toast.error("Failed to load your mobile number.");
+        showErrorModal("Failed to load your mobile number.");
       } finally {
         setLoadingNumber(false);
       }
@@ -60,7 +59,7 @@ const ForgetPasswordOTP = () => {
       newErrors.password = "Password must be at least 6 characters.";
     }
     if (!otp || otp.length !== 6 || !/^\d{6}$/.test(otp)) {
-      toast.error("OTP must be exactly 6 digits.");
+      showErrorModal("OTP must be exactly 6 digits.");
       return;
     }
 
@@ -134,29 +133,29 @@ const ForgetPasswordOTP = () => {
     }
   };
   return (
-    <div className="flex-1 min-h-screen py-6">
+    <div className="flex-1 min-h-screen ">
       <BackButton title="Verification" />
-      <div className="flex-1 px-4 mt-6 max-w-md mx-auto">
+      <div className="flex-1 px-4 mt-6 xs:mt-4 max-w-md mx-auto">
         {/* Header */}
         <div className="mb-8">
           <h1
             className={`${
               isDarkMode ? "text-white" : "text-black font-bold"
-            } text-3xl font-bold mb-2`}
+            } text-3xl sm:text-2xl xs:text-xl font-bold mb-2`}
           >
             Enter OTP
           </h1>
           <p
             className={`${
               isDarkMode ? "text-gray-400" : "text-primary-600"
-            } mb-1`}
+            } mb-1 text-md xs:text-sm`}
           >
             Check your SMS message.
           </p>
           <p
             className={`${
               isDarkMode ? "text-gray-400" : "text-primary-600"
-            } mb-4`}
+            } mb-4 text-md xs:text-sm`}
           >
             We have sent you a 6 digit pin at {phoneNumber}.
           </p>
@@ -199,7 +198,9 @@ const ForgetPasswordOTP = () => {
         <div className="items-center flex justify-center">
           <div className="flex items-center">
             <p
-              className={`${isDarkMode ? "text-gray-400" : "text-primary-600"}`}
+              className={`${
+                isDarkMode ? "text-gray-400" : "text-primary-600"
+              } text-md xs:text-sm`}
             >
               Didn&apos;t receive SMS?{" "}
             </p>
@@ -208,7 +209,7 @@ const ForgetPasswordOTP = () => {
               disabled={resendDisabled}
               className={`${
                 resendDisabled ? "text-gray-500" : "text-primary-400"
-              } font-medium ml-1`}
+              } font-medium ml-1 text-md xs:text-sm`}
             >
               {resendDisabled ? `Resend Code (${countdown}s)` : "Resend Code"}
             </button>

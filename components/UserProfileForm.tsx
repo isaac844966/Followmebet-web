@@ -77,18 +77,18 @@ const UserProfileForm: React.FC<Props> = ({
   return (
     <div className="flex-1 px-4">
       {showInfoBox && (
-        <div className="mt-4">
+        <div className="">
           <h2
             className={`${
               isDarkMode ? "text-white" : "text-black"
-            } mb-4 text-xl font-bold`}
+            } mb-4 text-xl xs:text-lg font-bold`}
           >
             Welcome Player
           </h2>
           <p
             className={`${
               isDarkMode ? "text-[#A0A3AC]" : "text-[#A0A3AC]"
-            } mb-8 text-md font-medium`}
+            } mb-8 xs:mb-4 text-md font-medium`}
           >
             setup your account
           </p>
@@ -99,7 +99,7 @@ const UserProfileForm: React.FC<Props> = ({
               className="mr-2 mt-1 flex-shrink-0"
             />
 
-            <p className="text-primary-1500 flex-1">
+            <p className="text-primary-1500 flex-1 text-sm xs:text-xs">
               Your first name and last name must match the account holder name
               of your bank account in order to process a withdrawal.
             </p>

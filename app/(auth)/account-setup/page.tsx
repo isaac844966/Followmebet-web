@@ -9,11 +9,18 @@ import { login } from "@/lib/services/authService"
 import BackButton from "@/components/BackButton"
 import UserProfileForm from "@/components/UserProfileForm"
 import toast from "react-hot-toast"
+import { useStatusModal } from "@/lib/contexts/useStatusModal"
+import StatusModal from "@/components/StatusModal"
 
 const AccountSetup = () => {
   const router = useRouter()
   const { isDarkMode } = useTheme()
-
+ const {
+   modalState,
+   showErrorModal,
+   showSuccessModal,
+   hideModal: hideStatusModal,
+ } = useStatusModal();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -80,19 +87,23 @@ const AccountSetup = () => {
           router.replace("/dashboard")
         } catch (error) {
           console.log(error)
-          handleApiError(error, toast.error, "Login failed after account setup", "Login Error")
+           handleApiError(
+             error,
+             showErrorModal,
+             "Login failed after account setup",
+             "Login Error"
+           );
         }
       }
     } catch (error) {
-      console.log(error)
-      handleApiError(error, toast.error, "Profile update failed", "Profile Error")
+      handleApiError(error, showErrorModal, "Profile update failed", "Profile Error")
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <div className="flex-1 min-h-screen py-6">
+    <div className="flex-1 min-h-screen pb-10">
       <BackButton title="Account Setup" />
       <UserProfileForm
         formData={formData}
@@ -103,8 +114,16 @@ const AccountSetup = () => {
         showInfoBox
         editableNames
       />
+      <StatusModal
+        visible={modalState.visible}
+        onClose={() => hideStatusModal()}
+        title={modalState.title}
+        message={modalState.message}
+        buttonText={modalState.buttonText}
+        type={modalState.type}
+      />
     </div>
-  )
+  );
 }
 
 export default AccountSetup

@@ -16,7 +16,7 @@ interface CustomInputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   editable?: boolean;
   className?: string;
-  maxLength?:string;
+  maxLength?: string;
 }
 
 const CustomInput: React.FC<CustomInputProps> = ({
@@ -46,12 +46,12 @@ const CustomInput: React.FC<CustomInputProps> = ({
   };
 
   return (
-    <div className="mb-3">
+    <div className="mb-3 xs:mb-2">
       {label && (
         <label
           className={`${
             isDarkMode ? "text-white" : "text-black"
-          } mb-3 font-bold block`}
+          } mb-3 xs:mb-2 font-bold block text-base xs:text-sm`}
         >
           {label}
         </label>
@@ -75,9 +75,11 @@ const CustomInput: React.FC<CustomInputProps> = ({
               isDarkMode
                 ? "bg-primary-1400 text-white"
                 : "bg-primary-1200 text-black"
-            } ${leftComponent ? "rounded-r-lg" : "rounded-lg"} h-20 px-4 ${
-              isPassword ? "pr-12" : ""
-            } font-bold w-full ${className || ""} ${
+            } ${
+              leftComponent ? "rounded-r-lg" : "rounded-lg"
+            } h-20 xs:h-16 px-4 xs:px-3 ${
+              isPassword ? "pr-12 xs:pr-10" : ""
+            } font-bold text-base xs:text-sm w-full ${className || ""} ${
               !editable ? "opacity-70 cursor-not-allowed" : ""
             }`}
             placeholder={placeholder || ""}
@@ -86,23 +88,22 @@ const CustomInput: React.FC<CustomInputProps> = ({
             value={value || ""}
             onChange={handleChange}
             disabled={!editable}
-          
             {...props}
           />
           {isPassword && (
             <button
               type="button"
-              className="absolute right-4 top-6"
+              className="absolute right-4 xs:right-3 top-6 xs:top-5"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? (
                 <EyeOff
-                  className="w-6 h-6"
+                  className="w-6 h-6 xs:w-5 xs:h-5"
                   color={isDarkMode ? "#6b6b9b" : "#A0A3AC"}
                 />
               ) : (
                 <Eye
-                  className="w-6 h-6"
+                  className="w-6 h-6 xs:w-5 xs:h-5"
                   color={isDarkMode ? "#6b6b9b" : "#A0A3AC"}
                 />
               )}

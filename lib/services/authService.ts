@@ -272,7 +272,7 @@ export const verifyOtp = async (
       otp: otpCode,
     });
 
-    const newToken = response.data.token;
+    const newToken = response.data.token ;
 
     if (credentials && credentials.mobile && credentials.password) {
       try {
@@ -386,14 +386,14 @@ export const requestPasswordReset = async (mobile: string): Promise<string> => {
       mobile,
     });
 
-    const token = response.data.token;
+    const data= response.data as any;
 
     if (typeof window !== "undefined") {
-      localStorage.setItem("passwordResetToken", token);
+      localStorage.setItem("passwordResetToken", data.token);
       localStorage.setItem("registeredMobile", mobile);
     }
 
-    return token;
+    return data.token;
   } catch (error: any) {
     const formattedError = formatApiError(
       error,

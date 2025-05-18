@@ -102,7 +102,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
             ${isDarkMode ? "bg-primary-1300" : "bg-white"}
             transform transition-transform duration-300 ease-out
             animate-in slide-in-from-bottom
-            max-h-[80vh] flex flex-col
+            max-h-[70vh] flex flex-col
           `}
         >
           {/* Header */}
@@ -201,7 +201,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
         className={`
           flex items-center justify-between
           ${isDarkMode ? "bg-primary-1400" : "bg-primary-1200"}
-          rounded-lg px-4 h-20 cursor-pointer
+          rounded-lg px-4 h-20 xs:h-16 cursor-pointer
           ${disabled ? "opacity-50 cursor-not-allowed" : ""}
         `}
       >

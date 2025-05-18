@@ -9,7 +9,6 @@ import { handleApiError } from "@/lib/utils/handleApiError"
 import BackButton from "@/components/BackButton"
 import OtpInput from "@/components/OtpInput"
 import CustomButton from "@/components/CustomButton"
-// import toast from "react-hot-toast"       
 import { useStatusModal } from "@/lib/contexts/useStatusModal"
 import StatusModal from "@/components/StatusModal"
 
@@ -113,28 +112,28 @@ const OtpVerification = () => {
   }, [countdown, resendDisabled])
 
   return (
-    <div className="flex-1 min-h-screen py-6">
+    <div className="flex-1 min-h-screen ">
       <BackButton title="Enter OTP" />
       <div className="flex-1 px-4 mt-6 max-w-md mx-auto">
         <div className="mb-8">
           <h1
             className={`${
               isDarkMode ? "text-white" : "text-black font-bold"
-            } text-3xl font-bold mb-2`}
+            } text-3xl sm:text-2xl xs:text-xl font-bold mb-2`}
           >
             Enter OTP
           </h1>
           <p
             className={`${
               isDarkMode ? "text-gray-400" : "text-primary-600"
-            } mb-1`}
+            } mb-1 text-md xs:text-sm`}
           >
             Check your SMS message.
           </p>
           <p
             className={`${
               isDarkMode ? "text-gray-400" : "text-primary-600"
-            } mb-8`}
+            } mb-8 text-md xs:text-smx`}
           >
             We have sent you 6 digit pin at {phoneNumber}
           </p>

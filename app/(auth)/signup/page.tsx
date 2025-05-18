@@ -92,14 +92,27 @@ const SignUp = () => {
   }
 
   return (
-    <div className="flex-1 min-h-screen  py-6">
+    <div className="flex-1 min-h-screen  ">
       <BackButton title="Sign up" />
-      <div className="flex-1 px-4 mt-10 max-w-md mx-auto">
-        <h1 className={`${isDarkMode ? "text-white" : "text-black"} text-3xl font-bold mb-2`}>Create your account</h1>
+      <div className="flex-1 px-4 mt-10 xs:mt-6 max-w-md mx-auto">
+        <h1
+          className={`${
+            isDarkMode ? "text-white" : "text-black"
+          } text-3xl sm:text-2xl xs:text-xl font-bold mb-2`}
+        >
+          Create your account
+        </h1>
 
-        <div className="flex mb-12">
-          <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Already have an account? </p>
-          <Link href="/login" className="text-dark-accent-100 font-medium ml-1">
+        <div className="flex mb-12 sm:mb-10 xs:mb-6">
+          <p
+            className={`${isDarkMode ? "text-white" : "text-black"} text-md xs:text-sm`}
+          >
+            Already have an account?{" "}
+          </p>
+          <Link
+            href="/login"
+            className="text-dark-accent-100 font-medium ml-1 text-md xs:text-sm"
+          >
             Login
           </Link>
         </div>
@@ -140,7 +153,7 @@ const SignUp = () => {
         />
       </div>
     </div>
-  )
+  );
 }
 
 export default SignUp

@@ -9,7 +9,7 @@ import BackButton from "@/components/BackButton"
 import PhoneInput from "@/components/PhoneInput"
 import CustomButton from "@/components/CustomButton"
 import Link from "next/link"
-import toast from "react-hot-toast"
+
 import { useStatusModal } from "@/lib/contexts/useStatusModal"
 import StatusModal from "@/components/StatusModal"
 
@@ -71,7 +71,7 @@ const ForgetPassword = () => {
   }
 
   return (
-    <div className="flex-1 min-h-screen py-6">
+    <div className="flex-1 min-h-screen ">
       <BackButton title="Forgot password" />
 
       <div className="flex-1 px-4 mt-6 max-w-md mx-auto">
@@ -79,14 +79,14 @@ const ForgetPassword = () => {
           <h1
             className={`${
               isDarkMode ? "text-white" : "text-black"
-            } text-3xl font-bold mb-2`}
+            } text-3xl sm:text-2xl xs:text-xl font-bold mb-2`}
           >
             Forgot your password
           </h1>
           <p
             className={`${
               isDarkMode ? "text-gray-400" : "text-primary-600"
-            } mb-8`}
+            } mb-8 text-md xs:text-sm`}
           >
             Please enter your Followmebet account registered phone number below
             to receive your password reset instructions.
@@ -113,7 +113,7 @@ const ForgetPassword = () => {
         <div className="items-center flex justify-center">
           <Link
             href="/login"
-            className="text-primary-400 font-medium border-b-2 border-dark-accent-100"
+            className="text-primary-400 font-medium border-b-2 border-dark-accent-100 text-md xs:text-sm"
           >
             Back to sign in
           </Link>

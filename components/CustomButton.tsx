@@ -28,18 +28,18 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 }) => {
   const { isDarkMode } = useTheme();
 
-  // Size classes
+  // Size classes with responsive variants - increased from previous version
   const sizeClasses = {
-    sm: "py-2 px-4",
-    md: "py-3 px-5",
-    lg: "py-4 px-6",
+    sm: "py-2 px-4 xs:py-1.5 xs:px-3.5",
+    md: "py-3 px-5 xs:py-2.5 xs:px-4.5",
+    lg: "py-4 px-6 xs:py-3.5 xs:px-5",
   };
 
-  // Text size classes
+  // Text size classes with responsive variants - slightly larger than previous
   const textSizeClasses = {
-    sm: "text-sm",
-    md: "text-base",
-    lg: "text-lg",
+    sm: "text-sm xs:text-xs",
+    md: "text-base xs:text-sm",
+    lg: "text-lg xs:text-base",
   };
 
   // Variant classes
@@ -85,7 +85,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       {...props}
     >
       {loading ? (
-        <div className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+        <div className="w-5 h-5 xs:w-4.5 xs:h-4.5 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
       ) : (
         <span
           className={`font-bold ${
