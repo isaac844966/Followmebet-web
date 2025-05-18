@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import TransactionItem from "./TrasactionItem";
 import { getTransaction } from "@/lib/services/walletService";
+import LoadingSpinner from "./LoadingSpinner";
 
 const RecentTransactions = () => {
   const { isDarkMode } = useTheme();
@@ -67,14 +68,11 @@ const RecentTransactions = () => {
 
       <div className="flex-1">
         {initialLoading ? (
-          <div className="flex-1 items-center justify-center py-20 text-center">
-            <div className="w-8 h-8 border-2 border-t-transparent border-primary-400 rounded-full animate-spin mx-auto"></div>
-            <p
-              className={`mt-4 ${isDarkMode ? "text-white" : "text-gray-800"}`}
-            >
-              Loading transactions...
-            </p>
-          </div>
+          <LoadingSpinner
+            variant="circular"
+            size="lg"
+            color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
+          />
         ) : transactions.length === 0 ? (
           <div className="flex-1 items-center justify-center py-10 text-center">
             <p className={`${isDarkMode ? "text-gray-300" : "text-gray-500"}`}>

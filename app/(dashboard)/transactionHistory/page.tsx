@@ -16,6 +16,7 @@ import EmptyState from "@/components/EmptyState";
 import TransactionItem, {
   TransactionItemProps,
 } from "@/components/TrasactionItem";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 type Tab = "Deposit" | "Withdrawal";
 const LIMIT = 20;
@@ -208,37 +209,35 @@ const TransactionHistory = () => {
         className="fixed top-0 left-0 right-0 z-10"
         style={{ backgroundColor }}
       >
-        <div className="flex items-center justify-between p-4">
-          <BackButton
-            title="Transaction History"
-            onPress={() => router.push("/wallet")}
-          />
-          <TransactionFilter onFiltersApplied={handleFiltersApplied} />
-        </div>
+        <BackButton
+          title="Transaction History"
+          onPress={() => router.push("/wallet")}
+          rightIcon={
+            <TransactionFilter onFiltersApplied={handleFiltersApplied} />
+          }
+        />
 
         {/* Fixed tabs */}
         <NestedTabNavigation
           tabs={tabs}
           activeTab={activeTab}
           onTabChange={handleTabChange}
-          containerStyle="my-3"
         />
       </div>
 
       {/* Scrollable content area with padding for the fixed header */}
       <div
         ref={scrollContainerRef}
-        className="flex-1 p-4 overflow-y-auto"
+        className="flex-1 px-2 overflow-y-auto mt-20"
         style={{ paddingTop: "110px" }} // Adjust based on the actual header height
       >
         {loading && currentItems.length === 0 ? (
-          <div className="flex justify-center items-center py-20">
-            <div className="w-8 h-8 border-2 border-t-transparent border-primary-400 rounded-full animate-spin"></div>
-            <p
-              className={`ml-3 ${isDarkMode ? "text-white" : "text-gray-800"}`}
-            >
-              Loading...
-            </p>
+          <div className="mt-36">
+            <LoadingSpinner
+              variant="circular"
+              size="lg"
+              color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
+            />
           </div>
         ) : currentItems.length === 0 ? (
           <div className="flex justify-center items-center py-10">
@@ -260,9 +259,11 @@ const TransactionHistory = () => {
 
             {/* Loading indicator at the bottom for infinite scroll */}
             {loading && (
-              <div className="py-4 flex justify-center">
-                <div className="w-6 h-6 border-2 border-t-transparent border-primary-400 rounded-full animate-spin"></div>
-              </div>
+              <LoadingSpinner
+                variant="circular"
+                size="md"
+                color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
+              />
             )}
           </>
         )}

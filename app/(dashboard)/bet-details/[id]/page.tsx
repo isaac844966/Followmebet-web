@@ -22,6 +22,7 @@ import CustomModal from "@/components/CustomModal";
 import BackButton from "@/components/BackButton";
 import CustomButton from "@/components/CustomButton";
 import StatusModal from "@/components/StatusModal";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 // Types for better type safety
 type PredictionType = "WIN" | "LOSE" | "DRAW" | null;
@@ -218,11 +219,12 @@ const BetDetailsPage = () => {
 
   if (!bet) {
     return (
-      <div
-        className={`min-h-screen ${backgroundColor} flex items-center justify-center`}
-      >
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
-      </div>
+      <LoadingSpinner
+        variant="circular"
+        size="lg"
+        color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
+        fullPage={true}
+      />
     );
   }
 

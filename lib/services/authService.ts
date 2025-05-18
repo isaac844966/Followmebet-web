@@ -122,7 +122,7 @@ export const login = async (credentials: LoginCredentials): Promise<void> => {
 
 export const logout = (): void => {
   useAuthStore.getState().logout();
-  // localStorage.removeItem("authToken") is now handled in the store's logout function
+  localStorage.removeItem("authToken") 
 };
 
 export const fetchUserProfile = async (): Promise<User | null> => {
@@ -142,6 +142,7 @@ export const fetchUserProfile = async (): Promise<User | null> => {
     console.log("User profile fetched successfully:", user);
 
     useAuthStore.getState().setUser(user);
+    localStorage.setItem("userData", JSON.stringify(user));
     return user;
   } catch (error) {
     console.error("Error fetching user profile:", error);

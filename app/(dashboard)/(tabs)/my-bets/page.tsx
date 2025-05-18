@@ -128,6 +128,32 @@ const MyBetsPage = () => {
       contentContainerRef.current.scrollTop = 0;
     }
 
+    // Reset hasMore flags when changing tabs to ensure fresh data loading
+    if (tabKey === "pending" && subTabKey === "public") {
+      setHasMorePublicPending(true);
+    } else if (tabKey === "pending" && subTabKey === "private") {
+      setHasMorePrivatePending(true);
+    } else if (tabKey === "accepted") {
+      setHasMoreAccepted(true);
+    } else if (tabKey === "settled") {
+      setHasMoreSettled(true);
+    }
+
+    // Clear existing data when changing tabs
+    if (tabKey === "pending" && subTabKey === "public") {
+      setPublicPendingBets([]);
+      initialDataLoadedRef.current.publicPending = false;
+    } else if (tabKey === "pending" && subTabKey === "private") {
+      setPrivatePendingBets([]);
+      initialDataLoadedRef.current.privatePending = false;
+    } else if (tabKey === "accepted") {
+      setAcceptedBets([]);
+      initialDataLoadedRef.current.accepted = false;
+    } else if (tabKey === "settled") {
+      setSettledBets([]);
+      initialDataLoadedRef.current.settled = false;
+    }
+
     // Set initial loading state when changing tabs
     const currentTab = getCurrentTabKey(
       tabKey,
@@ -233,16 +259,11 @@ const MyBetsPage = () => {
 
     const currentTab = getCurrentTabKey(statusTab, visibilityTab);
 
-    // Don't fetch if already loading
     if (loading) {
-      console.log("Already loading data, skipping fetch");
       return;
     }
 
     setLoading(true);
-    console.log(
-      `Fetching data for ${statusTab} tab, ${visibilityTab} subtab, offset: ${bets.length}`
-    );
 
     try {
       const betType =
@@ -256,11 +277,8 @@ const MyBetsPage = () => {
       });
 
       const items = response.data?.items || [];
-      console.log(`Fetched ${items.length} items`);
 
-      // Check if we've reached the end of available data
       if (items.length < LIMIT) {
-        console.log("No more data available, disabling infinite scroll");
         setHasMoreData(false);
       } else {
         setHasMoreData(true);
@@ -268,27 +286,27 @@ const MyBetsPage = () => {
 
       setBets([...bets, ...items]);
 
-      // Mark this tab's data as loaded
       initialDataLoadedRef.current[currentTab] = true;
     } catch (error) {
-      console.error("Error fetching bets:", error);
-      setHasMoreData(false); // Set to false on error to prevent continuous retries
+      setHasMoreData(false); 
     } finally {
       setLoading(false);
       setCurrentInitialLoading(false, statusTab, visibilityTab);
     }
   };
 
-  // Specific fetch handlers for each tab
   const fetchPrivatePendingBets = () => {
     fetchCurrentTabBets("pending", "private");
   };
 
-  // Setup intersection observer for infinite scrolling
   useEffect(() => {
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+    }
+
     const options = {
       root: null,
-      rootMargin: "200px", // Increased margin to load earlier
+      rootMargin: "300px", // Increased margin to load earlier
       threshold: 0.1,
     };
 
@@ -309,6 +327,7 @@ const MyBetsPage = () => {
     // Immediately attach to the current loadMoreRef if it exists
     if (loadMoreRef.current) {
       observerRef.current.observe(loadMoreRef.current);
+      console.log("Observer created and attached to loadMoreRef");
     }
 
     return () => {
@@ -318,40 +337,54 @@ const MyBetsPage = () => {
     };
   }, [activeStatusTab, activeVisibilityTab]);
 
-  // Re-attach observer when the loadMoreRef changes or when data changes
+  // Effect to fetch data when component mounts or tab changes
   useEffect(() => {
-    // First disconnect any existing observations
-    if (observerRef.current) {
-      observerRef.current.disconnect();
-    }
+    const currentTab = getCurrentTabKey();
 
-    // Then observe the current reference
-    if (loadMoreRef.current && observerRef.current) {
-      observerRef.current.observe(loadMoreRef.current);
-      console.log("Observer attached to loadMoreRef");
+    // Reset state when tab changes
+    if (!initialDataLoadedRef.current[currentTab]) {
+      setCurrentInitialLoading(true);
+      console.log(`Initial data load for ${currentTab}`);
+      fetchCurrentTabBets();
+    }
+  }, [activeStatusTab, activeVisibilityTab]);
+
+  // Add effect to handle scroll position change
+  useEffect(() => {
+    const handleScroll = () => {
+      if (contentContainerRef.current) {
+        const { scrollTop, scrollHeight, clientHeight } =
+          contentContainerRef.current;
+
+        // Check if we're close to the bottom (within 200px)
+        if (scrollHeight - scrollTop - clientHeight < 200) {
+          const { loading, hasMoreData } = getCurrentTabStateHandlers();
+          if (!loading && hasMoreData) {
+            console.log("Near bottom of scroll, loading more data...");
+            fetchCurrentTabBets();
+          }
+        }
+      }
+    };
+
+    const contentContainer = contentContainerRef.current;
+    if (contentContainer) {
+      contentContainer.addEventListener("scroll", handleScroll);
     }
 
     return () => {
-      if (loadMoreRef.current && observerRef.current) {
-        observerRef.current.unobserve(loadMoreRef.current);
+      if (contentContainer) {
+        contentContainer.removeEventListener("scroll", handleScroll);
       }
     };
   }, [
-    loadMoreRef.current,
+    activeStatusTab,
+    activeVisibilityTab,
     publicPendingBets.length,
     privatePendingBets.length,
     acceptedBets.length,
     settledBets.length,
   ]);
-
-  // Effect to fetch data when component mounts or tab changes
-  useEffect(() => {
-    const currentTab = getCurrentTabKey();
-    if (!initialDataLoadedRef.current[currentTab]) {
-      setCurrentInitialLoading(true);
-      fetchCurrentTabBets();
-    }
-  }, [activeStatusTab, activeVisibilityTab]);
 
   // Get current data and loading state based on active tabs
   const getCurrentTabData = () => {
@@ -361,6 +394,20 @@ const MyBetsPage = () => {
   };
 
   const { bets, initialLoading, hasMoreData, loading } = getCurrentTabData();
+
+  // Force re-render of loadMoreRef on tab change
+  useEffect(() => {
+    // Force re-render of loadMoreRef when active tab changes
+    if (loadMoreRef.current && observerRef.current) {
+      observerRef.current.unobserve(loadMoreRef.current);
+      setTimeout(() => {
+        if (loadMoreRef.current && observerRef.current) {
+          observerRef.current.observe(loadMoreRef.current);
+          console.log("Re-attached observer after tab change");
+        }
+      }, 100);
+    }
+  }, [activeStatusTab, activeVisibilityTab]);
 
   // Get the appropriate message for empty state
   const getEmptyStateMessage = () => {
@@ -409,7 +456,7 @@ const MyBetsPage = () => {
     }
 
     return (
-      <div className="space-y-4 ">
+      <div className="space-y-4">
         {bets.map((bet, index) => {
           if (activeStatusTab === "settled") {
             return (
@@ -451,8 +498,22 @@ const MyBetsPage = () => {
           return null;
         })}
 
-        {/* Always add the load-more trigger element at the end of the list */}
-        <div ref={loadMoreRef} className="h-20 w-full" id="load-more-trigger" />
+        {/* Load more trigger element */}
+        {hasMoreData && (
+          <div
+            ref={loadMoreRef}
+            className="h-20 w-full flex justify-center items-center"
+            id="load-more-trigger"
+          >
+            {loading && !initialLoading && (
+              <LoadingSpinner
+                variant="circular"
+                size="md"
+                color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
+              />
+            )}
+          </div>
+        )}
       </div>
     );
   };
@@ -487,16 +548,6 @@ const MyBetsPage = () => {
       >
         {renderBets()}
 
-        {/* Loading indicator at bottom - only show when actively loading more data */}
-        {loading && !initialLoading && hasMoreData && (
-          <div className="flex justify-center py-4">
-            <LoadingSpinner
-              variant="circular"
-              size="md"
-              color={isDarkMode?"text-[#FBB03B]":"text-[#1E1F68]"}
-            />
-          </div>
-        )}
       </div>
     </div>
   );

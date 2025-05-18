@@ -40,7 +40,7 @@ export default function LoadingSpinner({
   const Container = ({ children }: { children: React.ReactNode }) => {
     if (fullPage) {
       return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/5 backdrop-blur-[2px] z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/5 backdrop-blur-[1px] z-50">
           {children}
         </div>
       );

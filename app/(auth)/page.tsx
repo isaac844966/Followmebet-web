@@ -36,7 +36,7 @@ export default function Home() {
 
         <div className="items-center justify-center mb-16 flex">
           <Image
-            src="/images/icon.png"
+            src="/app-icon.png"
             alt="App Icon"
             width={200}
             height={200}

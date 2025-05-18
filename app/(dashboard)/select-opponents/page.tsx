@@ -18,6 +18,7 @@ import NestedTabNavigation from "@/components/NestedTabNavigation";
 import PhoneInput from "@/components/PhoneInput";
 import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const SelectOpponentPage = () => {
   const router = useRouter();
@@ -198,7 +199,7 @@ const SelectOpponentPage = () => {
     : challengers;
 
   const renderEmptyState = () => (
-    <div className="flex flex-col items-center justify-center h-full">
+    <div className="flex flex-col items-center justify-between h-full mt-20">
       <div className="items-center flex flex-col justify-center">
         <Feather
           name="users"
@@ -213,7 +214,7 @@ const SelectOpponentPage = () => {
       </div>
 
       <Button
-        className="bg-[#FBB03B] py-6 px-6 rounded-md mt-auto w-full hover:bg-[#e9a436]"
+        className="bg-[#FBB03B] py-6 px-6 rounded-md mt-auto w-full hover:bg-[#e9a436] mt-48"
         onClick={() => setActiveTab("contacts")}
       >
         Add from your Contact
@@ -222,7 +223,7 @@ const SelectOpponentPage = () => {
   );
 
   return (
-    <div className={`min-h-screen ${backgroundColor} p-4`}>
+    <div className={`min-h-screen ${backgroundColor} `}>
       <BackButton title="Select Opponent" />
       <div className="mb-4 mt-2">
         <NestedTabNavigation
@@ -233,7 +234,7 @@ const SelectOpponentPage = () => {
         />
       </div>
 
-      <div className="flex-1">
+      <div className="flex-1 px-2">
         {activeTab === "opponents" ? (
           <div className="h-full">
             {/* Search Bar */}
@@ -258,15 +259,17 @@ const SelectOpponentPage = () => {
             </div>
 
             {loading ? (
-              <div className="flex items-center justify-center h-64">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-10 border-b-2 border-[#FFA726]"></div>
-              </div>
+              <LoadingSpinner
+                variant="circular"
+                size="lg"
+                color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
+              />
             ) : filteredChallengers.length > 0 ? (
               <div className="space-y-2 mt-4">
                 {filteredChallengers.map((challenger) => (
                   <Card
                     key={challenger.id}
-                    className={`${cardBackground} rounded-lg p-4 cursor-pointer border-[0.1px]`}
+                    className={`${cardBackground} rounded-lg p-4 cursor-pointer border-none`}
                     onClick={() => handleSelectChallenger(challenger)}
                   >
                     <div className="flex items-center justify-between">

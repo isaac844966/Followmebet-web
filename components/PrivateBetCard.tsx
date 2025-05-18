@@ -9,15 +9,7 @@ import type { BetItem } from "@/lib/types/transactionHistory";
 import { declineBet } from "@/lib/services/bet-historyService";
 import { fetchUserProfile } from "@/lib/services/authService";
 import { formattedDate } from "@/lib/utils";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import CustomModal from "@/components/CustomModal";
 
 interface PrivateBetCardProps {
   bet: BetItem;
@@ -96,31 +88,19 @@ const PrivateBetCard: React.FC<PrivateBetCardProps> = ({
   return (
     <div className="mb-4">
       {/* Decline Confirmation Modal */}
-      <Dialog
-        open={isDeclineModalVisible}
-        onOpenChange={setIsDeclineModalVisible}
-      >
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Decline Bet</DialogTitle>
-            <DialogDescription>
-              Are you sure you want to decline this bet?
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setIsDeclineModalVisible(false)}
-              disabled={isLoading}
-            >
-              Cancel
-            </Button>
-            <Button onClick={handleConfirmDecline} disabled={isLoading}>
-              {isLoading ? "Declining..." : "Yes, Decline"}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <CustomModal
+        visible={isDeclineModalVisible}
+        onClose={() => setIsDeclineModalVisible(false)}
+        title="Decline Bet"
+        message="Are you sure you want to decline this bet? This action cannot be undone."
+        primaryButtonText={isLoading ? "Declining..." : "Yes, Decline"}
+        secondaryButtonText="Cancel"
+        onPrimaryButtonPress={handleConfirmDecline}
+        onSecondaryButtonPress={() => setIsDeclineModalVisible(false)}
+        primaryButtonColor="#FF3B30"
+        primaryTextColor="#FFFFFF"
+        hideCloseOnOverlayPress={isLoading}
+      />
 
       {/* Header Row */}
       <div className="flex justify-between items-center mb-2">
