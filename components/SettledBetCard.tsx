@@ -136,7 +136,7 @@ const SettledBetCard: React.FC<SettledBetCardProps> = ({
 
   return (
     <div
-      className="mb-4 w-full cursor-pointer"
+      className="mb-4 w-full cursor-pointer -mt-16"
       onClick={() =>
         router.push(
           `/bet-details/${
@@ -147,6 +147,9 @@ const SettledBetCard: React.FC<SettledBetCardProps> = ({
         )
       }
     >
+      <p className={`${secondaryTextColor} mb-2 text-sm`}>
+        {formattedDate(bet.time)}
+      </p>
       <div
         className={`${cardBg} rounded-lg border-[0.2px] border-[#62629e] p-3`}
       >
@@ -225,11 +228,23 @@ const SettledBetCard: React.FC<SettledBetCardProps> = ({
               {leftTeam.name}
             </p>
           </div>
-          <div className="relative mx-2">
-            <div className="absolute w-[0.4px] bg-[#62629e] h-31 -top-11 left-1/2"></div>
-            <div className={`${vsBackgroundColor} rounded-full px-2 py-1 z-10`}>
+          <div className="relative mx-2 w-8 items-center">
+            <div
+              className="absolute w-[0.1px] bg-gray-900"
+              style={{
+                height: "145px",
+                top: "-45px",
+                left: "50%",
+                marginLeft: "-0.5px",
+                border: "0.2px",
+                borderStyle: "dotted",
+              }}
+            />
+            <div
+              className={`${vsBackgroundColor} rounded-full px-2 py-1 z-10 my-2`}
+            >
               <p
-                className={`${secondaryTextColor} text-xs font-semibold text-center`}
+                className={`${secondaryTextColor} text-xs font-medium text-center`}
               >
                 Vs
               </p>

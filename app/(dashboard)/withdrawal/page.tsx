@@ -240,7 +240,7 @@ const Withdraw = () => {
               <CustomInput
                 label="Account Name"
                 value={accountName}
-                disabled={true}
+                editable={false}
               />
               <p
                 className={`${
@@ -258,6 +258,7 @@ const Withdraw = () => {
             size="lg"
             loading={addBankLoading}
             onClick={handleWithdrawPress}
+            className="w-full"
           />
         </div>
       </div>

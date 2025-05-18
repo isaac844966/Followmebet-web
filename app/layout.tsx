@@ -1,12 +1,9 @@
-"use client";
 import type React from "react";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/lib/contexts/ThemeContext";
 import { ApiProvider } from "@/lib/contexts/ApiContext";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
-import { useEffect } from "react";
-import { initializeFirebaseMessaging } from "@/lib/services/updateNotifictionToken";
 
 const inter = Inter({ subsets: ["latin"] });
 

@@ -20,9 +20,10 @@ const Dashboard = () => {
   const isLoading = !user || !user.firstname;
 
   const [refreshing, setRefreshing] = useState(false);
-    useEffect(() => {
-      initializeFirebaseMessaging();
-    }, []);
+
+  useEffect(() => {
+    initializeFirebaseMessaging();
+  }, []);
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
     await fetchUserProfile();

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { useAuthStore } from "@/lib/store/authStore";
@@ -19,6 +19,7 @@ import PublicBetCard from "@/components/PublicBetCard";
 import { Trophy } from "lucide-react";
 import WalletHeader from "@/components/WalletHeader";
 import EmptyState from "@/components/EmptyState";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const MyBetsPage = () => {
   const { isDarkMode } = useTheme();
@@ -79,6 +80,9 @@ const MyBetsPage = () => {
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
+  // Ref for the content container
+  const contentContainerRef = useRef<HTMLDivElement>(null);
+
   const LIMIT = 20;
   const STATUS_MAP: Record<string, BetStatus> = {
     pending: "PENDING",
@@ -117,6 +121,11 @@ const MyBetsPage = () => {
       } else {
         setActiveVisibilityTab("public");
       }
+    }
+
+    // Reset scroll position when tab changes
+    if (contentContainerRef.current) {
+      contentContainerRef.current.scrollTop = 0;
     }
 
     // Set initial loading state when changing tabs
@@ -225,9 +234,15 @@ const MyBetsPage = () => {
     const currentTab = getCurrentTabKey(statusTab, visibilityTab);
 
     // Don't fetch if already loading
-    if (loading) return;
+    if (loading) {
+      console.log("Already loading data, skipping fetch");
+      return;
+    }
 
     setLoading(true);
+    console.log(
+      `Fetching data for ${statusTab} tab, ${visibilityTab} subtab, offset: ${bets.length}`
+    );
 
     try {
       const betType =
@@ -241,9 +256,14 @@ const MyBetsPage = () => {
       });
 
       const items = response.data?.items || [];
+      console.log(`Fetched ${items.length} items`);
 
+      // Check if we've reached the end of available data
       if (items.length < LIMIT) {
+        console.log("No more data available, disabling infinite scroll");
         setHasMoreData(false);
+      } else {
+        setHasMoreData(true);
       }
 
       setBets([...bets, ...items]);
@@ -252,6 +272,7 @@ const MyBetsPage = () => {
       initialDataLoadedRef.current[currentTab] = true;
     } catch (error) {
       console.error("Error fetching bets:", error);
+      setHasMoreData(false); // Set to false on error to prevent continuous retries
     } finally {
       setLoading(false);
       setCurrentInitialLoading(false, statusTab, visibilityTab);
@@ -267,7 +288,7 @@ const MyBetsPage = () => {
   useEffect(() => {
     const options = {
       root: null,
-      rootMargin: "0px",
+      rootMargin: "200px", // Increased margin to load earlier
       threshold: 0.1,
     };
 
@@ -276,12 +297,19 @@ const MyBetsPage = () => {
       if (entry.isIntersecting) {
         const { loading, hasMoreData } = getCurrentTabStateHandlers();
         if (!loading && hasMoreData) {
+          console.log("Intersection triggered, fetching more data...");
           fetchCurrentTabBets();
         }
       }
     };
 
+    // Create the observer
     observerRef.current = new IntersectionObserver(callback, options);
+
+    // Immediately attach to the current loadMoreRef if it exists
+    if (loadMoreRef.current) {
+      observerRef.current.observe(loadMoreRef.current);
+    }
 
     return () => {
       if (observerRef.current) {
@@ -290,10 +318,17 @@ const MyBetsPage = () => {
     };
   }, [activeStatusTab, activeVisibilityTab]);
 
-  // Attach observer to load more element
+  // Re-attach observer when the loadMoreRef changes or when data changes
   useEffect(() => {
+    // First disconnect any existing observations
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+    }
+
+    // Then observe the current reference
     if (loadMoreRef.current && observerRef.current) {
       observerRef.current.observe(loadMoreRef.current);
+      console.log("Observer attached to loadMoreRef");
     }
 
     return () => {
@@ -303,10 +338,10 @@ const MyBetsPage = () => {
     };
   }, [
     loadMoreRef.current,
-    publicPendingBets,
-    privatePendingBets,
-    acceptedBets,
-    settledBets,
+    publicPendingBets.length,
+    privatePendingBets.length,
+    acceptedBets.length,
+    settledBets.length,
   ]);
 
   // Effect to fetch data when component mounts or tab changes
@@ -320,11 +355,12 @@ const MyBetsPage = () => {
 
   // Get current data and loading state based on active tabs
   const getCurrentTabData = () => {
-    const { bets, loading, initialLoading } = getCurrentTabStateHandlers();
-    return { bets, loading, initialLoading };
+    const { bets, loading, initialLoading, hasMoreData } =
+      getCurrentTabStateHandlers();
+    return { bets, loading, initialLoading, hasMoreData };
   };
 
-  const { bets, initialLoading } = getCurrentTabData();
+  const { bets, initialLoading, hasMoreData, loading } = getCurrentTabData();
 
   // Get the appropriate message for empty state
   const getEmptyStateMessage = () => {
@@ -350,8 +386,12 @@ const MyBetsPage = () => {
   const renderBets = () => {
     if (initialLoading) {
       return (
-        <div className="flex justify-center items-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
+        <div className="flex justify-center items-center h-full">
+          <LoadingSpinner
+            variant="circular"
+            size="lg"
+            color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
+          />
         </div>
       );
     }
@@ -369,7 +409,7 @@ const MyBetsPage = () => {
     }
 
     return (
-      <div className="space-y-4">
+      <div className="space-y-4 ">
         {bets.map((bet, index) => {
           if (activeStatusTab === "settled") {
             return (
@@ -411,8 +451,8 @@ const MyBetsPage = () => {
           return null;
         })}
 
-        {/* Invisible element for intersection observer */}
-        <div ref={loadMoreRef} className="h-4 w-full" />
+        {/* Always add the load-more trigger element at the end of the list */}
+        <div ref={loadMoreRef} className="h-20 w-full" id="load-more-trigger" />
       </div>
     );
   };
@@ -430,21 +470,31 @@ const MyBetsPage = () => {
           activeTab={activeStatusTab}
           activeSubTab={activeVisibilityTab}
           onTabChange={handleTabChange}
-          containerStyle="mt-2 mb-1"
+          containerStyle="mb-1"
         />
       </div>
 
-
       <div
-        className={`${subBackground} flex-1 pt-[230px] pb-16 px-4 overflow-y-auto`}
-        style={{ height: "calc(100vh - 60px)" }}
+        ref={contentContainerRef}
+        className={`${subBackground} flex-1 overflow-y-auto`}
+        style={{
+          height: "calc(100vh - 10px)",
+          paddingTop: "calc(220px + 56px + 16px)",
+          paddingBottom: "64px",
+          paddingLeft: "16px",
+          paddingRight: "16px",
+        }}
       >
         {renderBets()}
 
-        {/* Loading indicator at bottom */}
-        {getCurrentTabStateHandlers().loading && !initialLoading && (
+        {/* Loading indicator at bottom - only show when actively loading more data */}
+        {loading && !initialLoading && hasMoreData && (
           <div className="flex justify-center py-4">
-            <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-primary"></div>
+            <LoadingSpinner
+              variant="circular"
+              size="md"
+              color={isDarkMode?"text-[#FBB03B]":"text-[#1E1F68]"}
+            />
           </div>
         )}
       </div>

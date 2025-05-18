@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import CustomModal from "@/components/CustomModal";
 import BackButton from "@/components/BackButton";
 import CustomButton from "@/components/CustomButton";
+import StatusModal from "@/components/StatusModal";
 
 // Types for better type safety
 type PredictionType = "WIN" | "LOSE" | "DRAW" | null;
@@ -363,8 +364,6 @@ const BetDetailsPage = () => {
         <div className="space-y-3 mb-6">
           {/* Accept Button - only show for AllBet or PrivateBet when not owner */}
           {showAcceptButton && (
-            
-        
             <CustomButton
               className="w-full py-6 bg-[#FFA726] hover:bg-[#FF9800] text-black font-medium"
               disabled={!selectedApiPrediction || loading}
@@ -377,7 +376,7 @@ const BetDetailsPage = () => {
           {showDeclineButton && (
             <CustomButton
               title="Decline Bet"
-              className="w-full py-6 border-red-500 text-red-500 hover:bg-red-50 hover:text-red-600"
+              className="w-full py-6 border-2 text-red-500 border-[#FF3B30] bg-transparent"
               onClick={() => setShowDeclineModal(true)}
             />
           )}
@@ -412,7 +411,7 @@ const BetDetailsPage = () => {
       />
 
       {/* Status Modal */}
-      <StatusModalWrapper
+      <StatusModal
         visible={showStatusModal}
         onClose={handleModalClose}
         title={statusModalTitle}

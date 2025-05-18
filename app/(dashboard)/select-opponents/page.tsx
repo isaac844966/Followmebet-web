@@ -135,7 +135,7 @@ const SelectOpponentPage = () => {
         challenger.lastname.slice(1)
       }`;
     router.push(
-      `/summary?prediction=${prediction}&condition=${condition}&amount=${amount}&betType=challenge&opponentId=${
+      `/bet-summary?prediction=${prediction}&condition=${condition}&amount=${amount}&betType=challenge&opponentId=${
         challenger.id
       }&opponentName=${opponentName}&opponentAvatar=${encodeURIComponent(
         challenger.avatarUrl

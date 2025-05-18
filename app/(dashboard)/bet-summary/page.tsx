@@ -14,7 +14,6 @@ import {
   createBetMarket,
 } from "@/lib/services/bet-service";
 import BackButton from "@/components/BackButton";
-import { Button } from "@/components/ui/button";
 import { handleApiError } from "@/lib/utils/handleApiError";
 import { BetDetailsCard } from "@/components/bet-details/BetDetailsCard";
 import { StakerCard } from "@/components/bet-details/StakerCard";
@@ -22,6 +21,7 @@ import { PredictionCard } from "@/components/bet-details/PredictionCard";
 import { StakeCard } from "@/components/bet-details/StakeCard";
 import { OpponentCard } from "@/components/bet-details/OpponentCard";
 import StatusModal from "@/components/StatusModal";
+import CustomButton from "@/components/CustomButton";
 
 // Define the interface for search params
 interface SummaryPageParams {
@@ -219,13 +219,15 @@ const SummaryPage = () => {
       : null;
 
   return (
-    <div className={`min-h-screen ${backgroundColor}`}>
-      <BackButton title="Summary" />
+    <div className={` ${backgroundColor} pb-0`}>
+      <div className="fixed top-0 left-0 right-0 z-20">
+        <BackButton title="Summary" />
 
-      {/* Match Details */}
-      <BetDetailsCard bet={mockBet as any} />
+        {/* Match Details */}
+        <BetDetailsCard bet={mockBet as any} />
+      </div>
 
-      <div className="flex-1 px-4 overflow-auto">
+      <div className="flex-1 px-4 overflow-auto mt-[18rem]">
         {/* Staker Info */}
         <StakerCard owner={user as BetMarketUser} />
 
@@ -236,10 +238,7 @@ const SummaryPage = () => {
         />
 
         {/* Condition */}
-        <div
-          className="rounded-xl p-4 mb-2"
-          style={{ backgroundColor: cardBackgroundColor }}
-        >
+        <div className={`rounded-xl p-4 mb-2 ${cardBackgroundColor}`}>
           <p className={`${secondaryTextColor} uppercase text-xs mb-2`}>
             CONDITION
           </p>
@@ -253,18 +252,12 @@ const SummaryPage = () => {
 
         {/* Opponent */}
         {betType === "random" ? (
-          <div
-            className="rounded-xl p-4 mb-2"
-            style={{ backgroundColor: cardBackgroundColor }}
-          >
+          <div className={`rounded-xl p-4 mb-2 ${cardBackgroundColor}`}>
             <p className={`${secondaryTextColor} uppercase text-xs mb-2`}>
               OPPONENT
             </p>
             <div className="flex items-center">
-              <div
-                className="p-2 rounded-full"
-                style={{ backgroundColor: innerBackgroundColor }}
-              >
+              <div className={`p-2 rounded-full ${innerBackgroundColor}`}>
                 <span className={`${textColor} font-bold`}>🏆</span>
               </div>
               <p className={`${textColor} font-medium ml-3`}>Random Opponent</p>
@@ -281,17 +274,14 @@ const SummaryPage = () => {
         )}
 
         {/* Place Bet Button */}
-        <Button
-          className={`bg-[#FBB03B] py-6 rounded-md mb-4 mt-6 w-full hover:bg-[#e9a436] ${
-            submitting ? "opacity-70" : ""
-          }`}
+
+        <CustomButton
+          title={submitting ? "Processing..." : "Place Bet"}
           onClick={handlePlaceBet}
           disabled={submitting}
-        >
-          <span className="text-white text-center font-medium">
-            {submitting ? "Processing..." : "Place Bet"}
-          </span>
-        </Button>
+          size="lg"
+          className="w-full mt-6 mb-2"
+        />
       </div>
 
       {/* Error Modal */}

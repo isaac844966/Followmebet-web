@@ -16,6 +16,7 @@ import {
   type BetMarketItem,
   getBetMarkets,
 } from "@/lib/services/bet-service";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -404,7 +405,7 @@ const BetMarketPage = () => {
                       className="object-contain"
                     />
                   </div>
-                  <p className={`${textColor} text-sm w-[8.5rem] truncate`}>
+                  <p className={`${textColor} text-sm w-[6rem] truncate`}>
                     {fixture.item1.name}
                   </p>
                 </div>
@@ -420,7 +421,7 @@ const BetMarketPage = () => {
                       className="object-contain"
                     />
                   </div>
-                  <p className={`${textColor} text-sm w-[8.5rem] truncate`}>
+                  <p className={`${textColor} text-sm w-[6rem] truncate`}>
                     {fixture.item2.name}
                   </p>
                 </div>
@@ -600,6 +601,19 @@ const BetMarketPage = () => {
     );
   };
 
+  // Centered loading spinner component
+  const renderCenteredLoadingSpinner = () => {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center z-30">
+        <LoadingSpinner
+          variant="circular"
+          size={initialLoading ? "lg" : "md"}
+          color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
+        />
+      </div>
+    );
+  };
+
   return (
     <div className="flex flex-col h-screen">
       {/* Fixed Header */}
@@ -612,53 +626,42 @@ const BetMarketPage = () => {
           tabs={tabs}
           activeTab={activeTab}
           onTabChange={handleTabChange}
-          containerStyle="mt-2"
         />
       </div>
 
+      {/* Loading Spinner - centered and fixed in viewport */}
+      {(initialLoading || (loading && !dataFetched)) &&
+        renderCenteredLoadingSpinner()}
 
       <div
-        className={`${subBackground} flex-1 pt-[200px] pb-16 overflow-y-auto`}
+        className={`${subBackground} flex-1 pt-[220px] pb-8 overflow-y-auto`}
         style={{ height: "calc(100vh - 60px)" }}
       >
         {/* Show Pool Bet content if activeTab is "special" */}
         {activeTab === "special" ? (
           renderPoolBetContent()
         ) : (
-          <>
-            {/* Initial Loading State */}
-            {initialLoading ? (
-              <div className="flex-1 items-center justify-center flex h-[calc(100vh-240px)]">
-                <div className="text-center">
-                  <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary mx-auto"></div>
-                  <p
-                    className={`${textColor} mt-4 text-center px-4 font-medium`}
-                  >
-                    Loading bet markets...
-                  </p>
-                </div>
-              </div>
-            ) : (
-              /* Bet Markets List */
-              <div className="py-4">
-                {betMarkets.length > 0
-                  ? betMarkets.map((category) => renderCategory(category))
-                  : renderEmpty()}
+          /* Bet Markets List - only render when not in initial loading state */
+          <div className="py-4">
+            {betMarkets.length > 0 && !initialLoading
+              ? betMarkets.map((category) => renderCategory(category))
+              : !initialLoading && renderEmpty()}
 
-                {/* Invisible element for intersection observer */}
-                {hasMore && !initialLoading && (
-                  <div ref={loadMoreRef} className="h-4 w-full"></div>
-                )}
+            {/* Invisible element for intersection observer */}
+            {hasMore && !initialLoading && (
+              <div ref={loadMoreRef} className="h-4 w-full"></div>
+            )}
 
-                {/* Loading indicator at bottom */}
-                {loading && !initialLoading && (
-                  <div className="flex justify-center py-4">
-                    <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-primary"></div>
-                  </div>
-                )}
+            {loading && !initialLoading && dataFetched && (
+              <div className="flex justify-center my-4">
+                <LoadingSpinner
+                  variant="circular"
+                  size="md"
+                  color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
+                />
               </div>
             )}
-          </>
+          </div>
         )}
       </div>
     </div>

@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { addDays, subDays } from "date-fns";
-import { Loader2, Trophy } from "lucide-react";
+import { ChevronRight, Loader2, Trophy } from "lucide-react";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import WalletHeader from "@/components/WalletHeader";
 import {
@@ -16,6 +16,7 @@ import NestedTabNavigation from "@/components/NestedTabNavigation";
 import DateSelector from "@/components/DateSelector";
 import FixtureItemComponent from "@/components/FixtureItem";
 import { useLiveFixtureData } from "@/hooks/use-live-fixture-data";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -48,6 +49,9 @@ export default function CreateBetPage() {
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [dataFetched, setDataFetched] = useState<boolean>(false);
+
+  // Content container ref for scroll reset
+  const contentContainerRef = useRef<HTMLDivElement>(null);
 
   // Track pagination state separately for each date and type
   const [paginationState, setPaginationState] = useState<{
@@ -115,6 +119,11 @@ export default function CreateBetPage() {
   useEffect(() => {
     const dateKey = getCurrentDateKey();
 
+    // Reset scroll position when tab or date changes
+    if (contentContainerRef.current) {
+      contentContainerRef.current.scrollTop = 0;
+    }
+
     if (activeTab === "soccer") {
       ensurePaginationState(dateKey);
 
@@ -165,6 +174,11 @@ export default function CreateBetPage() {
 
     // Ensure pagination state for this date exists
     ensurePaginationState(newDateKey);
+
+    // Reset scroll position when switching dates
+    if (contentContainerRef.current) {
+      contentContainerRef.current.scrollTop = 0;
+    }
 
     // Only show loading indicator if we don't have data for this date yet
     if (!loadedFixturesRef.current.soccer[newDateKey]) {
@@ -515,7 +529,7 @@ export default function CreateBetPage() {
 
         <div className={`${backgroundColor}`}>
           {/* Tabs */}
-          <div className="mt-2">
+          <div className="mt-[0.2px]">
             <NestedTabNavigation
               tabs={tabs}
               activeTab={activeTab}
@@ -536,13 +550,17 @@ export default function CreateBetPage() {
       </div>
 
       {/* Main Content */}
-      <div className={`${backgroundColor} flex-1 pt-2 pb-20`}>
+      <div
+        ref={contentContainerRef}
+        className={`${backgroundColor} flex-1 pt-2 pb-20 overflow-auto h-full`}
+      >
         {initialLoading ? (
-          <div className="flex-1 flex justify-center items-center py-20">
-            <Loader2 className="h-8 w-8 text-primary animate-spin" />
-            <p className={`${textColor} mt-4 text-center px-4 font-medium`}>
-              Loading fixtures...
-            </p>
+          <div className="flex items-center justify-center h-64">
+            <LoadingSpinner
+              variant="circular"
+              size="lg"
+              color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
+            />
           </div>
         ) : (
           <div className="flex-1">
@@ -550,16 +568,20 @@ export default function CreateBetPage() {
               renderEmpty()
             ) : (
               <div className="space-y-4 pb-20">
-                {getCurrentFixtures().map((category:FixtureCategory) => (
+                {getCurrentFixtures().map((category: FixtureCategory) => (
                   <div key={category.id} className="mb-2">
                     <div className="flex items-center mb-2 px-4">
-                      <h3 className={`${textColor} font-medium text-sm`}>
+                      <h3 className={`${textColor} font-medium text-sm mr-2`}>
                         {category.category}
                       </h3>
+                      <ChevronRight
+                        className={isDarkMode ? "text-white" : "text-black"}
+                        size={16}
+                      />
                     </div>
 
                     <div className="space-y-2 px-4">
-                      {category?.items.map((fixture:FixtureItem) => (
+                      {category?.items.map((fixture: FixtureItem) => (
                         <FixtureItemComponent
                           key={fixture.id}
                           fixture={fixture}
@@ -583,10 +605,14 @@ export default function CreateBetPage() {
                 (activeTab === "special" && paginationState.special.hasMore) ? (
                   <div
                     ref={loadMoreRef}
-                    className="h-10 flex justify-center items-center"
+                    className="flex justify-center items-center"
                   >
                     {paginationLoading && (
-                      <Loader2 className="h-6 w-6 text-primary animate-spin" />
+                      <LoadingSpinner
+                        variant="circular"
+                        size="md"
+                        color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
+                      />
                     )}
                   </div>
                 ) : null}

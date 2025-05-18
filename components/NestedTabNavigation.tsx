@@ -40,10 +40,13 @@ const NestedTabNavigation: React.FC<Props> = ({
   const tabInactiveBg = isDarkMode ? "#1A1942" : "#F4F4F4";
   const subTabActiveBg = isDarkMode ? "#272785" : "#E8E8FF";
   const subTabInactiveBg = isDarkMode ? "#1A1942" : "#F0F0F0";
-
+ const backgroundColor = isDarkMode ? "bg-[#1E1F68]" : "bg-[#F4F4F4]";
+ const subBackground = isDarkMode ? "bg-[#0B0B3F]" : "bg-white";
   return (
     <div className={`w-full ${containerStyle}`}>
       {/* Main Tabs */}
+      <div className={`${subBackground} h-3`}></div>
+
       <div className={`flex overflow-hidden ${tabStyle}`}>
         {tabs.map((tab) => {
           const isActive = tab.key === activeTab;
@@ -86,10 +89,10 @@ const NestedTabNavigation: React.FC<Props> = ({
           );
         })}
       </div>
-
+      <div className={`${subBackground} h-3`}></div>
       {/* Sub-Tabs */}
       {activeTabObj?.subTabs && activeTabObj.showSubTabs && (
-        <div className={`flex overflow-hidden mt-2 ${subTabStyle}`}>
+        <div className={`flex overflow-hidden  ${subTabStyle}`}>
           {activeTabObj.subTabs.map((sub) => {
             const isActive = sub.key === activeSubTab;
             return (

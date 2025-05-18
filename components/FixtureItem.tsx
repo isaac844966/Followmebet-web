@@ -193,7 +193,7 @@ function TeamDisplay({ team1, team2, textColor }: TeamDisplayProps) {
             className="object-contain"
           />
         </div>
-        <p className={`${textColor} text-sm max-w-[8.5rem] truncate`}>
+        <p className={`${textColor} text-sm max-w-[6rem] truncate`}>
           {team1.name}
         </p>
       </div>
@@ -206,7 +206,7 @@ function TeamDisplay({ team1, team2, textColor }: TeamDisplayProps) {
             className="object-contain"
           />
         </div>
-        <p className={`${textColor} text-sm max-w-[8.5rem] truncate`}>
+        <p className={`${textColor} text-sm max-w-[6rem] truncate`}>
           {team2.name}
         </p>
       </div>

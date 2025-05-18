@@ -4,6 +4,7 @@ import type React from "react"
 import type { ReactNode } from "react"
 import { useTheme } from "@/lib/contexts/ThemeContext"
 import { AlertCircle, CheckCircle, Info, X } from "lucide-react"
+import SuccessIcon from "./SuccessIcon"
 
 type StatusType = "success" | "error" | "warning" | "info"
 
@@ -97,7 +98,7 @@ const StatusModal: React.FC<StatusModalProps> = ({
       case "success":
         return (
           <div className="w-20 h-20 rounded-full border-8 border-primary-400 flex items-center justify-center">
-            <CheckCircle size={48} color={colors.primary} />
+            <SuccessIcon/>
           </div>
         )
       case "error":

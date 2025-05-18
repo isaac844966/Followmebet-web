@@ -3,7 +3,6 @@ import { useTheme } from "@/lib/contexts/ThemeContext"
 import Link from "next/link"
 import Image from "next/image"
 import CustomButton from "@/components/CustomButton"
-import PWAInit from "./pwa-init"
 
 export default function Home() {
   const { isDarkMode } = useTheme()

@@ -288,6 +288,8 @@ export default function PinEntry() {
       } else {
         router.back();
       }
+    } else {
+      router.back();
     }
   };
 

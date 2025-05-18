@@ -101,7 +101,7 @@ const AcceptedBetCard: React.FC<AcceptedBetCardProps> = ({
 
   return (
     <div
-      className="mb-2 cursor-pointer"
+      className="mb-2 cursor-pointer -mt-16"
       onClick={() =>
         router.push(
           `/bet-details/${
@@ -195,7 +195,7 @@ const AcceptedBetCard: React.FC<AcceptedBetCardProps> = ({
                   top: "-40px",
                   left: "50%",
                   marginLeft: "-0.5px",
-                  border: "1px",
+                  border: "0.2px",
                   borderStyle: "dotted",
                 }}
               />
