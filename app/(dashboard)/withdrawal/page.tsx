@@ -235,7 +235,6 @@ const Withdraw = () => {
                 placeholder="Enter account number"
                 value={tempAccountNumber}
                 onChangeText={(value) => setTempAccountNumber(value)}
-                maxLength={10}
               />
               <CustomInput
                 label="Account Name"

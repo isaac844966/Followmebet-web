@@ -16,6 +16,7 @@ interface CustomInputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   editable?: boolean;
   className?: string;
+  maxLength?:string;
 }
 
 const CustomInput: React.FC<CustomInputProps> = ({
@@ -29,6 +30,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
   onChange,
   editable = true,
   className,
+  maxLength,
   ...props
 }) => {
   const { isDarkMode } = useTheme();
@@ -84,6 +86,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
             value={value || ""}
             onChange={handleChange}
             disabled={!editable}
+          
             {...props}
           />
           {isPassword && (

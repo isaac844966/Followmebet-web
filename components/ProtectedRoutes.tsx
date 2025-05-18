@@ -122,7 +122,6 @@ export default function ProtectedRoute({
     checkAuth();
   }, [router, token, user, setLoading, type]);
 
-  // Show loading indicator until auth check completes
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
