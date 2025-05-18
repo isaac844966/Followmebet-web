@@ -15,48 +15,83 @@ interface AuthState {
   setError: (error: string | null) => void;
 }
 
-// Initialize with values from localStorage if available (for SSR compatibility)
-const getInitialToken = () => {
+// Initialize with values from localStorage if available
+const getInitialState = () => {
   if (typeof window !== "undefined") {
-    return localStorage.getItem("authToken");
-  }
-  return null;
-};
+    const token = localStorage.getItem("authToken");
+    const userJson = localStorage.getItem("userData");
+    let user = null;
 
-export const useAuthStore = create<AuthState>((set) => ({
-  token: getInitialToken(),
-  user: null,
-  isAuthenticated: !!getInitialToken(),
-  isLoading: false,
-  error: null,
-
-  login: (token: string) =>
-    set({
-      token,
-      isAuthenticated: true,
-      error: null,
-    }),
-
-  setUser: (user: User) =>
-    set({
-      user,
-      isAuthenticated: true,
-      error: null,
-    }),
-
-  logout: () => {
-    if (typeof window !== "undefined") {
-      localStorage.removeItem("authToken");
+    if (userJson) {
+      try {
+        user = JSON.parse(userJson);
+      } catch (error) {
+        console.error("Failed to parse user data from localStorage:", error);
+      }
     }
 
-    return set({
-      token: null,
-      user: null,
-      isAuthenticated: false,
-    });
-  },
+    return {
+      token,
+      user,
+      isAuthenticated: !!token && !!user,
+    };
+  }
+  return {
+    token: null,
+    user: null,
+    isAuthenticated: false,
+  };
+};
 
-  setLoading: (isLoading: boolean) => set({ isLoading }),
+export const useAuthStore = create<AuthState>((set) => {
+  const initialState = getInitialState();
 
-  setError: (error: string | null) => set({ error }),
-}));
+  return {
+    token: initialState.token,
+    user: initialState.user,
+    isAuthenticated: initialState.isAuthenticated,
+    isLoading: false,
+    error: null,
+
+    login: (token: string) => {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("authToken", token);
+      }
+
+      set({
+        token,
+        isAuthenticated: true,
+        error: null,
+      });
+    },
+
+    setUser: (user: User) => {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("userData", JSON.stringify(user));
+      }
+
+      set({
+        user,
+        isAuthenticated: true,
+        error: null,
+      });
+    },
+
+    logout: () => {
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("userData");
+      }
+
+      return set({
+        token: null,
+        user: null,
+        isAuthenticated: false,
+      });
+    },
+
+    setLoading: (isLoading: boolean) => set({ isLoading }),
+
+    setError: (error: string | null) => set({ error }),
+  };
+});
