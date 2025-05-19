@@ -19,13 +19,13 @@ export default function RootLayout({
       <head>
         {/* PWA Meta Tags */}
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#00A86B" />
+        <meta name="theme-color" content="#fff000" />
         <link rel="icon" href="/app-icon.png" />
         <link rel="apple-touch-icon" href="/app-icon.png" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-        <meta name="apple-mobile-web-app-title" content="Your App Name" />
+        <meta name="apple-mobile-web-app-title" content="Followmebet" />
       </head>
       <body className={inter.className}>
         <ThemeProvider>
