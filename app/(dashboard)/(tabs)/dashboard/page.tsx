@@ -40,7 +40,7 @@ const Dashboard = () => {
         style={{ backgroundColor }}
       >
         <div className="px-4 max-w-4xl mx-auto">
-          <div className="flex items-center justify-between py-4 ">
+          <div className="flex items-center justify-between py-6 ">
             <Image
               src="/images/icon.png"
               alt="Logo"
@@ -57,7 +57,7 @@ const Dashboard = () => {
                     <span className="text-xs xs:text-[10px]">My Account</span>
                     <br />
                     <span
-                      className={`${textColor} font-bold text-left text-xs xs:text-[10px]`}
+                      className={`${textColor} font-bold text-left text-xs`}
                     >
                       ₦
                       {user?.balance?.toLocaleString("en-US", {
@@ -92,7 +92,7 @@ const Dashboard = () => {
       </div>
 
       {/* Main content with padding to account for fixed header */}
-      <div className="px-4 max-w-4xl mx-auto pt-18 xs:pt-16">
+      <div className="px-4 max-w-4xl mx-auto pt-28">
         <div className="space-y-3 xs:space-y-2 pb-20 xs:pb-16">
           {/* User Profile Card */}
           <div
