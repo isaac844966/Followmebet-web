@@ -6,7 +6,7 @@ import { useTheme } from "@/lib/contexts/ThemeContext";
 import { useAuthStore } from "@/lib/store/authStore";
 import Link from "next/link";
 import Image from "next/image";
-import { Info, RefreshCw, Settings, Bell } from "lucide-react";
+import { Info, RefreshCw, Settings, ChevronRight } from "lucide-react";
 import CustomButton from "@/components/CustomButton";
 import { fetchUserProfile } from "@/lib/services/authService";
 import { initializeFirebaseMessaging } from "@/lib/services/updateNotifictionToken";
@@ -16,7 +16,6 @@ const Dashboard = () => {
   const router = useRouter();
   const backgroundColor = isDarkMode ? "#0B0B3F" : "#fff";
   const { user } = useAuthStore();
-  console.log(user);
   const isLoading = !user || !user.firstname;
 
   const [refreshing, setRefreshing] = useState(false);
@@ -24,6 +23,7 @@ const Dashboard = () => {
   useEffect(() => {
     initializeFirebaseMessaging();
   }, []);
+
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
     await fetchUserProfile();
@@ -38,13 +38,13 @@ const Dashboard = () => {
         style={{ backgroundColor }}
       >
         <div className="px-4 max-w-4xl mx-auto">
-          <div className="flex items-center justify-between py-4">
+          <div className="flex items-center justify-between py-3 xs:py-2">
             <Image
               src="/images/icon.png"
               alt="Logo"
               width={120}
               height={48}
-              className="object-contain xs:w-40 h-10"
+              className="object-contain xs:w-28 h-8"
             />
             <div className="flex items-center">
               <div className="flex items-center">
@@ -56,12 +56,12 @@ const Dashboard = () => {
                       isDarkMode ? "text-white" : "text-primary-600"
                     } text-xs text-left mr-2`}
                   >
-                    <span>My Account</span>
+                    <span className="text-xs xs:text-[10px]">My Account</span>
                     <br />
                     <span
                       className={`${
                         isDarkMode ? "text-white" : "text-black"
-                      } font-bold text-left text-xs`}
+                      } font-bold text-left text-xs xs:text-[10px]`}
                     >
                       ₦
                       {user?.balance?.toLocaleString("en-US", {
@@ -71,14 +71,14 @@ const Dashboard = () => {
                   </div>
                 )}
                 <button onClick={() => router.push("/settings")}>
-                  <div className="w-8 h-8 rounded-full border border-[#FBB03B] flex items-center justify-center overflow-hidden">
+                  <div className="w-8 h-8 xs:w-6 xs:h-6 rounded-full border border-[#FBB03B] flex items-center justify-center overflow-hidden">
                     {user?.avatarUrl ? (
                       <Image
                         src={user.avatarUrl || "/placeholder.svg"}
                         alt="User Avatar"
                         width={32}
                         height={32}
-                        className="object-cover xs:w-6 xs:h-6"
+                        className="object-cover w-full h-full"
                       />
                     ) : (
                       <div
@@ -96,28 +96,29 @@ const Dashboard = () => {
       </div>
 
       {/* Main content with padding to account for fixed header */}
-      <div className="px-4 max-w-4xl mx-auto pt-20">
-        <div className="space-y-4 pb-8 xs:pb-4">
+      <div className="px-4 max-w-4xl mx-auto pt-16 xs:pt-14">
+        <div className="space-y-3 xs:space-y-2 pb-20 xs:pb-16">
           {/* User Profile Card */}
           <div
             className={`${
               isDarkMode ? "bg-primary-1400" : "bg-primary-100"
-            } rounded-lg p-6 xs:p-3 mb-2 xs:mb-1 flex items-center`}
+            } rounded-lg p-4 xs:p-3 flex items-center`}
           >
             {isLoading ? (
               <div className="w-3 h-3 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
             ) : (
               <>
-                <div className="w-12 h-12 xs:w-8 xs:h-8 rounded-full mr-4 border-primary-400 border-2 overflow-hidden">
+                <div className="w-12 h-12 xs:w-8 xs:h-8 rounded-full mr-3 xs:mr-2 border-primary-400 border-2 overflow-hidden">
                   <Image
                     src={
                       user?.avatarUrl ||
-                      "https://avatar.iran.liara.run/public/41"
+                      "https://avatar.iran.liara.run/public/41" ||
+                      "/placeholder.svg"
                     }
                     alt="User Avatar"
                     width={48}
                     height={48}
-                    className="object-cover "
+                    className="object-cover w-full h-full"
                   />
                 </div>
 
@@ -125,23 +126,25 @@ const Dashboard = () => {
                   <p
                     className={`${
                       isDarkMode ? "text-gray-400" : "text-primary-600"
-                    } text-xs mb-1`}
+                    } text-xs xs:text-[10px] mb-0.5`}
                   >
                     Welcome Back
                   </p>
-                  <h2 className="text-white text-lg sm:text-md xs:text-sm font-bold">
+                  <h2 className="text-white text-base xs:text-sm font-bold">
                     {user?.firstname} {user?.lastname}
                   </h2>
-                  <div className="flex items-center mt-1">
-                    <div className="w-2 h-2 rounded-full bg-primary-400 mr-2"></div>
-                    <p className="text-white text-xs uppercase">Legendary</p>
+                  <div className="flex items-center mt-0.5">
+                    <div className="w-2 h-2 xs:w-1.5 xs:h-1.5 rounded-full bg-primary-400 mr-1.5"></div>
+                    <p className="text-white text-xs xs:text-[10px] uppercase">
+                      Legendary
+                    </p>
                   </div>
                 </div>
                 <button
                   onClick={() => router.push("/settings")}
-                  className="p-2"
+                  className="p-2 xs:p-1.5"
                 >
-                  <Settings size={16} color="white" />
+                  <Settings size={16} color="white" className="xs:w-4 xs:h-4" />
                 </button>
               </>
             )}
@@ -151,16 +154,16 @@ const Dashboard = () => {
           <div
             className={`${
               isDarkMode ? "bg-primary-1400" : "bg-primary-1200"
-            } rounded-lg p-6 xs:p-4 mb-2 flex items-center justify-between`}
+            } rounded-lg p-4  flex items-center justify-between`}
           >
             <div>
               {isLoading ? (
-                <div className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+                <div className="w-5 h-5 xs:w-4 xs:h-4 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
               ) : (
                 <p
                   className={`${
                     isDarkMode ? "text-white" : "text-black"
-                  } text-xl xs:text-sm font-bold`}
+                  } text-lg xs:text-base font-bold`}
                 >
                   ₦
                   {user?.balance?.toLocaleString("en-US", {
@@ -171,17 +174,17 @@ const Dashboard = () => {
               <p
                 className={`${
                   isDarkMode ? "text-gray-400" : "text-primary-600"
-                } text-xs`}
+                } text-xs xs:text-[10px]`}
               >
                 Wallet Balance
               </p>
             </div>
 
-            <button onClick={onRefresh} className="mr-4 p-2">
+            <button onClick={onRefresh} className="mr-2 p-1.5">
               <RefreshCw
                 size={20}
                 color={isDarkMode ? "white" : "#1E1F68"}
-                className={`${refreshing} ? "animate-spin" : "" xs:w-4 xs:h-4`}
+                className={`${refreshing ? "animate-spin" : ""} xs:w-4 xs:h-4`}
               />
             </button>
 
@@ -196,27 +199,27 @@ const Dashboard = () => {
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-2 gap-2 mb-2 xs:mb-1">
+          <div className="grid grid-cols-2 gap-2">
             <div
-              className="rounded-lg py-6 px-4 xs:py-4 xs:px-2"
+              className="rounded-lg py-4 px-3 "
               style={{ backgroundColor: isDarkMode ? "#1E1F68" : "#E8E8FF" }}
             >
               <p
                 className={`${
                   isDarkMode ? "text-gray-400" : "text-primary-600"
-                } text-sm xs:text-xs font-semibold`}
+                } text-xs xs:text-[10px] font-semibold`}
               >
                 Total Pending Public Bets
               </p>
 
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mt-1">
                 {isLoading ? (
-                  <div className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+                  <div className="w-4 h-4 xs:w-3 xs:h-3 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
                 ) : (
                   <p
                     className={`${
                       isDarkMode ? "text-white" : "text-primary-100"
-                    } text-2xl sm:text-xl xs:text-lg font-bold`}
+                    } text-xl xs:text-lg font-bold`}
                   >
                     {user?.pendingPublicBets || 0}
                   </p>
@@ -225,25 +228,25 @@ const Dashboard = () => {
             </div>
 
             <div
-              className="rounded-lg py-6 px-4"
+              className="rounded-lg py-4 px-3 "
               style={{ backgroundColor: isDarkMode ? "#1E1F68" : "#FFFBE8" }}
             >
               <p
                 className={`${
                   isDarkMode ? "text-gray-400" : "text-primary-600"
-                } text-sm xs:text-xs font-semibold`}
+                } text-xs xs:text-[10px] font-semibold`}
               >
                 Total Pending Private Bets
               </p>
 
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mt-1">
                 {isLoading ? (
-                  <div className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+                  <div className="w-4 h-4 xs:w-3 xs:h-3 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
                 ) : (
                   <p
                     className={`${
                       isDarkMode ? "text-white" : "text-primary-100"
-                    } text-2xl sm:text-xl xs:text-lg font-bold`}
+                    } text-xl xs:text-lg font-bold`}
                   >
                     {user?.pendingPrivateBets || 0}
                   </p>
@@ -254,25 +257,25 @@ const Dashboard = () => {
 
           <div className="grid grid-cols-2 gap-2">
             <div
-              className="rounded-lg py-6 px-4 xs:py-4 xs:px-2"
+              className="rounded-lg py-4 px-3 "
               style={{ backgroundColor: isDarkMode ? "#1E1F68" : "#FDEFFF" }}
             >
               <p
                 className={`${
                   isDarkMode ? "text-gray-400" : "text-primary-600"
-                } text-sm xs:text-xs mb-2 font-semibold`}
+                } text-xs xs:text-[10px] font-semibold`}
               >
                 Total Accepted Bets
               </p>
 
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mt-1">
                 {isLoading ? (
-                  <div className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+                  <div className="w-4 h-4 xs:w-3 xs:h-3 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
                 ) : (
                   <p
                     className={`${
                       isDarkMode ? "text-white" : "text-primary-100"
-                    } text-2xl sm:text-xl xs:text-lg font-bold`}
+                    } text-xl xs:text-lg font-bold`}
                   >
                     {user?.openBets || 0}
                   </p>
@@ -281,25 +284,25 @@ const Dashboard = () => {
             </div>
 
             <div
-              className="rounded-lg py-6 px-4  xs:py-5 xs:px-2"
+              className="rounded-lg py-4 px-3 "
               style={{ backgroundColor: isDarkMode ? "#1E1F68" : "#E9FFE8" }}
             >
               <p
                 className={`${
                   isDarkMode ? "text-gray-400" : "text-primary-600"
-                } text-sm mb-2 font-semibold`}
+                } text-xs xs:text-[10px] font-semibold`}
               >
                 Total Settled Bets
               </p>
 
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mt-1">
                 {isLoading ? (
-                  <div className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+                  <div className="w-4 h-4 xs:w-3 xs:h-3 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
                 ) : (
                   <p
                     className={`${
                       isDarkMode ? "text-white" : "text-primary-100"
-                    } text-2xl sm:text-xl xs:text-lg font-bold`}
+                    } text-xl xs:text-lg font-bold`}
                   >
                     {user?.completedBets || 0}
                   </p>
@@ -313,24 +316,32 @@ const Dashboard = () => {
             href="/transactions"
             className={`${
               isDarkMode ? "bg-primary-1400" : "bg-blue-50"
-            } rounded-lg p-6 py-7 mb-2 xs:p-4 xs:py-4 xs:mb-1 flex items-center justify-between`}
+            } rounded-lg p-8 xs:p-6 flex items-center justify-between`}
           >
             <div className="flex items-center">
-              <Info size={20} color={isDarkMode ? "white" : "#1E1F68"} />
+              <Info
+                size={20}
+                color={isDarkMode ? "white" : "#1E1F68"}
+                className="xs:w-4 xs:h-4"
+              />
               <span
                 className={`${
                   isDarkMode ? "text-white" : "text-black"
-                } ml-3 font-semibold text-lg xs:text-md `}
+                } ml-3 xs:ml-2 font-semibold text-base xs:text-sm`}
               >
                 Transactions
               </span>
             </div>
 
             <div className="flex items-center">
-              <span className="text-gray-400 mr-2 text-sm xs:text-xs font-semibold">
+              <span className="text-gray-400 mr-2 xs:mr-1 text-xs xs:text-[10px] font-semibold">
                 View
               </span>
-              <Settings size={12} color={isDarkMode ? "white" : "#1E1F68"} />
+              <ChevronRight
+                size={16}
+                color={isDarkMode ? "white" : "#1E1F68"}
+                className="xs:w-3 xs:h-3"
+              />
             </div>
           </Link>
 
@@ -338,24 +349,32 @@ const Dashboard = () => {
             href="/help"
             className={`${
               isDarkMode ? "bg-primary-1400" : "bg-blue-50"
-            } rounded-lg p-6 py-7 mb-2 xs:p-4 xs:py-4 xs:mb-1 flex items-center justify-between`}
+            } rounded-lg p-8 xs:p-6 flex items-center justify-between`}
           >
             <div className="flex items-center">
-              <Info size={24} color={isDarkMode ? "#FFF" : "#000"} />
+              <Info
+                size={20}
+                color={isDarkMode ? "white" : "#1E1F68"}
+                className="xs:w-4 xs:h-4"
+              />
               <span
                 className={`${
                   isDarkMode ? "text-white" : "text-black"
-                } ml-3 font-semibold text-lg xs:text-md`}
+                } ml-3 xs:ml-2 font-semibold text-base xs:text-sm`}
               >
                 Help
               </span>
             </div>
 
             <div className="flex items-center">
-              <span className="text-gray-400 mr-2 text-sm xs:text-xs font-semibold">
+              <span className="text-gray-400 mr-2 xs:mr-1 text-xs xs:text-[10px] font-semibold">
                 Get Help
               </span>
-              <Settings size={12} color={isDarkMode ? "white" : "#1E1F68"} />
+              <ChevronRight
+                size={16}
+                color={isDarkMode ? "white" : "#1E1F68"}
+                className="xs:w-3 xs:h-3"
+              />
             </div>
           </Link>
         </div>
