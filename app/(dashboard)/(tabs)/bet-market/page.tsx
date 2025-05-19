@@ -305,7 +305,7 @@ const BetMarketPage = () => {
 
     return (
       <div
-        className="flex items-center justify-between py-3 border-b-[0.4px] border-[#62629e] cursor-pointer"
+        className="flex items-center justify-between py-3 xs:py-2 border-b-[0.4px] border-[#62629e] cursor-pointer"
         onClick={() =>
           router.push(
             `/bet-details/${
@@ -317,7 +317,7 @@ const BetMarketPage = () => {
         }
       >
         <div className="flex items-center">
-          <div className="relative w-7 h-7 mr-3">
+          <div className="relative w-7 h-7 xs:w-6 xs:h-6 mr-3 xs:mr-2">
             <Image
               src={
                 item.owner.avatarUrl || "/placeholder.svg?height=28&width=28"
@@ -330,11 +330,13 @@ const BetMarketPage = () => {
             />
           </div>
           <div>
-            <p className={`${textColor} font-medium text-sm`}>
+            <p className={`${textColor} font-medium text-sm xs:text-xs`}>
               {item.owner.nickname} predict
             </p>
             <div className="flex items-center">
-              <p className={`${textColor} text-sm w-30 truncate`}>
+              <p
+                className={`${textColor} text-sm xs:text-xs max-w-[120px] xs:max-w-[100px] truncate`}
+              >
                 {item.ownerPrediction === "WIN"
                   ? item.fixture.item1.name
                   : item.ownerPrediction === "LOSE"
@@ -349,7 +351,7 @@ const BetMarketPage = () => {
             </div>
           </div>
         </div>
-        <p className={`${textColor} font-bold text-sm`}>
+        <p className={`${textColor} font-bold text-sm xs:text-xs`}>
           ₦{(item.totalAmount / 2).toLocaleString()}
         </p>
       </div>
@@ -381,47 +383,55 @@ const BetMarketPage = () => {
     return (
       <div className={`${cardBackground} rounded-lg mb-2 overflow-hidden`}>
         {/* Match details */}
-        <div className="p-4 flex items-center justify-between">
+        <div className="p-4 xs:p-3 flex items-center justify-between">
           <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <div className="border-r-[#62629e] pr-4 border-r-[0.4px]">
+            <div className="flex items-center gap-2 xs:gap-1">
+              <div className="border-r-[#62629e] pr-4 xs:pr-2 border-r-[0.4px]">
                 <p
-                  className={`${textColor} text-md w-10 mb-1 text-center font-bold`}
+                  className={`${textColor} text-md xs:text-sm w-10 xs:w-8 mb-1 text-center font-bold`}
                 >
                   {matchDate}
                 </p>
-                <p className={`${secondaryTextColor} text-md`}>{matchTime}</p>
+                <p className={`${secondaryTextColor} text-md xs:text-xs`}>
+                  {matchTime}
+                </p>
               </div>
-              <div className="mb-1 mr-2">
-                <div className="flex items-center mb-2">
-                  <div className="relative w-5 h-5 mr-2">
+              <div className="mb-1 mr-2 xs:mr-1">
+                <div className="flex items-center mb-2 xs:mb-1">
+                  <div className="relative w-5 h-5 xs:w-4 xs:h-4 mr-2 xs:mr-1">
                     <Image
                       src={
                         fixture.item1.logoUrl ||
-                        "/placeholder.svg?height=20&width=20"
+                        "/placeholder.svg?height=20&width=20" ||
+                        "/placeholder.svg"
                       }
                       alt="Team 1 logo"
                       fill
                       className="object-contain"
                     />
                   </div>
-                  <p className={`${textColor} text-sm w-[6rem] truncate`}>
+                  <p
+                    className={`${textColor} text-sm xs:text-xs max-w-[6rem] xs:max-w-[5rem] truncate`}
+                  >
                     {fixture.item1.name}
                   </p>
                 </div>
                 <div className="flex items-center">
-                  <div className="relative w-5 h-5 mr-2">
+                  <div className="relative w-5 h-5 xs:w-4 xs:h-4 mr-2 xs:mr-1">
                     <Image
                       src={
                         fixture.item2.logoUrl ||
-                        "/placeholder.svg?height=20&width=20"
+                        "/placeholder.svg?height=20&width=20" ||
+                        "/placeholder.svg"
                       }
                       alt="Team 2 logo"
                       fill
                       className="object-contain"
                     />
                   </div>
-                  <p className={`${textColor} text-sm w-[6rem] truncate`}>
+                  <p
+                    className={`${textColor} text-sm xs:text-xs max-w-[6rem] xs:max-w-[5rem] truncate`}
+                  >
                     {fixture.item2.name}
                   </p>
                 </div>
@@ -431,11 +441,13 @@ const BetMarketPage = () => {
           <button
             className={`${
               isDarkMode ? "bg-[#0B0B3F]" : "bg-[#E8E8FF]"
-            } px-4 py-4 rounded-lg`}
+            } px-4 xs:px-2 py-4 xs:py-3 rounded-lg`}
             onClick={() => handleCreateBet(fixture, categoryId)}
           >
             <p
-              className={`${isDarkMode ? "text-white" : "text-black"} text-xs`}
+              className={`${
+                isDarkMode ? "text-white" : "text-black"
+              } text-xs xs:text-[10px]`}
             >
               Create New Bet
             </p>
@@ -444,7 +456,7 @@ const BetMarketPage = () => {
 
         {/* Avatars and expand button */}
         <div
-          className={`flex items-center justify-between p-3 ${
+          className={`flex items-center justify-between p-3 xs:p-2 ${
             isExpanded ? "" : "bg-transparent"
           } border-t-[0.4px] border-[#62629e] cursor-pointer`}
           onClick={() => toggleExpand(fixtureId)}
@@ -458,7 +470,7 @@ const BetMarketPage = () => {
                       {topOwners.map((owner, index) => (
                         <div
                           key={`${owner?.id}-${index}`}
-                          className="relative w-7 h-7"
+                          className="relative w-7 h-7 xs:w-6 xs:h-6"
                           style={{
                             marginLeft: index > 0 ? "-8px" : "0",
                           }}
@@ -466,7 +478,8 @@ const BetMarketPage = () => {
                           <Image
                             src={
                               owner?.avatarUrl ||
-                              "/placeholder.svg?height=28&width=28"
+                              "/placeholder.svg?height=28&width=28" ||
+                              "/placeholder.svg"
                             }
                             alt={`Owner ${index} avatar`}
                             fill
@@ -477,22 +490,26 @@ const BetMarketPage = () => {
                     </div>
 
                     <p
-                      className={`${secondaryTextColor} ml-2 text-sm`}
+                      className={`${secondaryTextColor} ml-2 xs:ml-1 text-sm xs:text-xs`}
                     >{`${bets.length}+ Player(s) waiting`}</p>
                   </>
                 ) : (
-                  <p className={secondaryTextColor}>No players yet</p>
+                  <p className={`${secondaryTextColor} text-sm xs:text-xs`}>
+                    No players yet
+                  </p>
                 )}
               </>
             )}
             {isExpanded && (
-              <p className={`${secondaryTextColor} ml-2 text-md`}>
+              <p
+                className={`${secondaryTextColor} ml-2 xs:ml-1 text-md xs:text-sm`}
+              >
                 Play against others
               </p>
             )}
           </div>
 
-          <div className="ml-2">
+          <div className="ml-2 xs:ml-1">
             {isExpanded ? (
               <ChevronUp
                 className={isDarkMode ? "text-white" : "text-black"}
@@ -509,7 +526,7 @@ const BetMarketPage = () => {
 
         {/* Expanded bets list */}
         {isExpanded && (
-          <div className="p-3">
+          <div className="p-3 xs:p-2">
             {bets.slice(0, 5).map((bet) => (
               <div key={bet.id}>{renderBetItem(bet)}</div>
             ))}
@@ -518,7 +535,7 @@ const BetMarketPage = () => {
               <button
                 className={`${
                   isDarkMode ? "bg-[#0B0B3F]" : "bg-[#E8E8FF]"
-                } py-4 w-full border-[0.2px] rounded-lg items-center mt-3 border-[#62629e] text-center`}
+                } py-4 xs:py-3 w-full border-[0.2px] rounded-lg items-center mt-3 xs:mt-2 border-[#62629e] text-center`}
                 onClick={() =>
                   router.push(
                     `/bet-market/${fixture.id}?category=${encodeURIComponent(
@@ -527,7 +544,7 @@ const BetMarketPage = () => {
                   )
                 }
               >
-                <p className={textColor}>View All</p>
+                <p className={`${textColor} xs:text-sm`}>View All</p>
               </button>
             )}
           </div>
@@ -542,8 +559,10 @@ const BetMarketPage = () => {
 
     return (
       <div className="mb-1" key={item.id}>
-        <div className="flex gap-2 items-center mb-2 px-2">
-          <p className={`${textColor} font-medium text-sm`}>{item.category}</p>
+        <div className="flex gap-2 xs:gap-1 items-center mb-2 xs:mb-1 px-2">
+          <p className={`${textColor} font-medium text-sm xs:text-xs`}>
+            {item.category}
+          </p>
           <ChevronRight
             className={isDarkMode ? "text-white" : "text-black"}
             size={16}
@@ -551,7 +570,7 @@ const BetMarketPage = () => {
         </div>
 
         {groupedFixtures.map((group) => (
-          <div key={group.fixtureId} className="px-4">
+          <div key={group.fixtureId} className="px-4 xs:px-2">
             {renderFixtureGroup(group)}
           </div>
         ))}
@@ -562,17 +581,20 @@ const BetMarketPage = () => {
   // Render Pool Bet content separately
   const renderPoolBetContent = () => {
     return (
-      <div className="flex-1 flex items-center justify-center h-[calc(100vh-240px)]">
+      <div className="flex-1 flex items-center justify-center h-[calc(100vh-240px)] xs:h-[calc(100vh-200px)]">
         <div className="text-center">
           <Trophy
             className={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
             size={50}
-            style={{ marginBottom: 16, margin: "0 auto" }}
           />
-          <p className={`${textColor} text-lg font-medium mt-4`}>
+          <p
+            className={`${textColor} text-lg xs:text-base font-medium mt-4 xs:mt-2`}
+          >
             Pool bet coming soon!
           </p>
-          <p className={`${secondaryTextColor} text-center mt-2 px-8`}>
+          <p
+            className={`${secondaryTextColor} text-center mt-2 xs:mt-1 px-8 xs:px-4 xs:text-sm`}
+          >
             We're working on exciting new pool betting features. Stay tuned!
           </p>
         </div>
@@ -589,7 +611,7 @@ const BetMarketPage = () => {
     if (loading && !dataFetched) return null;
 
     return (
-      <div className="flex-1 items-center justify-center py-8 h-[calc(100vh-240px)]">
+      <div className="flex-1 items-center justify-center py-8 xs:py-4 h-[calc(100vh-240px)] xs:h-[calc(100vh-200px)]">
         <EmptyState
           type="soccer"
           isDarkMode={isDarkMode}
@@ -620,7 +642,9 @@ const BetMarketPage = () => {
       <div className="fixed top-0 left-0 right-0 z-20">
         <WalletHeader
           title="Bet Market"
-          icon={<Trophy size={24} color={iconColor} />}
+          icon={
+            <Trophy size={24} className="xs:w-5 xs:h-5" color={iconColor} />
+          }
         />
         <NestedTabNavigation
           tabs={tabs}
@@ -634,14 +658,14 @@ const BetMarketPage = () => {
         renderCenteredLoadingSpinner()}
 
       <div
-        className={`${subBackground} flex-1 pt-[220px] xs:pt-[190px] pb-8 overflow-y-auto scrollbar-hide`}
+        className={`${subBackground} flex-1 pt-[220px] xs:pt-[190px] pb-8 xs:pb-20 overflow-y-auto scrollbar-hide`}
       >
         {/* Show Pool Bet content if activeTab is "special" */}
         {activeTab === "special" ? (
           renderPoolBetContent()
         ) : (
           /* Bet Markets List - only render when not in initial loading state */
-          <div className="py-2">
+          <div className="py-2 xs:py-1">
             {betMarkets.length > 0 && !initialLoading
               ? betMarkets.map((category) => renderCategory(category))
               : !initialLoading && renderEmpty()}
@@ -652,7 +676,7 @@ const BetMarketPage = () => {
             )}
 
             {loading && !initialLoading && dataFetched && (
-              <div className="flex justify-center my-4">
+              <div className="flex justify-center my-4 xs:my-2">
                 <LoadingSpinner
                   variant="circular"
                   size="md"
