@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { format, parseISO } from "date-fns";
 import type { FixtureItem as FixtureItemType } from "@/lib/services/fixtureService";
-import { LiveFixtureData } from "@/hooks/use-live-fixture-data";
+import type { LiveFixtureData } from "@/hooks/use-live-fixture-data";
 
 interface TeamInfo {
   name: string;
@@ -76,16 +76,18 @@ export default function FixtureItem({
   if (fixture.betStatus === "ON") {
     return (
       <div className={`${cardBackground} rounded-lg mb-1 overflow-hidden`}>
-        <div className="p-3 flex items-center justify-between">
+        <div className="p-3 xs:p-2 flex items-center justify-between">
           <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <div className="border-r border-r-[#62629e] pr-4">
+            <div className="flex items-center gap-2 xs:gap-1">
+              <div className="border-r border-r-[#62629e] pr-4 xs:pr-2">
                 <p
-                  className={`${textColor} text-md w-10 mb-1 text-center font-bold`}
+                  className={`${textColor} text-md xs:text-sm w-10 xs:w-8 mb-1 text-center font-bold`}
                 >
                   {matchDate}
                 </p>
-                <p className={`${secondaryTextColor} text-md`}>{matchTime}</p>
+                <p className={`${secondaryTextColor} text-md xs:text-xs`}>
+                  {matchTime}
+                </p>
               </div>
               <TeamDisplay
                 team1={fixture.item1}
@@ -97,11 +99,13 @@ export default function FixtureItem({
           <button
             className={`${
               isDarkMode ? "bg-[#0B0B3F]" : "bg-[#E8E8FF]"
-            } px-4 py-4 rounded-lg`}
+            } px-4 xs:px-2 py-4 xs:py-3 rounded-lg`}
             onClick={onCreateBet}
           >
             <span
-              className={`${isDarkMode ? "text-white" : "text-black"} text-xs`}
+              className={`${
+                isDarkMode ? "text-white" : "text-black"
+              } text-xs xs:text-[10px]`}
             >
               Create New Bet
             </span>
@@ -116,11 +120,13 @@ export default function FixtureItem({
         className={`${cardBackground} rounded-lg mb-1 overflow-hidden cursor-pointer hover:opacity-90 transition-opacity`}
         onClick={handleViewCommentary}
       >
-        <div className="p-3 flex items-center justify-between">
+        <div className="p-3 xs:p-2 flex items-center justify-between">
           <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <div className="border-r border-r-[#62629e] pr-4">
-                <p className={`${secondaryTextColor} text-md`}>{matchTime}</p>
+            <div className="flex items-center gap-2 xs:gap-1">
+              <div className="border-r border-r-[#62629e] pr-4 xs:pr-2">
+                <p className={`${secondaryTextColor} text-md xs:text-xs`}>
+                  {matchTime}
+                </p>
                 {/* Match status */}
                 {liveData && (
                   <p
@@ -130,7 +136,7 @@ export default function FixtureItem({
                       liveData.status === "PST"
                         ? `${secondaryTextColor}`
                         : "text-[#FFA726]"
-                    } text-md text-center font-medium`}
+                    } text-md xs:text-xs text-center font-medium`}
                   >
                     {String(liveData.status || "NS")}
                   </p>
@@ -149,7 +155,7 @@ export default function FixtureItem({
             <div className="items-center">
               {/* Team A score */}
               <p
-                className={`text-md font-bold mb-1 ${
+                className={`text-md xs:text-sm font-bold mb-1 ${
                   liveData.status === "FT" ||
                   liveData.status === "CANC" ||
                   liveData.status === "PST"
@@ -162,7 +168,7 @@ export default function FixtureItem({
 
               {/* Team B score */}
               <p
-                className={`text-md font-bold ${
+                className={`text-md xs:text-sm font-bold ${
                   liveData.status === "FT" ||
                   liveData.status === "CANC" ||
                   liveData.status === "PST"
@@ -183,9 +189,9 @@ export default function FixtureItem({
 // Helper component for team display
 function TeamDisplay({ team1, team2, textColor }: TeamDisplayProps) {
   return (
-    <div className="mb-1 mr-2">
-      <div className="flex items-center mb-2">
-        <div className="relative w-5 h-5 mr-2">
+    <div className="mb-1 mr-2 xs:mr-1">
+      <div className="flex items-center mb-2 xs:mb-1">
+        <div className="relative w-5 h-5 xs:w-4 xs:h-4 mr-2 xs:mr-1">
           <Image
             src={team1.logoUrl || "/placeholder.svg?height=24&width=24"}
             alt={team1.name}
@@ -193,12 +199,14 @@ function TeamDisplay({ team1, team2, textColor }: TeamDisplayProps) {
             className="object-contain"
           />
         </div>
-        <p className={`${textColor} text-sm max-w-[6rem] truncate`}>
+        <p
+          className={`${textColor} text-sm xs:text-xs max-w-[6rem] xs:max-w-[5rem] truncate`}
+        >
           {team1.name}
         </p>
       </div>
       <div className="flex items-center">
-        <div className="relative w-5 h-5 mr-2">
+        <div className="relative w-5 h-5 xs:w-4 xs:h-4 mr-2 xs:mr-1">
           <Image
             src={team2.logoUrl || "/placeholder.svg?height=24&width=24"}
             alt={team2.name}
@@ -206,7 +214,9 @@ function TeamDisplay({ team1, team2, textColor }: TeamDisplayProps) {
             className="object-contain"
           />
         </div>
-        <p className={`${textColor} text-sm max-w-[6rem] truncate`}>
+        <p
+          className={`${textColor} text-sm xs:text-xs max-w-[6rem] xs:max-w-[5rem] truncate`}
+        >
           {team2.name}
         </p>
       </div>

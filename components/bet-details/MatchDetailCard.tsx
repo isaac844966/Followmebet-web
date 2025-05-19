@@ -36,15 +36,19 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({
     : "";
 
   return (
-    <div className={`${primaryBg} p-4  border-[0.2px] border-gray-600`}>
-      <p className={`${textColor} text-md mb-2 font-medium text-center`}>
+    <div className={`${primaryBg} p-4 xs:p-3 border-[0.2px] border-gray-600`}>
+      <p
+        className={`${textColor} text-md xs:text-sm mb-2 font-medium text-center`}
+      >
         {fixture?.category || "League Match"}
       </p>
-      <p className={`${secondaryTextColor} text-md text-center`}>{matchDate}</p>
+      <p className={`${secondaryTextColor} text-md xs:text-xs text-center`}>
+        {matchDate}
+      </p>
 
       <div className="flex justify-between items-center w-full">
         <div className="flex flex-col items-center flex-1">
-          <div className="relative w-[50px] h-[50px] mb-2">
+          <div className="relative w-[50px] h-[50px] xs:w-[40px] xs:h-[40px] mb-2 xs:mb-1">
             <Image
               src={
                 fixture?.item1?.logoUrl || "/placeholder.svg?height=60&width=60"
@@ -55,7 +59,7 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({
             />
           </div>
           <p
-            className={`${textColor} text-center font-medium max-w-[120px]`}
+            className={`${textColor} text-center font-medium max-w-[120px] xs:max-w-[90px] xs:text-xs`}
             style={{
               textOverflow: "ellipsis",
               overflow: "hidden",
@@ -66,13 +70,15 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({
           </p>
         </div>
 
-        <div className="flex flex-col items-center mx-4">
-          <p className={`${textColor} text-lg font-bold`}>Vs</p>
-          <p className={`${secondaryTextColor} text-md mt-1`}>{matchTime}</p>
+        <div className="flex flex-col items-center mx-4 xs:mx-2">
+          <p className={`${textColor} text-lg xs:text-base font-bold`}>Vs</p>
+          <p className={`${secondaryTextColor} text-md xs:text-xs mt-1`}>
+            {matchTime}
+          </p>
         </div>
 
         <div className="flex flex-col items-center flex-1">
-          <div className="relative w-[50px] h-[50px] mb-2">
+          <div className="relative w-[50px] h-[50px] xs:w-[40px] xs:h-[40px] mb-2 xs:mb-1">
             <Image
               src={
                 fixture?.item2?.logoUrl || "/placeholder.svg?height=60&width=60"
@@ -83,7 +89,7 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({
             />
           </div>
           <p
-            className={`${textColor} text-center font-medium max-w-[120px]`}
+            className={`${textColor} text-center font-medium max-w-[120px] xs:max-w-[90px] xs:text-xs`}
             style={{
               textOverflow: "ellipsis",
               overflow: "hidden",

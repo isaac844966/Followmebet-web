@@ -34,13 +34,13 @@ const BetPredictionSelector: React.FC<BetPredictionSelectorProps> = ({
   const inactiveButtonText = isDarkMode ? "text-white" : "text-black";
 
   return (
-    <div className="mb-4 mt-4">
-      <p className={`${textColor} text-base font-medium mb-2`}>
+    <div className="mb-4 mt-4 xs:mt-2">
+      <p className={`${textColor} text-base xs:text-sm font-medium mb-2`}>
         Select your Prediction
       </p>
 
       <div
-        className={`flex justify-between px-2 py-3 rounded-lg ${cardBackground} border-[0.3px] border-gray-600`}
+        className={`flex justify-between px-2 xs:px-1 py-3 xs:py-2 rounded-lg ${cardBackground} border-[0.3px] border-gray-600`}
       >
         {/* WIN */}
         <button
@@ -56,7 +56,7 @@ const BetPredictionSelector: React.FC<BetPredictionSelectorProps> = ({
               selectedPrediction === "WIN"
                 ? activeButtonText
                 : inactiveButtonText
-            } text-center font-medium text-sm`}
+            } text-center font-medium text-sm xs:text-xs`}
           >
             {fixture.item1?.name?.split(" ")[0] || "Team 1"}
           </span>
@@ -65,7 +65,7 @@ const BetPredictionSelector: React.FC<BetPredictionSelectorProps> = ({
               selectedPrediction === "WIN"
                 ? activeButtonText
                 : inactiveButtonText
-            } text-center font-medium text-sm`}
+            } text-center font-medium text-sm xs:text-xs`}
           >
             Win
           </span>
@@ -87,7 +87,7 @@ const BetPredictionSelector: React.FC<BetPredictionSelectorProps> = ({
               selectedPrediction === "DRAW"
                 ? activeButtonText
                 : inactiveButtonText
-            } text-center font-medium text-sm`}
+            } text-center font-medium text-sm xs:text-xs`}
           >
             Draw
           </span>
@@ -109,7 +109,7 @@ const BetPredictionSelector: React.FC<BetPredictionSelectorProps> = ({
               selectedPrediction === "LOSE"
                 ? activeButtonText
                 : inactiveButtonText
-            } text-center text-sm font-medium`}
+            } text-center text-sm xs:text-xs font-medium`}
           >
             {fixture.item2?.name?.split(" ")[0] || "Team 2"}
           </span>
@@ -118,7 +118,7 @@ const BetPredictionSelector: React.FC<BetPredictionSelectorProps> = ({
               selectedPrediction === "LOSE"
                 ? activeButtonText
                 : inactiveButtonText
-            } text-center font-medium text-sm`}
+            } text-center font-medium text-sm xs:text-xs`}
           >
             Win
           </span>

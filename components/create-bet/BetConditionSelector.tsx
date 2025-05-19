@@ -24,17 +24,17 @@ const BetConditionSelector: React.FC<BetConditionSelectorProps> = ({
 
   return (
     <div className="mb-4">
-      <p className={`${textColor} text-base font-medium mb-2`}>
+      <p className={`${textColor} text-base xs:text-sm font-medium mb-2`}>
         Choose condition
       </p>
 
       <div
-        className={`flex justify-between ${cardBackground} rounded-lg py-3 px-2 border-[0.2px] border-gray-600`}
+        className={`flex justify-between ${cardBackground} rounded-lg py-3 xs:py-2 px-2 xs:px-1 border-[0.2px] border-gray-600`}
       >
         <button
           className={`${
             selectedCondition === "FT" ? activeButtonBg : inactiveButtonBg
-          } py-3 px-2 rounded-md flex-1 mr-1 ${
+          } py-3 xs:py-2 px-2 xs:px-1 rounded-md flex-1 mr-1 ${
             selectedCondition === "FT" ? `border-[0.2px] border-gray-600` : ""
           }`}
           onClick={() => onSelectCondition("FT")}
@@ -42,7 +42,7 @@ const BetConditionSelector: React.FC<BetConditionSelectorProps> = ({
           <span
             className={`${
               selectedCondition === "FT" ? activeButtonText : inactiveButtonText
-            } text-center text-sm font-medium`}
+            } text-center text-sm xs:text-xs font-medium`}
           >
             Full Time Result
           </span>
@@ -51,7 +51,7 @@ const BetConditionSelector: React.FC<BetConditionSelectorProps> = ({
         <button
           className={`${
             selectedCondition === "HT" ? activeButtonBg : inactiveButtonBg
-          } py-3 px-2 rounded-md flex-1 ml-2 ${
+          } py-3 xs:py-2 px-2 xs:px-1 rounded-md flex-1 ml-2 xs:ml-1 ${
             selectedCondition === "HT" ? `border-[0.2px] border-gray-600` : ""
           }`}
           onClick={() => onSelectCondition("HT")}
@@ -59,7 +59,7 @@ const BetConditionSelector: React.FC<BetConditionSelectorProps> = ({
           <span
             className={`${
               selectedCondition === "HT" ? activeButtonText : inactiveButtonText
-            } text-center text-sm font-medium`}
+            } text-center text-sm xs:text-xs font-medium`}
           >
             Half Time Result
           </span>

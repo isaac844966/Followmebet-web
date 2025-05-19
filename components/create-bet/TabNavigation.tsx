@@ -12,8 +12,9 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
   activeTab,
   onTabChange,
 }) => {
-    const {isDarkMode} = useTheme()
-     const backgroundColor = isDarkMode ? "bg-[#0B0B3F]" : "bg-white";
+  const { isDarkMode } = useTheme();
+  const backgroundColor = isDarkMode ? "bg-[#0B0B3F]" : "bg-white";
+
   return (
     <div className={`flex pt-2 border-b border-gray-300 ${backgroundColor}`}>
       {["Place bet", "Open challenges", "Standings"].map((tab, index) => (
@@ -22,13 +23,13 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
           onClick={() => onTabChange(index)}
           className="flex-1 focus:outline-none"
         >
-          <div className="py-4 text-center">
+          <div className="py-4 xs:py-3 text-center">
             <span
               className={`${
                 activeTab === index
                   ? "text-yellow-500 font-bold"
                   : "text-gray-500"
-              }`}
+              } xs:text-sm`}
             >
               {tab}
             </span>

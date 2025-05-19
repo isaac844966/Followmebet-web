@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import type React from "react";
 
 type AmountInputProps = {
   customAmount: string;
@@ -25,16 +27,20 @@ const AmountInput: React.FC<AmountInputProps> = ({
   const isAmountValid = !customAmount || Number(customAmount) >= minAmount;
 
   return (
-    <div className="mb-10">
+    <div className="mb-10 xs:mb-6">
       <div className="flex justify-between items-center mb-2">
-        <p className={`${textColor} text-base font-medium`}>Enter amount</p>
-        <p className={`${textColor} text-sm opacity-70`}>Min: {minAmount}</p>
+        <p className={`${textColor} text-base xs:text-sm font-medium`}>
+          Enter amount
+        </p>
+        <p className={`${textColor} text-sm xs:text-xs opacity-70`}>
+          Min: {minAmount}
+        </p>
       </div>
 
       <input
-        className={`${inputBg} ${inputText} p-4 py-6 rounded-md border-[0.5px] ${
+        className={`${inputBg} ${inputText} p-4 xs:p-3 py-6 xs:py-4 rounded-md border-[0.5px] ${
           !isAmountValid ? "border-red-500" : "border-[#5554]"
-        } mb-2 w-full`}
+        } mb-2 w-full text-base xs:text-sm`}
         placeholder={`Enter amount (min ${minAmount})`}
         type="number"
         value={customAmount}
@@ -45,7 +51,7 @@ const AmountInput: React.FC<AmountInputProps> = ({
       />
 
       {!isAmountValid && (
-        <p className={`${errorTextColor} text-sm`}>
+        <p className={`${errorTextColor} text-sm xs:text-xs`}>
           Amount must be at least {minAmount}
         </p>
       )}

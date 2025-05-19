@@ -23,16 +23,18 @@ const AmountSelector: React.FC<AmountSelectorProps> = ({
   const amountOptions: number[] = [1000, 5000, 10000, 50000];
 
   return (
-    <div className="mb-10">
-      <p className={`${textColor} text-base font-medium mb-2`}>Select Amount</p>
+    <div className="mb-10 xs:mb-6">
+      <p className={`${textColor} text-base xs:text-sm font-medium mb-2`}>
+        Select Amount
+      </p>
 
       <div
-        className={`grid grid-cols-4 gap-1 px-2 py-3 rounded-lg ${cardBackground} border-[0.3px] border-gray-500`}
+        className={`grid grid-cols-4 gap-1 px-2 xs:px-1 py-3 xs:py-2 rounded-lg ${cardBackground} border-[0.3px] border-gray-500`}
       >
         {amountOptions.map((amount) => (
           <button
             key={amount}
-            className={`py-3 rounded-md ${
+            className={`py-3 xs:py-2 rounded-md ${
               selectedAmount === amount
                 ? `${activeButtonBg} border-[0.3px] border-gray-600`
                 : inactiveButtonBg
@@ -44,7 +46,7 @@ const AmountSelector: React.FC<AmountSelectorProps> = ({
                 selectedAmount === amount
                   ? activeButtonText
                   : inactiveButtonText
-              } text-center text-sm font-medium`}
+              } text-center text-sm xs:text-xs font-medium`}
             >
               ₦{amount.toLocaleString()}
             </span>

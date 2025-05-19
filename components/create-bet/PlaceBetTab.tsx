@@ -59,8 +59,12 @@ const PlaceBetTab: React.FC<PlaceBetTabProps> = ({
 
   if (!fixture) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <div className={`text-lg ${isDarkMode ? "text-white" : "text-black"}`}>
+      <div className="flex justify-center items-center h-64 xs:h-48">
+        <div
+          className={`text-lg xs:text-base ${
+            isDarkMode ? "text-white" : "text-black"
+          }`}
+        >
           Loading match details...
         </div>
       </div>
@@ -69,7 +73,7 @@ const PlaceBetTab: React.FC<PlaceBetTabProps> = ({
 
   return (
     <div className="flex-1 overflow-auto">
-      <div className="px-4 mt-10">
+      <div className="px-4 xs:px-3 mt-10 xs:mt-6">
         <BetPredictionSelector
           fixture={fixture}
           selectedPrediction={selectedPrediction as BetPrediction}
@@ -106,7 +110,7 @@ const PlaceBetTab: React.FC<PlaceBetTabProps> = ({
           />
         )}
 
-        <div className="py-4">
+        <div className="py-4 xs:py-3">
           <ActionButton onPress={onNext} title="Next" isDarkMode={isDarkMode} />
         </div>
       </div>

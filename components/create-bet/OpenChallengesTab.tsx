@@ -45,13 +45,13 @@ const OpenChallengesTab: React.FC<OpenChallengesTabProps> = ({
     return (
       <button
         key={`bet-item-${item.id}`}
-        className="flex items-center justify-between py-3 border-b border-gray-700 w-full text-left"
+        className="flex items-center justify-between py-3 xs:py-2 border-b border-gray-700 w-full text-left"
         onClick={() =>
           router.push(`/bet-details/${item.id}?fromCreateBet=true`)
         }
       >
         <div className="flex items-center">
-          <div className="relative w-7 h-7 mr-3">
+          <div className="relative w-7 h-7 xs:w-6 xs:h-6 mr-3 xs:mr-2">
             <Image
               src={item.owner.avatarUrl || "/placeholder.svg"}
               alt={item.owner.nickname}
@@ -62,12 +62,12 @@ const OpenChallengesTab: React.FC<OpenChallengesTabProps> = ({
             />
           </div>
           <div>
-            <p className={`${textColor} font-medium text-sm`}>
+            <p className={`${textColor} font-medium text-sm xs:text-xs`}>
               {item.owner.nickname} predict
             </p>
             <div className="flex items-center">
               <p
-                className={`${textColor} text-sm max-w-[120px]`}
+                className={`${textColor} text-sm xs:text-xs max-w-[120px] xs:max-w-[100px]`}
                 style={{
                   textOverflow: "ellipsis",
                   overflow: "hidden",
@@ -88,7 +88,7 @@ const OpenChallengesTab: React.FC<OpenChallengesTabProps> = ({
             </div>
           </div>
         </div>
-        <p className={`${textColor} font-bold text-sm`}>
+        <p className={`${textColor} font-bold text-sm xs:text-xs`}>
           ₦{(item.totalAmount / 2).toLocaleString()}
         </p>
       </button>
@@ -100,8 +100,8 @@ const OpenChallengesTab: React.FC<OpenChallengesTabProps> = ({
     if (loading) return null;
 
     return (
-      <div className="py-40 flex items-center justify-center">
-        <p className={textColor}>
+      <div className="py-40 xs:py-24 flex items-center justify-center">
+        <p className={`${textColor} xs:text-sm text-center`}>
           No open challenge available for this fixture
         </p>
       </div>
@@ -109,18 +109,20 @@ const OpenChallengesTab: React.FC<OpenChallengesTabProps> = ({
   };
 
   return (
-    <div className="flex-1 px-4 overflow-auto">
+    <div className="flex-1 px-4 xs:px-3 overflow-auto">
       {loading ? (
-        <div className="flex-1 flex justify-center items-center py-20">
-          <Loader2 className="h-8 w-8 text-primary animate-spin" />
+        <div className="flex-1 flex justify-center items-center py-20 xs:py-12">
+          <Loader2 className="h-8 w-8 xs:h-6 xs:w-6 text-primary animate-spin" />
         </div>
       ) : error ? (
-        <div className="flex-1 flex justify-center items-center py-20">
-          <p className={textColor}>{error}</p>
+        <div className="flex-1 flex justify-center items-center py-20 xs:py-12">
+          <p className={`${textColor} xs:text-sm`}>{error}</p>
         </div>
       ) : (
         <div className="flex-1">
-          <p className={`${secondaryTextColor} my-4`}>Play against others</p>
+          <p className={`${secondaryTextColor} my-4 xs:my-3 xs:text-sm`}>
+            Play against others
+          </p>
 
           <div className="space-y-1">
             {bets.length > 0 ? (
@@ -129,10 +131,10 @@ const OpenChallengesTab: React.FC<OpenChallengesTabProps> = ({
                 {hasMore && (
                   <button
                     onClick={onLoadMore}
-                    className="w-full py-3 text-center text-primary"
+                    className="w-full py-3 xs:py-2 text-center text-primary xs:text-sm"
                   >
                     {refreshing ? (
-                      <Loader2 className="h-5 w-5 text-primary animate-spin mx-auto" />
+                      <Loader2 className="h-5 w-5 xs:h-4 xs:w-4 text-primary animate-spin mx-auto" />
                     ) : (
                       "Load More"
                     )}
