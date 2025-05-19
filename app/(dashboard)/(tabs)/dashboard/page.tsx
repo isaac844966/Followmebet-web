@@ -10,6 +10,7 @@ import { Info, RefreshCw, Settings, ChevronRight } from "lucide-react";
 import CustomButton from "@/components/CustomButton";
 import { fetchUserProfile } from "@/lib/services/authService";
 import { initializeFirebaseMessaging } from "@/lib/services/updateNotifictionToken";
+import { text } from "stream/consumers";
 
 const Dashboard = () => {
   const { isDarkMode } = useTheme();
@@ -17,7 +18,8 @@ const Dashboard = () => {
   const backgroundColor = isDarkMode ? "#0B0B3F" : "#fff";
   const { user } = useAuthStore();
   const isLoading = !user || !user.firstname;
-
+  const textColor = isDarkMode ? "text-white" : "text-gray-800";
+  const secondaryTextColor = isDarkMode ? "text-gray-300" : "text-gray-700";
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
@@ -38,30 +40,24 @@ const Dashboard = () => {
         style={{ backgroundColor }}
       >
         <div className="px-4 max-w-4xl mx-auto">
-          <div className="flex items-center justify-between py-3 xs:py-2">
+          <div className="flex items-center justify-between py-4 ">
             <Image
               src="/images/icon.png"
               alt="Logo"
               width={120}
               height={48}
-              className="object-contain xs:w-28 h-8"
+              className="object-contain xs:w-32 h-10"
             />
             <div className="flex items-center">
               <div className="flex items-center">
                 {isLoading ? (
                   <div className="w-3 h-3 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
                 ) : (
-                  <div
-                    className={`${
-                      isDarkMode ? "text-white" : "text-primary-600"
-                    } text-xs text-left mr-2`}
-                  >
+                  <div className={`${textColor} text-xs text-left mr-2`}>
                     <span className="text-xs xs:text-[10px]">My Account</span>
                     <br />
                     <span
-                      className={`${
-                        isDarkMode ? "text-white" : "text-black"
-                      } font-bold text-left text-xs xs:text-[10px]`}
+                      className={`${textColor} font-bold text-left text-xs xs:text-[10px]`}
                     >
                       ₦
                       {user?.balance?.toLocaleString("en-US", {
@@ -96,7 +92,7 @@ const Dashboard = () => {
       </div>
 
       {/* Main content with padding to account for fixed header */}
-      <div className="px-4 max-w-4xl mx-auto pt-16 xs:pt-14">
+      <div className="px-4 max-w-4xl mx-auto pt-18 xs:pt-16">
         <div className="space-y-3 xs:space-y-2 pb-20 xs:pb-16">
           {/* User Profile Card */}
           <div
@@ -201,13 +197,11 @@ const Dashboard = () => {
           {/* Stats Cards */}
           <div className="grid grid-cols-2 gap-2">
             <div
-              className="rounded-lg py-8 px-4 "
+              className="rounded-lg py-4 px-4 "
               style={{ backgroundColor: isDarkMode ? "#1E1F68" : "#E8E8FF" }}
             >
               <p
-                className={`${
-                  isDarkMode ? "text-gray-400" : "text-primary-600"
-                } text-xs xs:text-[10px] font-semibold`}
+                className={`${secondaryTextColor} text-md xs:text-sm font-semibold`}
               >
                 Total Pending Public Bets
               </p>
@@ -219,7 +213,7 @@ const Dashboard = () => {
                   <p
                     className={`${
                       isDarkMode ? "text-white" : "text-primary-100"
-                    } text-xl xs:text-lg font-bold`}
+                    } text-xl xs:text-lg font-bold text-center`}
                   >
                     {user?.pendingPublicBets || 0}
                   </p>
@@ -228,13 +222,11 @@ const Dashboard = () => {
             </div>
 
             <div
-              className="rounded-lg py-4 px-3 "
+              className="rounded-lg py-4 px-4 "
               style={{ backgroundColor: isDarkMode ? "#1E1F68" : "#FFFBE8" }}
             >
               <p
-                className={`${
-                  isDarkMode ? "text-gray-400" : "text-primary-600"
-                } text-xs xs:text-[10px] font-semibold`}
+                className={`${secondaryTextColor} text-md xs:text-sm font-semibold`}
               >
                 Total Pending Private Bets
               </p>
@@ -257,13 +249,11 @@ const Dashboard = () => {
 
           <div className="grid grid-cols-2 gap-2">
             <div
-              className="rounded-lg py-4 px-3 "
+              className="rounded-lg py-4 px-4 "
               style={{ backgroundColor: isDarkMode ? "#1E1F68" : "#FDEFFF" }}
             >
               <p
-                className={`${
-                  isDarkMode ? "text-gray-400" : "text-primary-600"
-                } text-xs xs:text-[10px] font-semibold`}
+                className={`${secondaryTextColor} text-md xs:text-sm font-semibold`}
               >
                 Total Accepted Bets
               </p>
@@ -272,11 +262,7 @@ const Dashboard = () => {
                 {isLoading ? (
                   <div className="w-4 h-4 xs:w-3 xs:h-3 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
                 ) : (
-                  <p
-                    className={`${
-                      isDarkMode ? "text-white" : "text-primary-100"
-                    } text-xl xs:text-lg font-bold`}
-                  >
+                  <p className={`${textColor} text-xl xs:text-lg font-bold`}>
                     {user?.openBets || 0}
                   </p>
                 )}
@@ -289,8 +275,8 @@ const Dashboard = () => {
             >
               <p
                 className={`${
-                  isDarkMode ? "text-gray-400" : "text-primary-600"
-                } text-xs xs:text-[10px] font-semibold`}
+                  secondaryTextColor
+                } text-md xs:text-sm font-semibold`}
               >
                 Total Settled Bets
               </p>
