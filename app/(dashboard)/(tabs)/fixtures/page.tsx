@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { addDays, subDays } from "date-fns";
-import { ChevronRight, Loader2, Trophy } from "lucide-react";
+import { ChevronRight, Trophy } from "lucide-react";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import WalletHeader from "@/components/WalletHeader";
 import {
@@ -18,7 +18,7 @@ import FixtureItemComponent from "@/components/FixtureItem";
 import { useLiveFixtureData } from "@/hooks/use-live-fixture-data";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 20;
 
 export default function CreateBetPage() {
   const { isDarkMode } = useTheme();
@@ -95,18 +95,30 @@ export default function CreateBetPage() {
   }, []);
 
   useEffect(() => {
-    // Set up intersection observer for infinite scrolling
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          handleLoadMore();
-        }
-      },
-      { threshold: 0.1 }
-    );
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+    }
 
+    const options = {
+      root: null,
+      rootMargin: "300px", // Increased margin to load earlier
+      threshold: 0.1,
+    };
+
+    const callback = (entries: IntersectionObserverEntry[]) => {
+      const [entry] = entries;
+      if (entry.isIntersecting) {
+        handleLoadMore();
+      }
+    };
+
+    // Create the observer
+    observerRef.current = new IntersectionObserver(callback, options);
+
+    // Immediately attach to the current loadMoreRef if it exists
     if (loadMoreRef.current) {
       observerRef.current.observe(loadMoreRef.current);
+      console.log("Observer attached to loadMoreRef");
     }
 
     return () => {
@@ -115,6 +127,32 @@ export default function CreateBetPage() {
       }
     };
   }, [activeTab, selectedDate]);
+
+  // Add this useEffect after the intersection observer effect
+  useEffect(() => {
+    const handleScroll = () => {
+      if (contentContainerRef.current) {
+        const { scrollTop, scrollHeight, clientHeight } =
+          contentContainerRef.current;
+
+        // Check if we're close to the bottom (within 200px)
+        if (scrollHeight - scrollTop - clientHeight < 200) {
+          handleLoadMore();
+        }
+      }
+    };
+
+    const contentContainer = contentContainerRef.current;
+    if (contentContainer) {
+      contentContainer.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      if (contentContainer) {
+        contentContainer.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [activeTab, selectedDate, fixturesData]);
 
   useEffect(() => {
     const dateKey = getCurrentDateKey();
@@ -458,14 +496,21 @@ export default function CreateBetPage() {
   };
 
   const handleLoadMore = (): void => {
-    if (!loading && !paginationLoading) {
-      const dateKey = getCurrentDateKey();
+    console.log("handleLoadMore called");
 
-      if (activeTab === "soccer" && paginationState.soccer[dateKey]?.hasMore) {
-        fetchSoccerFixtures(false);
-      } else if (activeTab === "special" && paginationState.special.hasMore) {
-        fetchSpecialFixtures(false);
-      }
+    if (loading || paginationLoading) {
+      console.log("Already loading, skipping handleLoadMore");
+      return;
+    }
+
+    const dateKey = getCurrentDateKey();
+
+    if (activeTab === "soccer" && paginationState.soccer[dateKey]?.hasMore) {
+      console.log("Loading more soccer fixtures");
+      fetchSoccerFixtures(false);
+    } else if (activeTab === "special" && paginationState.special.hasMore) {
+      console.log("Loading more special fixtures");
+      fetchSpecialFixtures(false);
     }
   };
 
@@ -552,7 +597,7 @@ export default function CreateBetPage() {
       {/* Main Content */}
       <div
         ref={contentContainerRef}
-        className={`${backgroundColor} flex-1 pt-2 pb-20 overflow-auto h-full`}
+        className={`${backgroundColor} flex-1 pt-2 pb-4 overflow-auto h-full`}
       >
         {initialLoading ? (
           <div className="flex items-center justify-center h-64">
@@ -567,11 +612,13 @@ export default function CreateBetPage() {
             {getCurrentFixtures().length === 0 ? (
               renderEmpty()
             ) : (
-              <div className="space-y-4 pb-20">
+              <div className="space-y-4 pb-4">
                 {getCurrentFixtures().map((category: FixtureCategory) => (
                   <div key={category.id} className="mb-2">
                     <div className="flex items-center mb-2 px-4">
-                      <h3 className={`${textColor} font-medium text-sm mr-2 xs:text-sm`}>
+                      <h3
+                        className={`${textColor} font-medium text-sm mr-2 xs:text-sm`}
+                      >
                         {category.category}
                       </h3>
                       <ChevronRight
@@ -600,12 +647,14 @@ export default function CreateBetPage() {
                 ))}
 
                 {/* Load more trigger element */}
-                {(activeTab === "soccer" &&
+                {((activeTab === "soccer" &&
                   paginationState.soccer[getCurrentDateKey()]?.hasMore) ||
-                (activeTab === "special" && paginationState.special.hasMore) ? (
+                  (activeTab === "special" &&
+                    paginationState.special.hasMore)) && (
                   <div
                     ref={loadMoreRef}
-                    className="flex justify-center items-center"
+                    className="h-10 w-full flex justify-center items-center"
+                    id="load-more-trigger"
                   >
                     {paginationLoading && (
                       <LoadingSpinner
@@ -615,7 +664,7 @@ export default function CreateBetPage() {
                       />
                     )}
                   </div>
-                ) : null}
+                )}
               </div>
             )}
           </div>

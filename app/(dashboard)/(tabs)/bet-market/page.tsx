@@ -542,7 +542,7 @@ const BetMarketPage = () => {
 
     return (
       <div className="mb-1" key={item.id}>
-        <div className="flex gap-2 items-center mb-2 px-4">
+        <div className="flex gap-2 items-center mb-2 px-2">
           <p className={`${textColor} font-medium text-sm`}>{item.category}</p>
           <ChevronRight
             className={isDarkMode ? "text-white" : "text-black"}
@@ -634,15 +634,14 @@ const BetMarketPage = () => {
         renderCenteredLoadingSpinner()}
 
       <div
-        className={`${subBackground} flex-1 pt-[220px] pb-8 overflow-y-auto`}
-        style={{ height: "calc(100vh - 60px)" }}
+        className={`${subBackground} flex-1 pt-[190px] pb-8 overflow-y-auto scrollbar-hide`}
       >
         {/* Show Pool Bet content if activeTab is "special" */}
         {activeTab === "special" ? (
           renderPoolBetContent()
         ) : (
           /* Bet Markets List - only render when not in initial loading state */
-          <div className="py-4">
+          <div className="py-2">
             {betMarkets.length > 0 && !initialLoading
               ? betMarkets.map((category) => renderCategory(category))
               : !initialLoading && renderEmpty()}

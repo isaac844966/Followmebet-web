@@ -60,21 +60,29 @@ const AmountInput: React.FC<AmountInputProps> = ({
 
   return (
     <>
-      <div className="flex mb-4">
-        <button
-          onClick={decreaseAmount}
-          className={`${bgColor} w-20 h-20 rounded-lg flex items-center justify-center`}
-        >
-          <MinusCircle size={24} color={isDarkMode ? "white" : "black"} />
-        </button>
-
+      <div className="mb-4">
         <div
           onClick={focusInput}
-          className={`${bgColor} flex-1 mx-2 rounded-lg px-4 py-4 flex items-center justify-between cursor-text`}
+          className={`${bgColor} rounded-lg px-4 py-6  flex items-center justify-between cursor-text relative`}
         >
+          {/* Minus button inside the input on the left */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              decreaseAmount();
+            }}
+            className="flex items-center justify-center mr-2 xs:mr-1"
+          >
+            <MinusCircle
+              size={24}
+              className="xs:w-5 xs:h-5"
+              color={isDarkMode ? "white" : "black"}
+            />
+          </button>
+
           <div className="flex items-center flex-1">
             <span
-              className={`${inputTextColor} text-lg font-bold mr-1`}
+              className={`${inputTextColor} text-lg xs:text-base font-bold mr-1`}
               style={{
                 fontSize: 22,
                 lineHeight: "24px",
@@ -89,50 +97,74 @@ const AmountInput: React.FC<AmountInputProps> = ({
               type="text"
               inputMode="numeric"
               placeholder="0"
-              className={`flex-1 bg-transparent ${inputTextColor} text-xl font-bold focus:outline-none`}
+              className={`flex-1 bg-transparent ${inputTextColor} text-xl xs:text-lg font-bold focus:outline-none`}
               style={{
                 fontSize: 20,
                 lineHeight: "24px",
               }}
             />
           </div>
-          <span className="text-gray-400 text-xs ml-2">Min {minAmount}</span>
-        </div>
 
-        <button
-          onClick={() => increaseAmount(100)}
-          className={`${bgColor} w-20 h-20 rounded-lg flex items-center justify-center`}
-        >
-          <PlusCircle size={24} color={isDarkMode ? "white" : "black"} />
-        </button>
+          <div className="flex items-center">
+            <span className="text-gray-400 text-xs xs:text-[10px] mr-2 xs:mr-1">
+              Min {minAmount}
+            </span>
+            {/* Plus button inside the input on the right */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                increaseAmount(100);
+              }}
+              className="flex items-center justify-center"
+            >
+              <PlusCircle
+                size={24}
+                className="xs:w-5 xs:h-5"
+                color={isDarkMode ? "white" : "black"}
+              />
+            </button>
+          </div>
+        </div>
       </div>
 
-      <div className="flex justify-between mb-8">
+      <div className="grid grid-cols-4 gap-2 xs:gap-1 mb-8 xs:mb-6">
         <button
           onClick={clearAmount}
-          className={`${quickButtonBg} py-3 px-6 rounded-lg`}
+          className={`${quickButtonBg} py-3 xs:py-2 px-6 xs:px-3 rounded-lg`}
         >
-          <span className={isDarkMode ? "text-white" : "text-black"}>
+          <span
+            className={`${isDarkMode ? "text-white" : "text-black"} xs:text-sm`}
+          >
             Clear
           </span>
         </button>
         <button
           onClick={() => increaseAmount(100)}
-          className={`${quickButtonBg} py-3 px-6 rounded-lg`}
+          className={`${quickButtonBg} py-3 xs:py-2 px-6 xs:px-3 rounded-lg`}
         >
-          <span className={isDarkMode ? "text-white" : "text-black"}>+100</span>
+          <span
+            className={`${isDarkMode ? "text-white" : "text-black"} xs:text-sm`}
+          >
+            +100
+          </span>
         </button>
         <button
           onClick={() => increaseAmount(500)}
-          className={`${quickButtonBg} py-3 px-6 rounded-lg`}
+          className={`${quickButtonBg} py-3 xs:py-2 px-6 xs:px-3 rounded-lg`}
         >
-          <span className={isDarkMode ? "text-white" : "text-black"}>+500</span>
+          <span
+            className={`${isDarkMode ? "text-white" : "text-black"} xs:text-sm`}
+          >
+            +500
+          </span>
         </button>
         <button
           onClick={() => increaseAmount(1000)}
-          className={`${quickButtonBg} py-3 px-6 rounded-lg`}
+          className={`${quickButtonBg} py-3 xs:py-2 px-6 xs:px-3 rounded-lg`}
         >
-          <span className={isDarkMode ? "text-white" : "text-black"}>
+          <span
+            className={`${isDarkMode ? "text-white" : "text-black"} xs:text-sm`}
+          >
             +1000
           </span>
         </button>

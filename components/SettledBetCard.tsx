@@ -244,8 +244,8 @@ const SettledBetCard: React.FC<SettledBetCardProps> = ({
             <div
               className="absolute w-[0.1px] bg-gray-900"
               style={{
-                height: "145px",
-                top: "-45px",
+                height: "125px",
+                top: "-40px",
                 left: "50%",
                 marginLeft: "-0.5px",
                 border: "0.2px",

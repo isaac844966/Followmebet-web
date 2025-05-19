@@ -67,6 +67,7 @@ const BackButton: React.FC<BackButtonProps> = ({
         className="flex items-center active:opacity-70"
         aria-label="Go back"
       >
+        <ChevronLeft size={iconSize} color={defaultIconColor} />
         {showTitle && (
           <span
             className={`${
