@@ -29,7 +29,7 @@ const SoccerFixtureCategory = ({
   return (
     <div className="mb-2">
       <div className="flex items-center gap-2 mb-2 px-4">
-        <p className={`${textColor} font-medium text-sm`}>
+        <p className={`${textColor} font-medium text-sm xs:text-xs`}>
           {category.category}
         </p>
         <span className={`${secondaryTextColor} text-md font-bold`}>

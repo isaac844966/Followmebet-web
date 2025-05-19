@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useTheme } from "@/lib/contexts/ThemeContext";
 
 // Interface for the props
@@ -35,11 +34,13 @@ export const OpponentPredictionCard: React.FC<OpponentPredictionCardProps> = ({
   };
 
   return (
-    <div className={`${primaryBg} rounded-xl p-4 mb-2`}>
-      <p className={`${secondaryTextColor} uppercase text-xs mb-2`}>
+    <div className={`${primaryBg} rounded-xl p-4 xs:p-3 mb-2`}>
+      <p
+        className={`${secondaryTextColor} uppercase text-xs xs:text-[10px] mb-2 xs:mb-1`}
+      >
         OPPONENT PREDICTION
       </p>
-      <p className={`${textColor} font-medium`}>
+      <p className={`${textColor} font-medium xs:text-sm`}>
         {challengerTeamName}{" "}
         <span
           className={`${getPredictionColor(

@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { useAuthStore } from "@/lib/store/authStore";
 import Image from "next/image";
@@ -29,10 +28,14 @@ export const StakerCard: React.FC<StakerCardProps> = ({ owner }) => {
   const isOwner = user?.id === owner?.id;
 
   return (
-    <div className={`${primaryBg} rounded-xl p-4 mb-2`}>
-      <p className={`${secondaryTextColor} uppercase text-xs mb-2`}>STAKER</p>
+    <div className={`${primaryBg} rounded-xl p-4 xs:p-3 mb-2`}>
+      <p
+        className={`${secondaryTextColor} uppercase text-xs xs:text-[10px] mb-2 xs:mb-1`}
+      >
+        STAKER
+      </p>
       <div className="flex items-center">
-        <div className="relative w-10 h-10 rounded-full overflow-hidden bg-primary-400">
+        <div className="relative w-10 h-10 xs:w-8 xs:h-8 rounded-full overflow-hidden bg-primary-400">
           <Image
             src={owner?.avatarUrl || "/placeholder.svg?height=40&width=40"}
             alt="Staker avatar"
@@ -40,13 +43,15 @@ export const StakerCard: React.FC<StakerCardProps> = ({ owner }) => {
             className="object-cover"
           />
         </div>
-        <div className="ml-3">
-          <p className={`${textColor} font-medium`}>
+        <div className="ml-3 xs:ml-2">
+          <p className={`${textColor} font-medium xs:text-sm`}>
             {isOwner ? "Me" : owner?.nickname || owner?.lastname || "Unknown"}
           </p>
           <div className="flex items-center">
-            <div className="w-3 h-3 rounded-full bg-yellow-500 mr-1"></div>
-            <p className={`${secondaryTextColor} text-xs`}>LEGENDARY</p>
+            <div className="w-3 h-3 xs:w-2 xs:h-2 rounded-full bg-yellow-500 mr-1"></div>
+            <p className={`${secondaryTextColor} text-xs xs:text-[10px]`}>
+              LEGENDARY
+            </p>
           </div>
         </div>
       </div>

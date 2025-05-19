@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useTheme } from "@/lib/contexts/ThemeContext";
 
 // Interface for the props
@@ -28,13 +27,15 @@ export const PredictionSelectionCard: React.FC<
   const primaryBg = isDarkMode ? "bg-[#1A1942]" : "bg-[#f1f5f9]";
 
   return (
-    <div className={`${primaryBg} rounded-xl p-4 mb-2`}>
-      <p className={`${secondaryTextColor} mb-4`}>Select your prediction</p>
-      <div className="flex space-x-2 gap-2">
+    <div className={`${primaryBg} rounded-xl p-4 xs:p-3 mb-2`}>
+      <p className={`${secondaryTextColor} mb-4 xs:mb-2 xs:text-sm`}>
+        Select your prediction
+      </p>
+      <div className="flex space-x-2 xs:space-x-1 gap-2 xs:gap-1">
         {/* Only show Team1 WIN button if owner didn't predict Team1 WIN */}
         {ownerPrediction !== "WIN" && (
           <button
-            className={`flex-1 py-4 rounded-lg items-center px-4 ${
+            className={`flex-1 py-4 xs:py-3 rounded-lg items-center px-4 xs:px-2 ${
               selectedApiPrediction === "WIN"
                 ? "bg-[#2E3192]"
                 : "border border-gray-500"
@@ -43,7 +44,7 @@ export const PredictionSelectionCard: React.FC<
           >
             <div>
               <p
-                className={`font-medium text-md text-center ${
+                className={`font-medium text-md xs:text-xs text-center ${
                   selectedApiPrediction === "WIN" ? "text-white" : textColor
                 }`}
                 style={{ wordBreak: "break-word" }}
@@ -51,7 +52,7 @@ export const PredictionSelectionCard: React.FC<
                 {team1Name}
               </p>
               <p
-                className={`font-medium text-md text-center ${
+                className={`font-medium text-md xs:text-xs text-center ${
                   selectedApiPrediction === "WIN" ? "text-white" : textColor
                 }`}
               >
@@ -64,7 +65,7 @@ export const PredictionSelectionCard: React.FC<
         {/* Only show DRAW button if owner didn't predict DRAW */}
         {ownerPrediction !== "DRAW" && (
           <button
-            className={`flex-1 py-4 rounded-lg items-center px-4 ${
+            className={`flex-1 py-4 xs:py-3 rounded-lg items-center px-4 xs:px-2 ${
               selectedApiPrediction === "DRAW"
                 ? "bg-[#2E3192]"
                 : "border border-gray-500"
@@ -72,7 +73,7 @@ export const PredictionSelectionCard: React.FC<
             onClick={() => handleSelect("DRAW", "DRAW")}
           >
             <p
-              className={`font-medium text-center my-auto ${
+              className={`font-medium text-center my-auto xs:text-xs ${
                 selectedApiPrediction === "DRAW" ? "text-white" : textColor
               }`}
             >
@@ -84,7 +85,7 @@ export const PredictionSelectionCard: React.FC<
         {/* Only show Team2 WIN button if owner didn't predict Team2 WIN (LOSE) */}
         {ownerPrediction !== "LOSE" && (
           <button
-            className={`flex-1 py-4 rounded-lg items-center px-4 ${
+            className={`flex-1 py-4 xs:py-3 rounded-lg items-center px-4 xs:px-2 ${
               selectedApiPrediction === "LOSE"
                 ? "bg-[#2E3192]"
                 : "border border-gray-500"
@@ -93,7 +94,7 @@ export const PredictionSelectionCard: React.FC<
           >
             <div>
               <p
-                className={`font-medium text-md text-center ${
+                className={`font-medium text-md xs:text-xs text-center ${
                   selectedApiPrediction === "LOSE" ? "text-white" : textColor
                 }`}
                 style={{ wordBreak: "break-word" }}
@@ -101,7 +102,7 @@ export const PredictionSelectionCard: React.FC<
                 {team2Name}
               </p>
               <p
-                className={`font-medium text-md text-center ${
+                className={`font-medium text-md xs:text-xs text-center ${
                   selectedApiPrediction === "LOSE" ? "text-white" : textColor
                 }`}
               >

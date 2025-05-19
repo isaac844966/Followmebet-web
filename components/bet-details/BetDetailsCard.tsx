@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import Image from "next/image";
 
@@ -87,17 +86,21 @@ export const BetDetailsCard: React.FC<BetDetailsCardProps> = ({
   const [leftScore, rightScore] = resultToShow?.split(" - ") ?? ["", ""];
 
   return (
-    <div className={`${primaryBg} px-4 py-6 mb-4`}>
-      <p className={`${secondaryTextColor} text-center mb-1 font-bold`}>
+    <div className={`${primaryBg} px-4 xs:px-3 py-6 xs:py-4 mb-4`}>
+      <p
+        className={`${secondaryTextColor} text-center mb-1 xs:mb-0.5 font-bold text-sm xs:text-xs`}
+      >
         {bet.category}
       </p>
-      <p className={`${secondaryTextColor} text-center text-xs mb-3 font-bold`}>
+      <p
+        className={`${secondaryTextColor} text-center text-xs xs:text-[10px] mb-3 xs:mb-2 font-bold`}
+      >
         {formattedDate}
       </p>
 
       <div className="flex justify-between items-center">
         <div className="flex flex-col items-center flex-1">
-          <div className="relative w-14 h-14 mb-2">
+          <div className="relative w-14 h-14 xs:w-10 xs:h-10 mb-2 xs:mb-1">
             <Image
               src={team1.logoUrl || "/placeholder.svg?height=40&width=40"}
               alt={team1Name}
@@ -106,28 +109,30 @@ export const BetDetailsCard: React.FC<BetDetailsCardProps> = ({
             />
           </div>
           <p
-            className={`${textColor} text-center font-medium max-w-[120px]`}
+            className={`${textColor} text-center font-medium max-w-[120px] xs:max-w-[90px] xs:text-xs`}
             style={{ wordBreak: "break-word" }}
           >
             {team1Name}
           </p>
           {resultToShow && resultToShow !== "?-?" && (
-            <p className={`${textColor} text-center font-medium mt-2`}>
+            <p
+              className={`${textColor} text-center font-medium mt-2 xs:mt-1 xs:text-sm`}
+            >
               {leftScore}
             </p>
           )}
         </div>
 
-        <div className="flex flex-col items-center mx-4">
-          <p className={`${textColor} text-lg font-bold`}>Vs</p>
-          <p className={`${secondaryTextColor} text-xs mt-1`}>
+        <div className="flex flex-col items-center mx-4 xs:mx-2">
+          <p className={`${textColor} text-lg xs:text-base font-bold`}>Vs</p>
+          <p className={`${secondaryTextColor} text-xs xs:text-[10px] mt-1`}>
             {formattedTime}
           </p>
           {bet.fixture.htResult !== "?-?" && bet.result ? (
             <p
               className={`${getPredictionColor(
                 bet.result
-              )} text-center font-medium mt-2`}
+              )} text-center font-medium mt-2 xs:mt-1 xs:text-sm`}
             >
               You {bet.result}
             </p>
@@ -135,7 +140,7 @@ export const BetDetailsCard: React.FC<BetDetailsCardProps> = ({
         </div>
 
         <div className="flex flex-col items-center flex-1">
-          <div className="relative w-14 h-14 mb-2">
+          <div className="relative w-14 h-14 xs:w-10 xs:h-10 mb-2 xs:mb-1">
             <Image
               src={team2.logoUrl || "/placeholder.svg?height=40&width=40"}
               alt={team2Name}
@@ -144,13 +149,15 @@ export const BetDetailsCard: React.FC<BetDetailsCardProps> = ({
             />
           </div>
           <p
-            className={`${textColor} text-center font-medium max-w-[120px]`}
+            className={`${textColor} text-center font-medium max-w-[120px] xs:max-w-[90px] xs:text-xs`}
             style={{ wordBreak: "break-word" }}
           >
             {team2Name}
           </p>
           {resultToShow && resultToShow !== "?-?" && (
-            <p className={`${textColor} text-center font-medium mt-2`}>
+            <p
+              className={`${textColor} text-center font-medium mt-2 xs:mt-1 xs:text-sm`}
+            >
               {rightScore}
             </p>
           )}

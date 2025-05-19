@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useTheme } from "@/lib/contexts/ThemeContext";
 
 // Define prediction type
@@ -38,11 +37,13 @@ export const PredictionCard: React.FC<PredictionCardProps> = ({
   };
 
   return (
-    <div className={`${primaryBg} rounded-xl p-4 mb-2`}>
-      <p className={`${secondaryTextColor} uppercase text-xs mb-2`}>
+    <div className={`${primaryBg} rounded-xl p-4 xs:p-3 mb-2`}>
+      <p
+        className={`${secondaryTextColor} uppercase text-xs xs:text-[10px] mb-2 xs:mb-1`}
+      >
         PREDICTION
       </p>
-      <p className={`${textColor} font-medium`}>
+      <p className={`${textColor} font-medium xs:text-sm`}>
         {ownerTeamName}{" "}
         <span
           className={`${getPredictionColor(ownerPrediction)} font-medium mb-1`}

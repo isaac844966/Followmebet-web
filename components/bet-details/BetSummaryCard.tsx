@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useTheme } from "@/lib/contexts/ThemeContext";
 
 // Interface for the props with expanded types
@@ -94,12 +93,12 @@ export const BetSummaryCard: React.FC<BetSummaryCardProps> = ({
   };
 
   return (
-    <div className={`${primaryBg} rounded-xl p-4 mb-4`}>
+    <div className={`${primaryBg} rounded-xl p-4 xs:p-3 mb-4`}>
       <div className="flex justify-between mb-2">
-        <p className={secondaryTextColor}>
+        <p className={`${secondaryTextColor} xs:text-sm`}>
           {isCompleted ? "Total Stake" : "Stake"}
         </p>
-        <p className={`${textColor} font-medium`}>
+        <p className={`${textColor} font-medium xs:text-sm`}>
           ₦
           {showAcceptButton || isCompleted || isFromAllBet || isFromPrivateBet
             ? bet.totalAmount.toFixed(2)
@@ -108,12 +107,12 @@ export const BetSummaryCard: React.FC<BetSummaryCardProps> = ({
       </div>
 
       <div className="flex justify-between mb-2">
-        <p className={secondaryTextColor}>
+        <p className={`${secondaryTextColor} xs:text-sm`}>
           {showAcceptButton || isCompleted || isFromAllBet || isFromPrivateBet
             ? `Commission Fees (${bet.fee}%)`
             : `Cancellation Fee (${bet.fee}%)`}
         </p>
-        <p className={`${textColor} font-medium`}>
+        <p className={`${textColor} font-medium xs:text-sm`}>
           ₦
           {showAcceptButton || isCompleted || isFromAllBet || isFromPrivateBet
             ? commissionFee.toFixed(2)
@@ -122,8 +121,10 @@ export const BetSummaryCard: React.FC<BetSummaryCardProps> = ({
       </div>
 
       <div className="flex justify-between mb-2">
-        <p className={secondaryTextColor}>{getAmountLabel()}</p>
-        <p className={getAmountValueClass()}>₦{potentialWinnings}</p>
+        <p className={`${secondaryTextColor} xs:text-sm`}>{getAmountLabel()}</p>
+        <p className={`${getAmountValueClass()} xs:text-sm`}>
+          ₦{potentialWinnings}
+        </p>
       </div>
     </div>
   );

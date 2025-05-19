@@ -298,8 +298,7 @@ const BetDetailsPage = () => {
   return (
     <div className={`min-h-screen ${backgroundColor}`}>
       {/* Header */}
-      <div className=" py-3 sticky top-0 z-10 bg-inherit">
-        <BackButton title="Bet Details" onPress={handleNavigation} />
+      <div className=" py-3 sticky top-0 z-10 bg-inherit mt-6">
         <BetDetailsCard bet={bet} resultToShow={resultToShow} />
       </div>
 

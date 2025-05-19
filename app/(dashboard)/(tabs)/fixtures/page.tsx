@@ -571,7 +571,7 @@ export default function CreateBetPage() {
                 {getCurrentFixtures().map((category: FixtureCategory) => (
                   <div key={category.id} className="mb-2">
                     <div className="flex items-center mb-2 px-4">
-                      <h3 className={`${textColor} font-medium text-sm mr-2`}>
+                      <h3 className={`${textColor} font-medium text-sm mr-2 xs:text-sm`}>
                         {category.category}
                       </h3>
                       <ChevronRight

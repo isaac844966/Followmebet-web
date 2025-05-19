@@ -2,6 +2,7 @@ import type React from "react";
 import Image from "next/image";
 import { Loader2 } from "lucide-react";
 import { TeamStanding } from "@/hooks/use-standing";
+import LoadingSpinner from "../LoadingSpinner";
 
 interface StandingsTabProps {
   standings: TeamStanding[];
@@ -132,9 +133,11 @@ const StandingsTab: React.FC<StandingsTabProps> = ({
   return (
     <div className="flex-1 px-4 xs:px-2 overflow-auto">
       {loading ? (
-        <div className="flex-1 flex justify-center items-center py-20 xs:py-12">
-          <Loader2 className="h-8 w-8 xs:h-6 xs:w-6 text-primary animate-spin" />
-        </div>
+        <LoadingSpinner
+          variant="circular"
+          size="lg"
+          color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
+        />
       ) : error ? (
         <div className="flex-1 flex justify-center items-center py-20 xs:py-12">
           <p className={`${textColor} xs:text-sm`}>{error}</p>

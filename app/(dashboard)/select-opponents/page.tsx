@@ -2,14 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Feather } from "lucide-react";
+import { Contact, Group, Search } from "lucide-react";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { useAuthStore } from "@/lib/store/authStore";
 import {
   getSuggestedChallengers,
   type SuggestedChallenger,
 } from "@/lib/services/bet-service";
-import BackButton from "@/components/BackButton";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -54,7 +53,7 @@ const SelectOpponentPage = () => {
       key: "opponents",
       label: "Opponents",
       icon: (
-        <Feather
+        <Contact
           name="users"
           size={18}
           className={isDarkMode ? "text-white" : "text-black"}
@@ -65,11 +64,7 @@ const SelectOpponentPage = () => {
       key: "contacts",
       label: "Contacts",
       icon: (
-        <Feather
-          name="phone"
-          size={18}
-          className={isDarkMode ? "text-white" : "text-black"}
-        />
+        <Group size={18} className={isDarkMode ? "text-white" : "text-black"} />
       ),
     },
   ];
@@ -100,7 +95,7 @@ const SelectOpponentPage = () => {
   const formatPhoneNumberForAPI = (input: string) => {
     if (!input) return "";
 
-    let cleaned = input.replace(/\D/g, "");
+    const cleaned = input.replace(/\D/g, "");
 
     if (cleaned.startsWith("234")) {
       return `+${cleaned}`;
@@ -201,7 +196,7 @@ const SelectOpponentPage = () => {
   const renderEmptyState = () => (
     <div className="flex flex-col items-center justify-between h-full mt-20">
       <div className="items-center flex flex-col justify-center">
-        <Feather
+        <Group
           name="users"
           size={60}
           className={isDarkMode ? "text-gray-600" : "text-gray-400"}
@@ -224,8 +219,12 @@ const SelectOpponentPage = () => {
 
   return (
     <div className={`min-h-screen ${backgroundColor} `}>
-      <BackButton title="Select Opponent" />
-      <div className="mb-4 mt-2">
+      <div
+        className={`fixed top-0 left-0 right-0 z-10 ${backgroundColor} pt-4 pb-2 px-2`}
+      >
+        <h1 className={`text-lg font-bold mb-4 pl-2 ${textColor}`}>
+          Select Opponent
+        </h1>
         <NestedTabNavigation
           tabs={tabs}
           activeTab={activeTab}
@@ -234,17 +233,17 @@ const SelectOpponentPage = () => {
         />
       </div>
 
-      <div className="flex-1 px-2">
+      <div className="flex-1 px-2 pt-32">
         {activeTab === "opponents" ? (
           <div className="h-full">
             {/* Search Bar */}
-            <div className="mb-4">
+            <div className="mb-4 mt-4">
               <div
                 className={`flex items-center ${
                   isDarkMode ? "bg-[#1A1942]" : "bg-[#f1f5f9]"
-                } rounded-lg px-3 py-2`}
+                } rounded-lg px-3 py-2 xs:py-1`}
               >
-                <Feather
+                <Search
                   name="search"
                   size={20}
                   className={isDarkMode ? "text-white" : "text-black"}
@@ -269,12 +268,12 @@ const SelectOpponentPage = () => {
                 {filteredChallengers.map((challenger) => (
                   <Card
                     key={challenger.id}
-                    className={`${cardBackground} rounded-lg p-4 cursor-pointer border-none`}
+                    className={`${cardBackground} rounded-lg xs:rounded-md xs:p-3 p-4 cursor-pointer border-none`}
                     onClick={() => handleSelectChallenger(challenger)}
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
-                        <div className="relative w-14 h-14 rounded-full border border-[#FFA726] overflow-hidden">
+                        <div className="relative w-14 h-14 xs:h-10 xs:w-10 rounded-full border border-[#FFA726] overflow-hidden">
                           <Image
                             src={challenger.avatarUrl || "/placeholder.svg"}
                             alt={
@@ -282,7 +281,7 @@ const SelectOpponentPage = () => {
                               `${challenger.firstname} ${challenger.lastname}`
                             }
                             fill
-                            className="object-cover"
+                            className="object-cover "
                           />
                         </div>
                         <div className="ml-3">
@@ -327,6 +326,7 @@ const SelectOpponentPage = () => {
                 onChange={(e) => setOpponentName(e.target.value)}
                 error={opponentNameError}
                 value={opponentName}
+                label="Opponent"
               />
             </div>
 
@@ -336,6 +336,7 @@ const SelectOpponentPage = () => {
                 placeholder="Me"
                 value={`${user?.firstname} ${user?.lastname}`}
                 editable={false}
+                label="Me"
               />
             </div>
 

@@ -237,10 +237,9 @@ export default function CreateBetPage() {
   };
 
   return (
-    <div className={`min-h-screen ${backgroundColor} pt-20`}>
+    <div className={`min-h-screen ${backgroundColor} `}>
       {/* Header */}
-      <div className="fixed top-0 left-0 right-0 z-10">
-        <BackButton title="Create bet" />
+      <div className="fixed top-10 left-0 right-0 z-10">
         <MatchDetailsCard fixture={fixture as any} isDarkMode={isDarkMode} />
         {fixture?.eventType !== "Special" && (
           <TabNavigation activeTab={activeTab} onTabChange={handleTabPress} />
@@ -248,10 +247,10 @@ export default function CreateBetPage() {
       </div>
 
       {/* Main content with proper padding to account for fixed header */}
-      <div className="pt-[180px]">
+      <div className="pt-[210px]">
         {/* Tab Content */}
         <div ref={horizontalScrollRef} className="flex-1 overflow-hidden">
-          <div className="flex h-full mt-6 xs:mt-2">
+          <div className="flex h-full mt-6 xs:mt-4">
             {/* Tab 1: Place Bet */}
             <div
               className={`tab-content w-full flex-shrink-0 ${
