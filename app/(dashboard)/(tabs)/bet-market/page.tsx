@@ -411,7 +411,7 @@ const BetMarketPage = () => {
                     />
                   </div>
                   <p
-                    className={`${textColor} text-sm xs:text-xs max-w-[6rem] xs:max-w-[5rem] truncate`}
+                    className={`${textColor} text-sm xs:text-xs max-w-[6rem] xs:max-w-[5rem] mb-1 ml-1 truncate`}
                   >
                     {fixture.item1.name}
                   </p>
@@ -430,7 +430,7 @@ const BetMarketPage = () => {
                     />
                   </div>
                   <p
-                    className={`${textColor} text-sm xs:text-xs max-w-[6rem] xs:max-w-[5rem] truncate`}
+                    className={`${textColor} text-sm xs:text-xs max-w-[6rem] xs:max-w-[5rem] ml-1 truncate`}
                   >
                     {fixture.item2.name}
                   </p>

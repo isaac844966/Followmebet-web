@@ -1,7 +1,9 @@
+"use client";
+
 import { useEffect, useRef } from "react";
+import type { LiveEventData } from "@/hooks/use-match-event";
+import type { LiveFixtureData } from "@/hooks/use-live-fixture-data";
 import Image from "next/image";
-import { LiveEventData } from "@/hooks/use-match-event";
-import { LiveFixtureData } from "@/hooks/use-live-fixture-data";
 
 interface CommentaryTabProps {
   events: Record<string, LiveEventData>;
@@ -155,29 +157,119 @@ export default function CommentaryTab({
     switch (type) {
       case "goal":
         if (info.includes("own goal"))
-          return <div className="w-5 h-5 bg-red-500 rounded-full"></div>;
+          return (
+            <div className="w-5 h-5 xs:w-4 xs:h-4 ">
+              <Image
+                src="/images/own_goal.png"
+                alt="own goal"
+                width={20}
+                height={20}
+              />
+            </div>
+          );
         if (info.includes("missed"))
-          return <div className="w-5 h-5 bg-yellow-500 rounded-full"></div>;
+          return (
+            <div className="w-5 h-5 xs:w-4 xs:h-4 ">
+              <Image
+                src="/images/missed_penalty.png"
+                alt="missed penalty"
+                width={20}
+                height={20}
+              />
+            </div>
+          );
         if (info.includes("penalty"))
-          return <div className="w-5 h-5 bg-green-500 rounded-full"></div>;
-        return <div className="w-5 h-5 bg-green-500 rounded-full"></div>;
+          return (
+            <div className="w-5 h-5 xs:w-4 xs:h-4 ">
+              <Image
+                src="/images/penalty_goal.png"
+                alt="penalty"
+                width={20}
+                height={20}
+              />
+            </div>
+          );
+        return (
+          <div className="w-5 h-5 xs:w-4 xs:h-4">
+            <Image
+              src="/images/penalty_goal.png"
+              alt="penalty"
+              width={20}
+              height={20}
+            />
+          </div>
+        );
 
       case "card":
         if (info.includes("yellow"))
-          return <div className="w-5 h-5 bg-yellow-500 rounded-full"></div>;
+          return (
+            <div className="w-5 h-5 xs:w-4 xs:h-4  ">
+              <Image
+                src="/images/yellow_card.png"
+                alt="yellow card"
+                width={20}
+                height={20}
+              />
+            </div>
+          );
         if (info.includes("red"))
-          return <div className="w-5 h-5 bg-red-500 rounded-full"></div>;
+          return (
+            <div className="w-5 h-5 xs:w-4 xs:h-4 ">
+              <Image
+                src="/images/red_card.png"
+                alt="red card"
+                width={20}
+                height={20}
+              />
+            </div>
+          );
         return null;
 
       case "subst":
-        return <div className="w-5 h-5 bg-blue-500 rounded-full"></div>;
+        return (
+          <div className="w-5 h-5 xs:w-4 xs:h-4 ">
+            <Image
+              src="/images/substitution.png"
+              alt="substitution"
+              width={20}
+              height={20}
+            />
+          </div>
+        );
 
       case "var":
         if (info.includes("goal cancelled"))
-          return <div className="w-5 h-5 bg-red-500 rounded-full"></div>;
+          return (
+            <div className="w-5 h-5 xs:w-4 xs:h-4 bg-red-500 rounded-full">
+              <Image
+                src="/images/var_goal_cancelled.png"
+                alt="var_goal_cancelled"
+                width={20}
+                height={20}
+              />
+            </div>
+          );
         if (info.includes("penalty confirmed"))
-          return <div className="w-5 h-5 bg-green-500 rounded-full"></div>;
-        return <div className="w-5 h-5 bg-purple-500 rounded-full"></div>;
+          return (
+            <div className="w-5 h-5 xs:w-4 xs:h-4 ">
+              <Image
+                src="/images/var_penalty-confirmed.png"
+                alt="var_goal_cancelled"
+                width={20}
+                height={20}
+              />
+            </div>
+          );
+        return (
+          <div className="w-5 h-5 xs:w-4 xs:h-4 ">
+            <Image
+              src="/images/var_penalty-confirmed.png"
+              alt="var_goal_cancelled"
+              width={20}
+              height={20}
+            />
+          </div>
+        );
 
       default:
         return null;
@@ -243,18 +335,18 @@ export default function CommentaryTab({
     return (
       <div
         key={event.id}
-        className={`mb-2 rounded-lg overflow-hidden ${primaryBg} relative`}
+        className={`mb-2 xs:mb-1 rounded-lg overflow-hidden ${primaryBg} relative`}
       >
         {isSpecialEvent ? (
           // Special events
-          <div className="p-3">
+          <div className="p-3 xs:p-2">
             <div className="flex items-center">
-              <span className="text-gray-300 text-base w-10">
+              <span className="text-gray-300 text-base xs:text-sm w-10 xs:w-8">
                 {event.displayTime}
               </span>
 
               <div className="flex-1 items-center text-center">
-                <span className="text-white text-base font-medium">
+                <span className="text-white text-base xs:text-sm font-medium">
                   {event.player || "Match Update"}
                 </span>
               </div>
@@ -262,8 +354,8 @@ export default function CommentaryTab({
           </div>
         ) : (
           // Regular events with left/right alignment based on team
-          <div className="p-3">
-            <div className="flex items-center gap-4">
+          <div className="p-3 xs:p-2">
+            <div className="flex items-center gap-4 xs:gap-2">
               {/* Time column - always on the left */}
               <span
                 className={`${
@@ -272,7 +364,7 @@ export default function CommentaryTab({
                   fixtureData?.status === "CANC"
                     ? secondaryTextColor
                     : "text-[#FFA726]"
-                } font-medium text-base`}
+                } font-medium text-base xs:text-sm`}
               >
                 {event.displayTime}
               </span>
@@ -283,13 +375,13 @@ export default function CommentaryTab({
                   <div className="flex items-center w-full">
                     <div>
                       <p
-                        className={`${textColor} font-bold w-32 text-left truncate`}
+                        className={`${textColor} font-bold w-32 xs:w-24 text-left truncate xs:text-sm`}
                       >
                         {playerName}
                       </p>
                       {assistName && (
                         <p
-                          className={`${secondaryTextColor} font-medium text-sm w-32 text-left truncate`}
+                          className={`${secondaryTextColor} font-medium text-sm xs:text-xs w-32 xs:w-24 text-left truncate`}
                         >
                           {event.event_type?.toLowerCase() === "goal"
                             ? "Assist: "
@@ -299,9 +391,11 @@ export default function CommentaryTab({
                       )}
                     </div>
                     {icon && (
-                      <div className="absolute left-[43%] flex gap-2">
+                      <div className="absolute left-[43%] xs:left-[40%] flex gap-2 xs:gap-1">
                         <div>{icon}</div>
-                        <span className={`text-sm ${secondaryTextColor}`}>
+                        <span
+                          className={`text-sm xs:text-xs ${secondaryTextColor}`}
+                        >
                           ({eventDetails})
                         </span>
                       </div>
@@ -311,8 +405,10 @@ export default function CommentaryTab({
                   // Away team event (right side)
                   <div className="flex items-center justify-end w-full">
                     {icon && (
-                      <div className="absolute right-[50%] flex gap-2">
-                        <span className={`text-sm ${secondaryTextColor}`}>
+                      <div className="absolute right-[50%] xs:right-[45%] flex gap-2 xs:gap-1">
+                        <span
+                          className={`text-sm xs:text-xs ${secondaryTextColor}`}
+                        >
                           ({eventDetails})
                         </span>
                         <div>{icon}</div>
@@ -320,13 +416,13 @@ export default function CommentaryTab({
                     )}
                     <div className="text-right">
                       <p
-                        className={`${textColor} font-bold text-sm w-40 text-right truncate`}
+                        className={`${textColor} font-bold text-sm xs:text-xs w-40 xs:w-28 text-right truncate`}
                       >
                         {playerName}
                       </p>
                       {assistName && (
                         <p
-                          className={`${secondaryTextColor} font-medium text-sm w-40 text-right truncate`}
+                          className={`${secondaryTextColor} font-medium text-sm xs:text-xs w-40 xs:w-28 text-right truncate`}
                         >
                           {event.event_type?.toLowerCase() === "goal"
                             ? "Assist: "
@@ -339,7 +435,9 @@ export default function CommentaryTab({
                 ) : (
                   // Fallback for events without team specification
                   <div className="flex items-center justify-center w-full">
-                    <p className="text-white font-bold">{playerName}</p>
+                    <p className="text-white font-bold xs:text-sm">
+                      {playerName}
+                    </p>
                   </div>
                 )}
               </div>
@@ -351,7 +449,7 @@ export default function CommentaryTab({
   };
 
   return (
-    <div className="flex-1 px-4">
+    <div className="flex-1 px-4 xs:px-2">
       <div ref={scrollRef} className="h-full overflow-y-auto">
         {/* First half events */}
         {firstHalfEvents.map((event) => renderEvent(event))}
@@ -359,16 +457,18 @@ export default function CommentaryTab({
         {/* Half Time marker - only show if match has reached half time */}
         {showHalfTime && (
           <div
-            className={`mb-2 rounded-lg overflow-hidden ${primaryBg} relative`}
+            className={`mb-2 xs:mb-1 rounded-lg overflow-hidden ${primaryBg} relative`}
           >
-            <div className="p-3">
+            <div className="p-3 xs:p-2">
               <div className="flex items-center">
-                <span className={`${secondaryTextColor} text-base w-12`}>
+                <span
+                  className={`${secondaryTextColor} text-base xs:text-sm w-12 xs:w-10`}
+                >
                   HT
                 </span>
                 {htScore && (
                   <span
-                    className={`${textColor} text-md font-bold absolute left-[47%]`}
+                    className={`${textColor} text-md xs:text-sm font-bold absolute left-[47%] xs:left-[45%]`}
                   >
                     {htScore}
                   </span>
@@ -384,15 +484,17 @@ export default function CommentaryTab({
         {/* Full Time marker - only show if match has reached full time */}
         {showFullTime && (
           <div
-            className={`mb-2 rounded-lg overflow-hidden ${primaryBg} relative`}
+            className={`mb-2 xs:mb-1 rounded-lg overflow-hidden ${primaryBg} relative`}
           >
-            <div className="p-3">
+            <div className="p-3 xs:p-2">
               <div className="flex items-center">
-                <span className={`${secondaryTextColor} text-base w-12`}>
+                <span
+                  className={`${secondaryTextColor} text-base xs:text-sm w-12 xs:w-10`}
+                >
                   FT
                 </span>
                 <span
-                  className={`${textColor} text-md font-bold absolute left-[47%]`}
+                  className={`${textColor} text-md xs:text-sm font-bold absolute left-[47%] xs:left-[45%]`}
                 >
                   {ftScore}
                 </span>
@@ -402,15 +504,15 @@ export default function CommentaryTab({
         )}
 
         {allEvents.length === 0 && (
-          <div className="flex items-center justify-center py-20">
-            <p className="text-gray-400 text-center">
+          <div className="flex items-center justify-center py-20 xs:py-12">
+            <p className="text-gray-400 text-center xs:text-sm">
               No match events available yet
             </p>
           </div>
         )}
 
         {/* Add some padding at the bottom for better scrolling */}
-        <div className="h-10"></div>
+        <div className="h-10 xs:h-6"></div>
       </div>
     </div>
   );

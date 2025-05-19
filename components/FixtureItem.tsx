@@ -203,7 +203,7 @@ function TeamDisplay({ team1, team2, textColor, status }: TeamDisplayProps) {
           />
         </div>
         <p
-          className={`${textColor} text-sm xs:text-xs ${
+          className={`${textColor} text-sm xs:text-xs mb-1 ml-1 ${
             status === "ON" ? "max-w-[6rem] " : ""
           }  truncate`}
         >
@@ -220,7 +220,9 @@ function TeamDisplay({ team1, team2, textColor, status }: TeamDisplayProps) {
           />
         </div>
         <p
-          className={`${textColor} text-sm xs:text-xs max-w-[6rem] xs:max-w-[5rem] truncate`}
+          className={`${textColor} text-sm xs:text-xs ml-1 ${
+            status === "ON" ? "max-w-[6rem]" : ""
+          }  truncate`}
         >
           {team2.name}
         </p>

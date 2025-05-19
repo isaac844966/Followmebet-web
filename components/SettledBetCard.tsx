@@ -160,9 +160,7 @@ const SettledBetCard: React.FC<SettledBetCardProps> = ({
           >
             {getLeagueName()}
           </p>
-          <p
-            className={`${secondaryTextColor} text-xs font-bold`}
-          >
+          <p className={`${secondaryTextColor} text-xs font-bold`}>
             {formattedDate(bet.fixture.time)}
           </p>
         </div>
@@ -182,9 +180,7 @@ const SettledBetCard: React.FC<SettledBetCardProps> = ({
                 className="object-cover"
               />
             </div>
-            <p
-              className={`${getSideTextColor("left")} font-semibold text-sm`}
-            >
+            <p className={`${getSideTextColor("left")} font-semibold text-sm`}>
               {leftUser?.id === currentUserId
                 ? "Me"
                 : leftUser.nickname ||
@@ -235,7 +231,7 @@ const SettledBetCard: React.FC<SettledBetCardProps> = ({
             <p
               className={`${getSideTextColor(
                 "left"
-              )} text-sm s flex-1 font-semibold truncate`}
+              )} text-sm s flex-1 font-semibold max-w-[7rem] truncate`}
             >
               {leftTeam.name}
             </p>
@@ -266,7 +262,7 @@ const SettledBetCard: React.FC<SettledBetCardProps> = ({
             <p
               className={`${getSideTextColor(
                 "right"
-              )} text-sm  flex-1 text-right font-semibold truncate`}
+              )} text-sm  flex-1 text-right font-semibold max-w-[7rem] truncate`}
             >
               {rightTeam.name}
             </p>
@@ -357,10 +353,10 @@ const SettledBetCard: React.FC<SettledBetCardProps> = ({
           >
             {bet.condition}
           </p>
-          <div className="flex-1 items-end"> 
+          <div className="flex-1 items-end">
             <div className="flex items-center justify-end">
               <p
-                className={`${textColor} text-right w-26  text-sm  font-semibold truncate`}
+                className={`${textColor} text-right w-26  text-sm  font-semibold  max-w-[7rem] truncate`}
               >
                 {bet.fixture.item1.name}
               </p>
@@ -368,7 +364,7 @@ const SettledBetCard: React.FC<SettledBetCardProps> = ({
             </div>
             <div className="flex items-center justify-end mt-1">
               <p
-                className={`${textColor} text-right w-26  text-sm  font-semibold truncate`}
+                className={`${textColor} text-right w-26  text-sm  font-semibold max-w-[7rem]  truncate`}
               >
                 {bet.fixture.item2.name}
               </p>

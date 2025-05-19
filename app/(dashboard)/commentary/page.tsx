@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import MatchHeader from "@/components/commentary/MatchHeader";
 import TabNavigation from "@/components/commentary/TabNavigation";
@@ -72,24 +72,29 @@ export default function CommentaryPage() {
   // Reusable loading component
   const LoadingIndicator = () => (
     <div className="flex-1 flex items-center justify-center">
-      <Loader2 className="h-8 w-8 text-primary animate-spin" />
+      <Loader2 className="h-8 w-8 xs:h-6 xs:w-6 text-primary animate-spin" />
     </div>
   );
 
   // Reusable error component
   const ErrorComponent = ({ error }: { error: string }) => (
-    <div className="flex-1 flex items-center justify-center p-4">
-      <p className={`${textColor} text-center mb-4`}>{error}</p>
+    <div className="flex-1 flex items-center justify-center p-4 xs:p-2">
+      <p className={`${textColor} text-center mb-4 xs:text-sm`}>{error}</p>
     </div>
   );
 
-  return (
-    <div className={`min-h-screen ${backgroundColor} pt-6`}>
-      {/* Header */}
-      <BackButton title="Commentary"/>
+  // Calculate the total height of fixed elements for content padding
+  // Back button (56px) + Match header (approx 120px) + Tab navigation (48px)
+  const fixedHeaderHeight = "224px";
 
-      <div className="flex flex-col h-[calc(100vh-64px)]">
-        {/* Match details */}
+  return (
+    <div className={`min-h-screen ${backgroundColor}`}>
+      {/* Fixed Header Section */}
+      <div className={`fixed top-0 left-0 right-0 z-10 ${backgroundColor}`}>
+        {/* Back Button */}
+          <BackButton title="Commentary" />
+
+        {/* Match Header */}
         <MatchHeader
           team1={team1}
           team2={team2}
@@ -105,57 +110,57 @@ export default function CommentaryPage() {
         />
 
         {/* Tab Navigation */}
-        <div className="flex-1 flex flex-col">
-          {/* Tab Bar */}
-          <TabNavigation activeTab={activeTab} onTabChange={handleTabChange} />
+        <TabNavigation activeTab={activeTab} onTabChange={handleTabChange} />
+      </div>
 
-          {/* Tab Content */}
-          <div className="flex-1 overflow-hidden">
-            {/* Commentary Tab */}
-            {activeTab === 0 && (
-              <>
-                {eventsLoading ? (
-                  <LoadingIndicator />
-                ) : eventsError ? (
-                  <ErrorComponent error={eventsError} />
-                ) : (
-                  <CommentaryTab
-                    events={events}
-                    fixtureData={fixtureData}
-                    primaryBg={primaryBg}
-                    textColor={textColor}
-                    secondaryTextColor={secondaryTextColor}
-                    isDarkMode={isDarkMode}
-                  />
-                )}
-              </>
-            )}
+      {/* Content Area with padding to account for fixed header */}
+      <div className={`pt-[${fixedHeaderHeight}] xs:pt-[270px] min-h-screen`}>
+        {/* Tab Content */}
+        <div className="h-full">
+          {/* Commentary Tab */}
+          {activeTab === 0 && (
+            <>
+              {eventsLoading ? (
+                <LoadingIndicator />
+              ) : eventsError ? (
+                <ErrorComponent error={eventsError} />
+              ) : (
+                <CommentaryTab
+                  events={events}
+                  fixtureData={fixtureData}
+                  primaryBg={primaryBg}
+                  textColor={textColor}
+                  secondaryTextColor={secondaryTextColor}
+                  isDarkMode={isDarkMode}
+                />
+              )}
+            </>
+          )}
 
-            {/* Standings Tab */}
-            {activeTab === 1 && (
-              <>
-                {standingsLoading ? (
-                  <LoadingIndicator />
-                ) : standingsError ? (
-                  <ErrorComponent error={standingsError} />
-                ) : (
-                  <StandingsTab
-                    standings={standings}
-                    loading={standingsLoading}
-                    error={standingsError}
-                    leagueName={leagueName}
-                    categoryId={categoryId}
-                    primaryBg={primaryBg}
-                    textColor={textColor}
-                    secondaryTextColor={secondaryTextColor}
-                    team1Name={team1}
-                    team2Name={team2}
-                    isDarkMode={isDarkMode}
-                  />
-                )}
-              </>
-            )}
-          </div>
+          {/* Standings Tab */}
+          {activeTab === 1 && (
+            <>
+              {standingsLoading ? (
+                <LoadingIndicator />
+              ) : standingsError ? (
+                <ErrorComponent error={standingsError} />
+              ) : (
+                <StandingsTab
+                  standings={standings}
+                  loading={standingsLoading}
+                  error={standingsError}
+                  leagueName={leagueName}
+                  categoryId={categoryId}
+                  primaryBg={primaryBg}
+                  textColor={textColor}
+                  secondaryTextColor={secondaryTextColor}
+                  team1Name={team1}
+                  team2Name={team2}
+                  isDarkMode={isDarkMode}
+                />
+              )}
+            </>
+          )}
         </div>
       </div>
     </div>

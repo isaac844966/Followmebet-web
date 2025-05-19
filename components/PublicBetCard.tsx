@@ -86,7 +86,7 @@ const PublicBetCard: React.FC<BetCardProps> = ({ bet }) => {
                 className="object-contain"
               />
             </div>
-            <p className={`${textColor} text-sm flex-1 truncate`}>
+            <p className={`${textColor} text-sm flex-1 max-w-[7rem]  truncate`}>
               {bet.fixture.item1.name}
             </p>
           </div>
@@ -94,7 +94,9 @@ const PublicBetCard: React.FC<BetCardProps> = ({ bet }) => {
           <p className={`${secondaryTextColor} mx-2 text-xs`}>Vs</p>
 
           <div className="flex-1 flex items-center justify-end">
-            <p className={`${textColor} text-sm flex-1 text-right truncate`}>
+            <p
+              className={`${textColor} text-sm flex-1 text-right max-w-[7rem]  truncate`}
+            >
               {bet.fixture.item2.name}
             </p>
             <div className="relative w-6 h-6 ml-2">
@@ -111,7 +113,9 @@ const PublicBetCard: React.FC<BetCardProps> = ({ bet }) => {
         {/* Prediction */}
         <div className="flex justify-between items-center mb-3">
           <div className="flex flex-col items-start">
-            <p className={`${textColor} mb-1 text-sm`}>{bet.fixture.item1.name}</p>
+            <p className={`${textColor} mb-1 text-sm`}>
+              {bet.fixture.item1.name}
+            </p>
             <p className="text-green-500 text-sm">{getPredictionText()}</p>
           </div>
 
