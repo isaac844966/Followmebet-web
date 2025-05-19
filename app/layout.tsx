@@ -1,6 +1,7 @@
+"use client"
 import type React from "react";
 import { Inter } from "next/font/google";
-import { ThemeProvider } from "@/lib/contexts/ThemeContext";
+import { ThemeProvider, useTheme } from "@/lib/contexts/ThemeContext";
 import { ApiProvider } from "@/lib/contexts/ApiContext";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
@@ -12,6 +13,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { isDarkMode } = useTheme();
 
 
   return (
@@ -19,7 +21,7 @@ export default function RootLayout({
       <head>
         {/* PWA Meta Tags */}
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#fff000" />
+        <meta name="theme-color" content={isDarkMode?"#0B0B3F":"#fff"} />
         <link rel="icon" href="/app-icon.png" />
         <link rel="apple-touch-icon" href="/app-icon.png" />
         <meta name="mobile-web-app-capable" content="yes" />
