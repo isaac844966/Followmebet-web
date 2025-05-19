@@ -200,7 +200,7 @@ function TeamDisplay({ team1, team2, textColor }: TeamDisplayProps) {
           />
         </div>
         <p
-          className={`${textColor} text-sm xs:text-xs max-w-[6rem] xs:max-w-[5rem] truncate`}
+          className={`${textColor} text-sm xs:text-xs max-w-[6rem]  truncate`}
         >
           {team1.name}
         </p>

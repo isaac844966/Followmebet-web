@@ -145,14 +145,18 @@ const AcceptedBetCard: React.FC<AcceptedBetCardProps> = ({
                 className="object-cover"
               />
             </div>
-            <p className={`${textColor} font-semibold`}>
+            <p
+              className={`${textColor}  w-26 xs:w-20 text-sm xs:text-xs font-semibold truncate`}
+            >
               {isOwner ? "Me" : getUserDisplayName(bet.owner)}
             </p>
           </div>
 
           {/* Right User (Challenger) */}
           <div className="flex items-center">
-            <p className={`${textColor} mr-2 font-semibold`}>
+            <p
+              className={`${textColor} mr-2   text-right w-26 xs:w-20 text-sm xs:text-xs font-semibold truncate`}
+            >
               {isChallenger ? "Me" : getUserDisplayName(bet.challenger)}
             </p>
             <div className="relative w-6 h-6 rounded-full overflow-hidden">
@@ -180,7 +184,7 @@ const AcceptedBetCard: React.FC<AcceptedBetCardProps> = ({
                 />
               </div>
               <p
-                className={`${textColor} text-sm font-semibold flex-1 truncate`}
+                className={`${textColor}  w-26 xs:w-20 text-sm xs:text-xs font-semibold truncate`}
               >
                 {leftTeam.name}
               </p>
@@ -239,7 +243,7 @@ const AcceptedBetCard: React.FC<AcceptedBetCardProps> = ({
             <p
               className={`${getPredictionColor(
                 bet.ownerPrediction
-              )} font-semibold mb-1`}
+              )} font-semibold mb-1 xs:text-sm`}
             >
               {getPredictionText(bet.ownerPrediction, bet.condition)}
             </p>
@@ -253,7 +257,7 @@ const AcceptedBetCard: React.FC<AcceptedBetCardProps> = ({
             <p
               className={`${getPredictionColor(
                 bet.challengerPrediction
-              )} font-semibold mb-1`}
+              )} font-semibold mb-1 xs:text-sm`}
             >
               {getPredictionText(bet.challengerPrediction, bet.condition)}
             </p>

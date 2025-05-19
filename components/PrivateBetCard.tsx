@@ -221,7 +221,7 @@ const PrivateBetCard: React.FC<PrivateBetCardProps> = ({
                     className="object-cover"
                   />
                 </div>
-                <p className={textColor}>
+                <p className={` xs:text-sm ${textColor}`}>
                   {bet.challenger.nickname ||
                     `${bet.challenger.firstname} ${bet.challenger.lastname}`}
                 </p>
@@ -229,7 +229,7 @@ const PrivateBetCard: React.FC<PrivateBetCardProps> = ({
             ) : (
               <>
                 <span className={`${textColor} mr-1`}>🏆</span>
-                <p className={textColor}>BetMarket</p>
+                <p className={` xs:text-sm ${textColor}`}>BetMarket</p>
               </>
             )}
           </div>
@@ -244,14 +244,14 @@ const PrivateBetCard: React.FC<PrivateBetCardProps> = ({
           {isChallenger ? (
             <div className="flex gap-2">
               <button
-                className="bg-[#FBB03B] px-6 py-3 rounded text-white"
+                className="bg-[#FBB03B] px-6 py-3 xs:px-4 xs:py-2  rounded text-white"
                 onClick={handleDeclinePress}
                 disabled={isLoading}
               >
                 {isLoading ? "..." : "Decline"}
               </button>
               <button
-                className="bg-[#1E1F68] px-6 py-3 rounded text-white"
+                className="bg-[#1E1F68] px-6 py-3 xs:px-4 xs:py-2  rounded text-white"
                 onClick={() =>
                   router.push(
                     `/bet-details/${
@@ -268,7 +268,7 @@ const PrivateBetCard: React.FC<PrivateBetCardProps> = ({
             </div>
           ) : isOwner && bet.status === "PENDING" ? (
             <button
-              className="bg-[#FC0900] px-6 py-3 rounded text-white"
+              className="bg-[#FC0900] px-6 py-3 xs:px-4 xs:py-2 rounded text-white"
               onClick={() =>
                 router.push(
                   `/bet-details/${

@@ -357,7 +357,7 @@ const SettledBetCard: React.FC<SettledBetCardProps> = ({
           >
             {bet.condition}
           </p>
-          <div className="flex-1 items-end">
+          <div className="flex-1 items-end"> 
             <div className="flex items-center justify-end">
               <p
                 className={`${textColor} text-right w-26 xs:w-20 text-sm xs:text-xs font-semibold truncate`}
