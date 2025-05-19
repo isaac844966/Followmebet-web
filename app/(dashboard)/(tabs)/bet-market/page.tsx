@@ -512,13 +512,17 @@ const BetMarketPage = () => {
           <div className="ml-2 xs:ml-1">
             {isExpanded ? (
               <ChevronUp
-                className={isDarkMode ? "text-white" : "text-black"}
                 size={24}
+                className={`${
+                  isDarkMode ? "text-white" : "text-black"
+                } xs:w-5 xs:h-5`}
               />
             ) : (
               <ChevronDown
-                className={isDarkMode ? "text-white" : "text-black"}
                 size={24}
+                className={`${
+                  isDarkMode ? "text-white" : "text-black"
+                } xs:w-5 xs:h-5`}
               />
             )}
           </div>
@@ -564,8 +568,10 @@ const BetMarketPage = () => {
             {item.category}
           </p>
           <ChevronRight
-            className={isDarkMode ? "text-white" : "text-black"}
             size={16}
+            className={`${
+              isDarkMode ? "text-white" : "text-black"
+            } xs:w-4 xs:h-4`}
           />
         </div>
 
@@ -584,8 +590,10 @@ const BetMarketPage = () => {
       <div className="flex-1 flex items-center justify-center h-[calc(100vh-240px)] xs:h-[calc(100vh-200px)]">
         <div className="text-center">
           <Trophy
-            className={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
             size={50}
+            className={`${
+              isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"
+            } xs:w-10 xs:h-10 mb-4 xs:mb-2 mx-auto`}
           />
           <p
             className={`${textColor} text-lg xs:text-base font-medium mt-4 xs:mt-2`}

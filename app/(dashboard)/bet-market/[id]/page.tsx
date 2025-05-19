@@ -209,7 +209,7 @@ const AllBetsPage = () => {
     return (
       <div
         key={item.id}
-        className="flex items-center justify-between py-3 border-b border-gray-200 dark:border-gray-700 cursor-pointer"
+        className="flex items-center justify-between py-3 xs:py-2 border-b border-gray-200 dark:border-gray-700 cursor-pointer"
         onClick={() =>
           router.push(
             `/bet-details/${
@@ -221,10 +221,12 @@ const AllBetsPage = () => {
         }
       >
         <div className="flex items-center">
-          <div className="relative w-8 h-8 mr-3">
+          <div className="relative w-8 h-8 xs:w-6 xs:h-6 mr-3 xs:mr-2">
             <Image
               src={
-                item.owner.avatarUrl || "/placeholder.svg?height=30&width=30"
+                item.owner.avatarUrl ||
+                "/placeholder.svg?height=30&width=30" ||
+                "/placeholder.svg"
               }
               alt="Owner avatar"
               fill
@@ -232,11 +234,13 @@ const AllBetsPage = () => {
             />
           </div>
           <div>
-            <p className={`${textColor} font-medium mb-1`}>
+            <p className={`${textColor} font-medium mb-1 xs:mb-0.5 xs:text-sm`}>
               {item.owner.nickname} predict
             </p>
             <div className="flex items-center">
-              <p className={`${textColor} text-sm`}>
+              <p
+                className={`${textColor} text-sm xs:text-xs max-w-[150px] xs:max-w-[120px] truncate`}
+              >
                 {item.ownerPrediction === "WIN"
                   ? item.fixture.item1.name
                   : item.ownerPrediction === "LOSE"
@@ -251,7 +255,7 @@ const AllBetsPage = () => {
             </div>
           </div>
         </div>
-        <p className={`${textColor} font-bold text-sm`}>
+        <p className={`${textColor} font-bold text-sm xs:text-xs`}>
           ₦{(item.totalAmount / 2).toLocaleString()}
         </p>
       </div>
@@ -269,19 +273,23 @@ const AllBetsPage = () => {
             <DialogTitle className={textColor}>Filter Bets</DialogTitle>
           </DialogHeader>
 
-          <div className="py-4">
-            <p className={`${textColor} text-lg font-bold mb-6`}>By Stake</p>
-            <div className="grid grid-cols-2 gap-4 mb-6">
+          <div className="py-4 xs:py-3">
+            <p
+              className={`${textColor} text-lg xs:text-base font-bold mb-6 xs:mb-4`}
+            >
+              By Stake
+            </p>
+            <div className="grid grid-cols-2 gap-4 xs:gap-2 mb-6 xs:mb-4">
               {[1000, 5000, 10000, 50000].map((amount) => (
                 <button
                   key={amount}
-                  className={`py-4 px-4 rounded-lg ${
+                  className={`py-4 xs:py-3 px-4 xs:px-3 rounded-lg ${
                     pendingFilters.amount === amount
                       ? "bg-[#2E3192] text-white"
                       : isDarkMode
                       ? "bg-[#1A1942] text-white"
                       : "bg-gray-100 text-gray-800"
-                  }`}
+                  } xs:text-sm`}
                   onClick={() =>
                     setPendingFilters((prev) => ({ ...prev, amount: amount }))
                   }
@@ -293,10 +301,12 @@ const AllBetsPage = () => {
 
             {fixture && (
               <>
-                <p className={`${textColor} text-lg font-bold mb-6`}>
+                <p
+                  className={`${textColor} text-lg xs:text-base font-bold mb-6 xs:mb-4`}
+                >
                   By Prediction Supported
                 </p>
-                <div className="flex flex-wrap gap-2 mb-8">
+                <div className="flex flex-wrap gap-2 mb-8 xs:mb-6">
                   {[
                     { label: `${fixture.item2.name} Win`, value: "LOSE" },
                     { label: "Draw", value: "DRAW" },
@@ -304,13 +314,13 @@ const AllBetsPage = () => {
                   ].map((pred) => (
                     <button
                       key={pred.value}
-                      className={`py-3 px-4 rounded-lg ${
+                      className={`py-3 xs:py-2 px-4 xs:px-3 rounded-lg ${
                         pendingFilters.prediction === pred.value
                           ? "bg-[#2E3192] text-white"
                           : isDarkMode
                           ? "bg-[#1A1942] text-white"
                           : "bg-gray-100 text-gray-800"
-                      }`}
+                      } xs:text-sm`}
                       onClick={() =>
                         setPendingFilters((prev) => ({
                           ...prev,
@@ -327,12 +337,16 @@ const AllBetsPage = () => {
           </div>
 
           <DialogFooter>
-            <Button variant="outline" onClick={resetFilters}>
+            <Button
+              variant="outline"
+              onClick={resetFilters}
+              className="xs:text-sm"
+            >
               Reset Filters
             </Button>
             <Button
               onClick={applyFilters}
-              className="bg-[#FFA726] hover:bg-[#FF9800]"
+              className="bg-[#FFA726] hover:bg-[#FF9800] xs:text-sm"
             >
               Apply Filters
             </Button>
@@ -347,7 +361,7 @@ const AllBetsPage = () => {
     if (loading) return null;
 
     return (
-      <div className="py-10 flex items-center justify-center">
+      <div className="py-10 xs:py-6 flex items-center justify-center">
         <EmptyState
           type="bet"
           isDarkMode={isDarkMode}
@@ -362,17 +376,21 @@ const AllBetsPage = () => {
   return (
     <div className={`min-h-screen`}>
       {/* Header */}
-      <div className="px-4 py-3 sticky top-0 z-10 bg-inherit">
-        <div className="flex items-center justify-between ">
+      <div className="px-4 xs:px-3 py-3 xs:py-2 sticky top-0 z-10 bg-inherit">
+        <div className="flex items-center justify-between">
           <button
             className="flex items-center"
             onClick={() => router.push("/bet-market")}
           >
             <ChevronLeft
-              className={isDarkMode ? "text-white" : "text-black"}
               size={24}
+              className={`${
+                isDarkMode ? "text-white" : "text-black"
+              } xs:w-5 xs:h-5`}
             />
-            <span className={`${textColor} text-lg font-medium ml-1`}>
+            <span
+              className={`${textColor} text-lg xs:text-base font-medium ml-1`}
+            >
               All Bets
             </span>
           </button>
@@ -385,58 +403,68 @@ const AllBetsPage = () => {
             }}
           >
             <Filter
-              className={isDarkMode ? "text-[#FFA726]" : "text-[#1E1F68]"}
               size={20}
+              className={`${
+                isDarkMode ? "text-[#FFA726]" : "text-[#1E1F68]"
+              } xs:w-4 xs:h-4`}
             />
-            <span className="text-[#FFA726] ml-1 font-medium">Filter</span>
+            <span className="text-[#FFA726] ml-1 font-medium xs:text-sm">
+              Filter
+            </span>
           </button>
         </div>
         {/* Match details - Always show this when fixture is available */}
         {fixture && (
           <div
-            className={`${cardBackground} p-4 flex items-center justify-between border-b-gray-700 border-b-[0.4px] pb-8 mt-4`}
+            className={`${cardBackground} p-4 xs:p-3 flex items-center justify-between border-b-gray-700 border-b-[0.4px] pb-8 xs:pb-6 mt-4 xs:mt-3`}
           >
             <div className="flex items-center">
-              <div className="border-r-gray-700 border-r pr-4 mr-4">
+              <div className="border-r-gray-700 border-r pr-4 xs:pr-2 mr-4 xs:mr-2">
                 <p
-                  className={`${textColor} text-md w-10 mb-1 text-center font-bold`}
+                  className={`${textColor} text-md xs:text-sm w-10 xs:w-8 mb-1 text-center font-bold`}
                 >
                   {fixture.time ? format(parseISO(fixture.time), "dd MMM") : ""}
                 </p>
-                <p className={`${secondaryTextColor} text-md`}>
+                <p className={`${secondaryTextColor} text-md xs:text-xs`}>
                   {fixture.time ? format(parseISO(fixture.time), "HH:mm") : ""}
                 </p>
               </div>
-              <div className="mb-1 mr-2">
-                <div className="flex items-center mb-2">
-                  <div className="relative w-5 h-5 mr-2">
+              <div className="mb-1 mr-2 xs:mr-1">
+                <div className="flex items-center mb-2 xs:mb-1">
+                  <div className="relative w-5 h-5 xs:w-4 xs:h-4 mr-2 xs:mr-1">
                     <Image
                       src={
                         fixture.item1.logoUrl ||
-                        "/placeholder.svg?height=20&width=20"
+                        "/placeholder.svg?height=20&width=20" ||
+                        "/placeholder.svg"
                       }
                       alt="Team 1 logo"
                       fill
                       className="object-contain"
                     />
                   </div>
-                  <p className={`${textColor} text-md w-[8.5rem] truncate`}>
+                  <p
+                    className={`${textColor} text-md xs:text-sm max-w-[8.5rem] xs:max-w-[7rem] truncate`}
+                  >
                     {fixture.item1.name}
                   </p>
                 </div>
                 <div className="flex items-center">
-                  <div className="relative w-5 h-5 mr-2">
+                  <div className="relative w-5 h-5 xs:w-4 xs:h-4 mr-2 xs:mr-1">
                     <Image
                       src={
                         fixture.item2.logoUrl ||
-                        "/placeholder.svg?height=20&width=20"
+                        "/placeholder.svg?height=20&width=20" ||
+                        "/placeholder.svg"
                       }
                       alt="Team 2 logo"
                       fill
                       className="object-contain"
                     />
                   </div>
-                  <p className={`${textColor} text-md w-[8.5rem] truncate`}>
+                  <p
+                    className={`${textColor} text-md xs:text-sm max-w-[8.5rem] xs:max-w-[7rem] truncate`}
+                  >
                     {fixture.item2.name}
                   </p>
                 </div>
@@ -446,13 +474,13 @@ const AllBetsPage = () => {
             <button
               className={`${
                 isDarkMode ? "bg-[#0B0B3F]" : "bg-[#E8E8FF]"
-              } px-4 py-4 rounded-lg`}
+              } px-4 xs:px-2 py-4 xs:py-3 rounded-lg`}
               onClick={handleCreateBet}
             >
               <p
                 className={`${
                   isDarkMode ? "text-white" : "text-black"
-                } text-xs`}
+                } text-xs xs:text-[10px]`}
               >
                 Create New Bet
               </p>
@@ -464,12 +492,14 @@ const AllBetsPage = () => {
       {/* Bets List */}
       <div className={`flex-1 ${isDarkMode ? "bg-[#0B0B3F]" : "bg-white"}`}>
         {initialLoading ? (
-          <div className="flex justify-center items-center py-20">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
+          <div className="flex justify-center items-center py-20 xs:py-12">
+            <div className="animate-spin rounded-full h-8 w-8 xs:h-6 xs:w-6 border-t-2 border-b-2 border-primary"></div>
           </div>
         ) : (
-          <div className="p-4">
-            <p className={`${secondaryTextColor} mb-2`}>Play against others</p>
+          <div className="p-4 xs:p-3">
+            <p className={`${secondaryTextColor} mb-2 xs:mb-1 xs:text-sm`}>
+              Play against others
+            </p>
 
             {bets.length > 0 ? (
               <div className="space-y-1">
@@ -480,8 +510,8 @@ const AllBetsPage = () => {
 
                 {/* Loading indicator at bottom */}
                 {loading && !initialLoading && (
-                  <div className="flex justify-center py-4">
-                    <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-primary"></div>
+                  <div className="flex justify-center py-4 xs:py-2">
+                    <div className="animate-spin rounded-full h-6 w-6 xs:h-5 xs:w-5 border-t-2 border-b-2 border-primary"></div>
                   </div>
                 )}
               </div>
