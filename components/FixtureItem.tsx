@@ -15,6 +15,7 @@ interface TeamDisplayProps {
   team1: TeamInfo;
   team2: TeamInfo;
   textColor: string;
+  status: "OFF" | "ON" | any;
 }
 
 interface FixtureItemProps {
@@ -146,6 +147,7 @@ export default function FixtureItem({
                 team1={fixture.item1}
                 team2={fixture.item2}
                 textColor={textColor}
+                status={fixture.betStatus}
               />
             </div>
           </div>
@@ -187,7 +189,7 @@ export default function FixtureItem({
 }
 
 // Helper component for team display
-function TeamDisplay({ team1, team2, textColor }: TeamDisplayProps) {
+function TeamDisplay({ team1, team2, textColor, status }: TeamDisplayProps) {
   return (
     <div className="mb-1 mr-2 xs:mr-1">
       <div className="flex items-center mb-2 xs:mb-1">
@@ -200,7 +202,9 @@ function TeamDisplay({ team1, team2, textColor }: TeamDisplayProps) {
           />
         </div>
         <p
-          className={`${textColor} text-sm xs:text-xs max-w-[6rem]  truncate`}
+          className={`${textColor} text-sm xs:text-xs ${
+            status === "ON" ? "max-w-[6rem] " : ""
+          }  truncate`}
         >
           {team1.name}
         </p>
