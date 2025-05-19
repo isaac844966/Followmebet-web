@@ -94,6 +94,7 @@ export default function FixtureItem({
                 team1={fixture.item1}
                 team2={fixture.item2}
                 textColor={textColor}
+                status={fixture.status}
               />
             </div>
           </div>
