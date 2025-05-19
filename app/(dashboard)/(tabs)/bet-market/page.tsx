@@ -634,7 +634,7 @@ const BetMarketPage = () => {
         renderCenteredLoadingSpinner()}
 
       <div
-        className={`${subBackground} flex-1 pt-[190px] pb-8 overflow-y-auto scrollbar-hide`}
+        className={`${subBackground} flex-1 pt-[220px] xs:pt-[190px] pb-8 overflow-y-auto scrollbar-hide`}
       >
         {/* Show Pool Bet content if activeTab is "special" */}
         {activeTab === "special" ? (
