@@ -158,7 +158,7 @@ const PrivateBetCard: React.FC<PrivateBetCardProps> = ({
       >
         {/* League and Match Time */}
         <div className="flex justify-between items-center mb-2">
-          <p className={`${secondaryTextColor} text-xs w-40 line-clamp-2`}>
+          <p className={`${secondaryTextColor} text-sm w-40 line-clamp-2`}>
             {getLeagueName()}
           </p>
           <p className={`${secondaryTextColor} text-xs`}>
@@ -221,7 +221,7 @@ const PrivateBetCard: React.FC<PrivateBetCardProps> = ({
                     className="object-cover"
                   />
                 </div>
-                <p className={` ${textColor}`}>
+                <p className={`text-sm ${textColor}`}>
                   {bet.challenger.nickname ||
                     `${bet.challenger.firstname} ${bet.challenger.lastname}`}
                 </p>

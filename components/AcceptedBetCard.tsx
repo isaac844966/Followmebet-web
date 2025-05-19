@@ -146,7 +146,7 @@ const AcceptedBetCard: React.FC<AcceptedBetCardProps> = ({
               />
             </div>
             <p
-              className={`${textColor}  w-26 xs:w-20 text-sm xs:text-xs font-semibold truncate`}
+              className={`${textColor}  w-26  text-sm  font-semibold truncate`}
             >
               {isOwner ? "Me" : getUserDisplayName(bet.owner)}
             </p>
@@ -155,7 +155,7 @@ const AcceptedBetCard: React.FC<AcceptedBetCardProps> = ({
           {/* Right User (Challenger) */}
           <div className="flex items-center">
             <p
-              className={`${textColor} mr-2   text-right w-26 xs:w-20 text-sm xs:text-xs font-semibold truncate`}
+              className={`${textColor} mr-2   text-right w-26 text-sm  font-semibold truncate`}
             >
               {isChallenger ? "Me" : getUserDisplayName(bet.challenger)}
             </p>
