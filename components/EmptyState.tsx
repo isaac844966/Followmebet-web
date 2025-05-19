@@ -30,21 +30,35 @@ const EmptyState: React.FC<EmptyStateProps> = ({
   const getIcon = () => {
     switch (type) {
       case "soccer":
-        return <Award size={50} color={iconColor} />;
+        return (
+          <Award size={50} color={iconColor} className="xs:w-10 xs:h-10" />
+        );
       case "special":
-        return <Star size={50} color={iconColor} />;
+        return <Star size={50} color={iconColor} className="xs:w-10 xs:h-10" />;
       case "network":
-        return <CloudOff size={50} color={iconColor} />;
+        return (
+          <CloudOff size={50} color={iconColor} className="xs:w-10 xs:h-10" />
+        );
       case "transaction":
-        return <Receipt size={50} color={iconColor} />;
+        return (
+          <Receipt size={50} color={iconColor} className="xs:w-10 xs:h-10" />
+        );
       case "bank":
-        return <Building size={50} color={iconColor} />;
+        return (
+          <Building size={50} color={iconColor} className="xs:w-10 xs:h-10" />
+        );
       case "bet":
-        return <Award size={50} color={iconColor} />;
+        return (
+          <Award size={50} color={iconColor} className="xs:w-10 xs:h-10" />
+        );
       case "market":
-        return <Wallet size={50} color={iconColor} />;
+        return (
+          <Wallet size={50} color={iconColor} className="xs:w-10 xs:h-10" />
+        );
       default:
-        return <CloudOff size={50} color={iconColor} />;
+        return (
+          <CloudOff size={50} color={iconColor} className="xs:w-10 xs:h-10" />
+        );
     }
   };
 
@@ -91,16 +105,18 @@ const EmptyState: React.FC<EmptyStateProps> = ({
   };
 
   return (
-    <div className="py-10 flex flex-col items-center justify-center mt-20">
+    <div className="py-10 xs:py-6 flex flex-col items-center justify-center mt-20 xs:mt-12">
       {getIcon()}
-      <p className={`${textColor} text-center text-lg mt-4 mb-2 font-medium`}>
+      <p
+        className={`${textColor} text-center text-lg xs:text-base mt-4 mb-2 font-medium`}
+      >
         {message || getDefaultMessage()}
       </p>
       {(subMessage || getDefaultSubMessage()) && (
         <p
           className={`${
             isDarkMode ? "text-gray-400" : "text-gray-500"
-          } text-center px-4`}
+          } text-center px-4 xs:text-sm`}
         >
           {subMessage || getDefaultSubMessage()}
         </p>

@@ -1,5 +1,7 @@
 "use client";
 
+import type React from "react";
+
 import { useState } from "react";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { Filter, X } from "lucide-react";
@@ -189,56 +191,74 @@ const TransactionFilter: React.FC<TransactionFilterProps> = ({
   return (
     <>
       {/* Filter Button */}
-      <button onClick={() => setFilterModalVisible(true)} className="p-2">
-        <Filter size={22} color="#FBB03B" />
+      <button
+        onClick={() => setFilterModalVisible(true)}
+        className="p-2 xs:p-1.5"
+      >
+        <Filter size={22} color="#FBB03B" className="xs:w-5 xs:h-5" />
       </button>
 
       {/* Filter Modal */}
       {filterModalVisible && (
         <div className="fixed inset-0 bg-black/50 flex justify-end items-end z-50">
-          <div className="w-full rounded-t-3xl p-4" style={{ backgroundColor }}>
+          <div
+            className="w-full rounded-t-3xl p-4 xs:p-3"
+            style={{ backgroundColor }}
+          >
             {/* Modal Header */}
-            <div className="flex justify-between items-center mb-4">
-              <div className="w-8"></div>
+            <div className="flex justify-between items-center mb-4 xs:mb-3">
+              <div className="w-8 xs:w-6"></div>
               <div className="flex-1 flex justify-center">
                 {/* Tab Selector */}
                 <div className="flex border-b border-gray-600">
                   <button
                     onClick={() => setActiveFilterTab("Date")}
-                    className={`px-4 py-2 ${
+                    className={`px-4 xs:px-3 py-2 xs:py-1.5 ${
                       activeFilterTab === "Date"
                         ? "border-b-2 border-[#FBB03B]"
                         : ""
                     }`}
                   >
-                    <span className={isDarkMode ? "text-white" : "text-black"}>
+                    <span
+                      className={`${
+                        isDarkMode ? "text-white" : "text-black"
+                      } xs:text-sm`}
+                    >
                       Date
                     </span>
                   </button>
                   <button
                     onClick={() => setActiveFilterTab("Time Frame")}
-                    className={`px-4 py-2 ${
+                    className={`px-4 xs:px-3 py-2 xs:py-1.5 ${
                       activeFilterTab === "Time Frame"
                         ? "border-b-2 border-[#FBB03B]"
                         : ""
                     }`}
                   >
-                    <span className={isDarkMode ? "text-white" : "text-black"}>
+                    <span
+                      className={`${
+                        isDarkMode ? "text-white" : "text-black"
+                      } xs:text-sm`}
+                    >
                       Time Frame
                     </span>
                   </button>
                 </div>
               </div>
               <button onClick={() => setFilterModalVisible(false)}>
-                <X size={22} color={isDarkMode ? "#FFFFFF" : "#000000"} />
+                <X
+                  size={22}
+                  color={isDarkMode ? "#FFFFFF" : "#000000"}
+                  className="xs:w-5 xs:h-5"
+                />
               </button>
             </div>
 
             {/* Modal Content based on active tab */}
             {activeFilterTab === "Date" ? (
-              <div className="mb-6">
+              <div className="mb-6 xs:mb-4">
                 <h3
-                  className={`text-lg mb-4 ${
+                  className={`text-lg xs:text-base mb-4 xs:mb-3 ${
                     isDarkMode ? "text-white" : "text-black"
                   }`}
                 >
@@ -248,13 +268,13 @@ const TransactionFilter: React.FC<TransactionFilterProps> = ({
                 </h3>
 
                 {/* Side by side Month and Year selectors */}
-                <div className="flex h-64" style={{ backgroundColor }}>
+                <div className="flex h-64 xs:h-48" style={{ backgroundColor }}>
                   {/* Months on the left */}
-                  <div className="flex-1 mr-2 border-gray-200 rounded overflow-auto">
+                  <div className="flex-1 mr-2 xs:mr-1 border-gray-200 rounded overflow-auto">
                     {displayedMonths.reverse().map((item) => (
                       <button
                         key={item}
-                        className={`p-4 w-full text-left ${
+                        className={`p-4 xs:p-3 w-full text-left ${
                           selectedMonth === item ? "bg-[#e6b662]" : ""
                         }`}
                         onClick={() => {
@@ -263,7 +283,7 @@ const TransactionFilter: React.FC<TransactionFilterProps> = ({
                         }}
                       >
                         <span
-                          className={`font-bold ${
+                          className={`font-bold xs:text-sm ${
                             isDarkMode ? "text-gray-300" : "text-gray-700"
                           }`}
                         >
@@ -274,17 +294,17 @@ const TransactionFilter: React.FC<TransactionFilterProps> = ({
                   </div>
 
                   {/* Years on the right */}
-                  <div className="flex-1 ml-2 rounded overflow-auto">
+                  <div className="flex-1 ml-2 xs:ml-1 rounded overflow-auto">
                     {availableYears.map((item) => (
                       <button
                         key={item}
-                        className={`p-4 w-full text-left ${
+                        className={`p-4 xs:p-3 w-full text-left ${
                           selectedYear === item ? "bg-[#e6b662]" : ""
                         }`}
                         onClick={() => setSelectedYear(item)}
                       >
                         <span
-                          className={`font-bold ${
+                          className={`font-bold xs:text-sm ${
                             isDarkMode ? "text-gray-300" : "text-gray-700"
                           }`}
                         >
@@ -298,17 +318,17 @@ const TransactionFilter: React.FC<TransactionFilterProps> = ({
             ) : (
               <>
                 {/* Duration Selection */}
-                <div className="mb-6">
+                <div className="mb-6 xs:mb-4">
                   <h3
-                    className={`text-lg mb-4 ${
+                    className={`text-lg xs:text-base mb-4 xs:mb-3 ${
                       isDarkMode ? "text-white" : "text-black"
                     }`}
                   >
                     Duration
                   </h3>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 xs:gap-1">
                     <button
-                      className={`flex-1 p-4 rounded-lg border relative ${
+                      className={`flex-1 p-4 xs:p-3 rounded-lg border relative ${
                         filterDuration === "Last 3 months"
                           ? "border-[#FBB03B] bg-[#FBB03B] bg-opacity-10"
                           : "border-gray-500"
@@ -316,20 +336,24 @@ const TransactionFilter: React.FC<TransactionFilterProps> = ({
                       onClick={() => setFilterDuration("Last 3 months")}
                     >
                       <span
-                        className={isDarkMode ? "text-white" : "text-black"}
+                        className={`${
+                          isDarkMode ? "text-white" : "text-black"
+                        } xs:text-sm`}
                       >
                         Last 3 months
                       </span>
                       {filterDuration === "Last 3 months" && (
                         <div className="absolute bottom-2 right-2">
-                          <div className="w-5 h-5 bg-[#FBB03B] rounded-full flex items-center justify-center">
-                            <span className="text-white text-xs">✓</span>
+                          <div className="w-5 h-5 xs:w-4 xs:h-4 bg-[#FBB03B] rounded-full flex items-center justify-center">
+                            <span className="text-white text-xs xs:text-[10px]">
+                              ✓
+                            </span>
                           </div>
                         </div>
                       )}
                     </button>
                     <button
-                      className={`flex-1 p-4 rounded-lg border relative ${
+                      className={`flex-1 p-4 xs:p-3 rounded-lg border relative ${
                         filterDuration === "Last 6 months"
                           ? "border-[#FBB03B] bg-[#FBB03B] bg-opacity-10"
                           : "border-gray-500"
@@ -337,20 +361,24 @@ const TransactionFilter: React.FC<TransactionFilterProps> = ({
                       onClick={() => setFilterDuration("Last 6 months")}
                     >
                       <span
-                        className={isDarkMode ? "text-white" : "text-black"}
+                        className={`${
+                          isDarkMode ? "text-white" : "text-black"
+                        } xs:text-sm`}
                       >
                         Last 6 months
                       </span>
                       {filterDuration === "Last 6 months" && (
                         <div className="absolute bottom-2 right-2">
-                          <div className="w-5 h-5 bg-[#FBB03B] rounded-full flex items-center justify-center">
-                            <span className="text-white text-xs">✓</span>
+                          <div className="w-5 h-5 xs:w-4 xs:h-4 bg-[#FBB03B] rounded-full flex items-center justify-center">
+                            <span className="text-white text-xs xs:text-[10px]">
+                              ✓
+                            </span>
                           </div>
                         </div>
                       )}
                     </button>
                     <button
-                      className={`flex-1 p-4 rounded-lg border relative ${
+                      className={`flex-1 p-4 xs:p-3 rounded-lg border relative ${
                         filterDuration === "Custom"
                           ? "border-[#FBB03B] bg-[#FBB03B] bg-opacity-10"
                           : "border-gray-500"
@@ -358,14 +386,18 @@ const TransactionFilter: React.FC<TransactionFilterProps> = ({
                       onClick={() => setFilterDuration("Custom")}
                     >
                       <span
-                        className={isDarkMode ? "text-white" : "text-black"}
+                        className={`${
+                          isDarkMode ? "text-white" : "text-black"
+                        } xs:text-sm`}
                       >
                         Custom
                       </span>
                       {filterDuration === "Custom" && (
                         <div className="absolute bottom-2 right-2">
-                          <div className="w-5 h-5 bg-[#FBB03B] rounded-full flex items-center justify-center">
-                            <span className="text-white text-xs">✓</span>
+                          <div className="w-5 h-5 xs:w-4 xs:h-4 bg-[#FBB03B] rounded-full flex items-center justify-center">
+                            <span className="text-white text-xs xs:text-[10px]">
+                              ✓
+                            </span>
                           </div>
                         </div>
                       )}
@@ -376,16 +408,16 @@ const TransactionFilter: React.FC<TransactionFilterProps> = ({
                 {/* Date Range Selection (always visible in Time Frame tab) */}
                 <>
                   {/* Start Date */}
-                  <div className="mb-4">
+                  <div className="mb-4 xs:mb-3">
                     <h3
-                      className={`text-lg mb-2 ${
+                      className={`text-lg xs:text-base mb-2 xs:mb-1 ${
                         isDarkMode ? "text-white" : "text-black"
                       }`}
                     >
                       Start Date
                     </h3>
                     <button
-                      className="p-4 border border-gray-500 rounded-lg flex justify-between items-center w-full"
+                      className="p-4 xs:p-3 border border-gray-500 rounded-lg flex justify-between items-center w-full"
                       onClick={() => {
                         setDateSelectionFor("start");
                         const year = startDate.split(", ")[1];
@@ -394,7 +426,9 @@ const TransactionFilter: React.FC<TransactionFilterProps> = ({
                       }}
                     >
                       <span
-                        className={isDarkMode ? "text-white" : "text-black"}
+                        className={`${
+                          isDarkMode ? "text-white" : "text-black"
+                        } xs:text-sm`}
                       >
                         {startDate}
                       </span>
@@ -403,16 +437,16 @@ const TransactionFilter: React.FC<TransactionFilterProps> = ({
                   </div>
 
                   {/* End Date */}
-                  <div className="mb-6">
+                  <div className="mb-6 xs:mb-4">
                     <h3
-                      className={`text-lg mb-2 ${
+                      className={`text-lg xs:text-base mb-2 xs:mb-1 ${
                         isDarkMode ? "text-white" : "text-black"
                       }`}
                     >
                       End Date
                     </h3>
                     <button
-                      className="p-4 border border-gray-500 rounded-lg flex justify-between items-center w-full"
+                      className="p-4 xs:p-3 border border-gray-500 rounded-lg flex justify-between items-center w-full"
                       onClick={() => {
                         setDateSelectionFor("end");
                         const year = endDate.split(", ")[1];
@@ -421,7 +455,9 @@ const TransactionFilter: React.FC<TransactionFilterProps> = ({
                       }}
                     >
                       <span
-                        className={isDarkMode ? "text-white" : "text-black"}
+                        className={`${
+                          isDarkMode ? "text-white" : "text-black"
+                        } xs:text-sm`}
                       >
                         {endDate}
                       </span>

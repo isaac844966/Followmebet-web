@@ -59,7 +59,7 @@ const RecentTransactions = () => {
   return (
     <div className={`${isDarkMode ? "white" : "#1E1F68"} mt-4 flex-1`}>
       <p
-        className={`text-sm font-medium mb-2 ${
+        className={`text-sm xs:text-xs font-medium mb-2 ${
           isDarkMode ? "text-gray-300" : "text-gray-600"
         }`}
       >
@@ -74,8 +74,12 @@ const RecentTransactions = () => {
             color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
           />
         ) : transactions.length === 0 ? (
-          <div className="flex-1 items-center justify-center py-10 text-center">
-            <p className={`${isDarkMode ? "text-gray-300" : "text-gray-500"}`}>
+          <div className="flex-1 items-center justify-center py-10 xs:py-6 text-center">
+            <p
+              className={`${
+                isDarkMode ? "text-gray-300" : "text-gray-500"
+              } xs:text-sm`}
+            >
               No transactions found
             </p>
           </div>
@@ -99,11 +103,11 @@ const RecentTransactions = () => {
         )}
         <button
           onClick={handleShowMore}
-          className="py-6 rounded-lg mt-2 items-center w-full text-center"
+          className="py-6 xs:py-4 rounded-lg mt-2 items-center w-full text-center"
           style={{ backgroundColor: isDarkMode ? "#1E1F68" : "#E8E8FF" }}
         >
           <span
-            className={`font-medium ${
+            className={`font-medium xs:text-sm ${
               isDarkMode ? "text-white" : "text-primary-1400"
             }`}
           >

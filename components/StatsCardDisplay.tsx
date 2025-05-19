@@ -40,9 +40,9 @@ const StatCardDisplay: React.FC<StatCardDisplayProps> = ({
 
   return (
     <div
-      className={`rounded-lg p-6 mb-2 ${fullWidth ? "w-full" : "flex-1"} ${
-        isTailwindClass ? bgColor : ""
-      }`}
+      className={`rounded-lg p-6 xs:p-4 mb-2 ${
+        fullWidth ? "w-full" : "flex-1"
+      } ${isTailwindClass ? bgColor : ""}`}
       style={{
         ...containerStyle,
         ...(isTailwindClass ? {} : { backgroundColor: bgColor }),
@@ -51,11 +51,14 @@ const StatCardDisplay: React.FC<StatCardDisplayProps> = ({
       <p
         className={`${
           isDarkMode ? "text-primary-1200" : "text-black"
-        } text-xs font-semibold mb-2`}
+        } text-xs xs:text-[10px] font-semibold mb-2`}
       >
         {title}
       </p>
-      <p className="text-3xl font-bold mt-2" style={{ color: textColor }}>
+      <p
+        className="text-3xl xs:text-2xl font-bold mt-2"
+        style={{ color: textColor }}
+      >
         {value}
       </p>
     </div>

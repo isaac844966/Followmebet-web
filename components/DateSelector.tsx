@@ -16,15 +16,15 @@ export default function DateSelector({
   textColor,
 }: DateSelectorProps) {
   return (
-    <div className="py-4 flex px-3 justify-between w-full">
+    <div className="py-4 xs:py-3 flex px-3 xs:px-2 justify-between w-full">
       {dateRange.map((date) => (
         <button
           key={date.toISOString()}
           onClick={() => onDateSelect(date)}
-          className="mx-1 rounded-lg items-center"
+          className="mx-1 xs:mx-0.5 rounded-lg items-center"
         >
           <span
-            className={`text-sm ${
+            className={`text-sm xs:text-xs ${
               isSameDay(date, selectedDate)
                 ? "text-[#FBB03B] font-bold"
                 : textColor

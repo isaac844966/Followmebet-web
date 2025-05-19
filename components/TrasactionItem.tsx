@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useTheme } from "@/lib/contexts/ThemeContext";
 
 export interface TransactionItemProps {
@@ -48,14 +47,14 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
 
   return (
     <div
-      className={`p-4 rounded-lg mb-2 ${
+      className={`p-4 xs:p-3 rounded-lg mb-2 ${
         isDarkMode ? "bg-primary-1400" : "bg-primary-1200"
       }`}
     >
       {/* Date/Time and Type */}
       <div className="flex justify-between items-center mb-2">
         <p
-          className={`text-xs ${
+          className={`text-xs xs:text-[10px] ${
             isDarkMode ? "text-gray-300" : "text-gray-500"
           }`}
         >
@@ -63,7 +62,7 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
         </p>
         {bankAccountNumber ? (
           <p
-            className={`text-xs mb-2 ${
+            className={`text-xs xs:text-[10px] mb-2 ${
               isDarkMode ? "text-gray-400" : "text-gray-600"
             }`}
           >
@@ -71,7 +70,7 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
           </p>
         ) : (
           <p
-            className={`text-sm font-medium ${
+            className={`text-sm xs:text-xs font-medium ${
               isDarkMode ? "text-white" : "text-gray-700"
             }`}
           >
@@ -83,22 +82,24 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
       <div className="flex justify-between items-center">
         <div>
           <p
-            className={`text-lg font-bold ${
+            className={`text-lg xs:text-base font-bold ${
               isDarkMode ? "text-white" : "text-primary-1400"
             }`}
           >
             ₦{amount.toLocaleString("en-US", { minimumFractionDigits: 2 })}
           </p>
-          <p className={getStatusColor()}>{label}</p>
+          <p className={`${getStatusColor()} xs:text-xs`}>{label}</p>
         </div>
 
         {/* Show Re-deposit button only on Deposit */}
         {type === "Deposit" && onRedeposit && (
           <button
             onClick={onRedeposit}
-            className="bg-yellow-500 py-2 px-4 rounded-md"
+            className="bg-yellow-500 py-2 px-4 xs:py-1.5 xs:px-3 rounded-md"
           >
-            <span className="text-white font-medium text-sm">Re‑deposit</span>
+            <span className="text-white font-medium text-sm xs:text-xs">
+              Re‑deposit
+            </span>
           </button>
         )}
       </div>

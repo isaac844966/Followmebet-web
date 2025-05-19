@@ -44,18 +44,12 @@ const Dashboard = () => {
               alt="Logo"
               width={120}
               height={48}
-              className="object-contain"
+              className="object-contain xs:w-40 h-10"
             />
             <div className="flex items-center">
-              <button
-                className="mr-3"
-                onClick={() => console.log("Notification pressed")}
-              >
-                <Bell size={24} color={isDarkMode ? "white" : "#1E1F68"} />
-              </button>
               <div className="flex items-center">
                 {isLoading ? (
-                  <div className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+                  <div className="w-3 h-3 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
                 ) : (
                   <div
                     className={`${
@@ -67,7 +61,7 @@ const Dashboard = () => {
                     <span
                       className={`${
                         isDarkMode ? "text-white" : "text-black"
-                      } font-bold text-left`}
+                      } font-bold text-left text-xs`}
                     >
                       ₦
                       {user?.balance?.toLocaleString("en-US", {
@@ -84,7 +78,7 @@ const Dashboard = () => {
                         alt="User Avatar"
                         width={32}
                         height={32}
-                        className="object-cover"
+                        className="object-cover xs:w-6 xs:h-6"
                       />
                     ) : (
                       <div
@@ -103,18 +97,18 @@ const Dashboard = () => {
 
       {/* Main content with padding to account for fixed header */}
       <div className="px-4 max-w-4xl mx-auto pt-20">
-        <div className="space-y-4 pb-8">
+        <div className="space-y-4 pb-8 xs:pb-4">
           {/* User Profile Card */}
           <div
             className={`${
               isDarkMode ? "bg-primary-1400" : "bg-primary-100"
-            } rounded-lg p-6 mb-2 flex items-center`}
+            } rounded-lg p-6 xs:p-3 mb-2 xs:mb-1 flex items-center`}
           >
             {isLoading ? (
-              <div className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+              <div className="w-3 h-3 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
             ) : (
               <>
-                <div className="w-12 h-12 rounded-full mr-4 border-primary-400 border-2 overflow-hidden">
+                <div className="w-12 h-12 xs:w-8 xs:h-8 rounded-full mr-4 border-primary-400 border-2 overflow-hidden">
                   <Image
                     src={
                       user?.avatarUrl ||
@@ -123,7 +117,7 @@ const Dashboard = () => {
                     alt="User Avatar"
                     width={48}
                     height={48}
-                    className="object-cover"
+                    className="object-cover "
                   />
                 </div>
 
@@ -135,7 +129,7 @@ const Dashboard = () => {
                   >
                     Welcome Back
                   </p>
-                  <h2 className="text-white text-lg font-bold">
+                  <h2 className="text-white text-lg sm:text-md xs:text-sm font-bold">
                     {user?.firstname} {user?.lastname}
                   </h2>
                   <div className="flex items-center mt-1">
@@ -157,16 +151,16 @@ const Dashboard = () => {
           <div
             className={`${
               isDarkMode ? "bg-primary-1400" : "bg-primary-1200"
-            } rounded-lg p-6 mb-2 flex items-center justify-between`}
+            } rounded-lg p-6 xs:p-4 mb-2 flex items-center justify-between`}
           >
             <div>
-              {isLoading || refreshing ? (
+              {isLoading ? (
                 <div className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
               ) : (
                 <p
                   className={`${
                     isDarkMode ? "text-white" : "text-black"
-                  } text-xl font-bold`}
+                  } text-xl xs:text-sm font-bold`}
                 >
                   ₦
                   {user?.balance?.toLocaleString("en-US", {
@@ -187,7 +181,7 @@ const Dashboard = () => {
               <RefreshCw
                 size={20}
                 color={isDarkMode ? "white" : "#1E1F68"}
-                className={refreshing ? "animate-spin" : ""}
+                className={`${refreshing} ? "animate-spin" : "" xs:w-4 xs:h-4`}
               />
             </button>
 
@@ -202,15 +196,15 @@ const Dashboard = () => {
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-2 gap-2 mb-2">
+          <div className="grid grid-cols-2 gap-2 mb-2 xs:mb-1">
             <div
-              className="rounded-lg py-6 px-4"
+              className="rounded-lg py-6 px-4 xs:py-4 xs:px-2"
               style={{ backgroundColor: isDarkMode ? "#1E1F68" : "#E8E8FF" }}
             >
               <p
                 className={`${
                   isDarkMode ? "text-gray-400" : "text-primary-600"
-                } text-sm mb-2 font-semibold`}
+                } text-sm xs:text-xs font-semibold`}
               >
                 Total Pending Public Bets
               </p>
@@ -222,7 +216,7 @@ const Dashboard = () => {
                   <p
                     className={`${
                       isDarkMode ? "text-white" : "text-primary-100"
-                    } text-2xl font-bold`}
+                    } text-2xl sm:text-xl xs:text-lg font-bold`}
                   >
                     {user?.pendingPublicBets || 0}
                   </p>
@@ -237,7 +231,7 @@ const Dashboard = () => {
               <p
                 className={`${
                   isDarkMode ? "text-gray-400" : "text-primary-600"
-                } text-sm mb-2 font-semibold`}
+                } text-sm xs:text-xs font-semibold`}
               >
                 Total Pending Private Bets
               </p>
@@ -249,7 +243,7 @@ const Dashboard = () => {
                   <p
                     className={`${
                       isDarkMode ? "text-white" : "text-primary-100"
-                    } text-2xl font-bold`}
+                    } text-2xl sm:text-xl xs:text-lg font-bold`}
                   >
                     {user?.pendingPrivateBets || 0}
                   </p>
@@ -258,15 +252,15 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="grid grid-cols-2 gap-2">
             <div
-              className="rounded-lg py-6 px-4"
+              className="rounded-lg py-6 px-4 xs:py-4 xs:px-2"
               style={{ backgroundColor: isDarkMode ? "#1E1F68" : "#FDEFFF" }}
             >
               <p
                 className={`${
                   isDarkMode ? "text-gray-400" : "text-primary-600"
-                } text-sm mb-2 font-semibold`}
+                } text-sm xs:text-xs mb-2 font-semibold`}
               >
                 Total Accepted Bets
               </p>
@@ -278,7 +272,7 @@ const Dashboard = () => {
                   <p
                     className={`${
                       isDarkMode ? "text-white" : "text-primary-100"
-                    } text-2xl font-bold`}
+                    } text-2xl sm:text-xl xs:text-lg font-bold`}
                   >
                     {user?.openBets || 0}
                   </p>
@@ -287,7 +281,7 @@ const Dashboard = () => {
             </div>
 
             <div
-              className="rounded-lg py-6 px-4"
+              className="rounded-lg py-6 px-4  xs:py-5 xs:px-2"
               style={{ backgroundColor: isDarkMode ? "#1E1F68" : "#E9FFE8" }}
             >
               <p
@@ -305,7 +299,7 @@ const Dashboard = () => {
                   <p
                     className={`${
                       isDarkMode ? "text-white" : "text-primary-100"
-                    } text-2xl font-bold`}
+                    } text-2xl sm:text-xl xs:text-lg font-bold`}
                   >
                     {user?.completedBets || 0}
                   </p>
@@ -319,21 +313,21 @@ const Dashboard = () => {
             href="/transactions"
             className={`${
               isDarkMode ? "bg-primary-1400" : "bg-blue-50"
-            } rounded-lg p-6 py-7 mb-2 flex items-center justify-between`}
+            } rounded-lg p-6 py-7 mb-2 xs:p-4 xs:py-4 xs:mb-1 flex items-center justify-between`}
           >
             <div className="flex items-center">
               <Info size={20} color={isDarkMode ? "white" : "#1E1F68"} />
               <span
                 className={`${
                   isDarkMode ? "text-white" : "text-black"
-                } ml-3 font-semibold text-lg`}
+                } ml-3 font-semibold text-lg xs:text-md `}
               >
                 Transactions
               </span>
             </div>
 
             <div className="flex items-center">
-              <span className="text-gray-400 mr-2 text-sm font-semibold">
+              <span className="text-gray-400 mr-2 text-sm xs:text-xs font-semibold">
                 View
               </span>
               <Settings size={12} color={isDarkMode ? "white" : "#1E1F68"} />
@@ -344,21 +338,21 @@ const Dashboard = () => {
             href="/help"
             className={`${
               isDarkMode ? "bg-primary-1400" : "bg-blue-50"
-            } rounded-lg p-6 py-7 mb-2 flex items-center justify-between`}
+            } rounded-lg p-6 py-7 mb-2 xs:p-4 xs:py-4 xs:mb-1 flex items-center justify-between`}
           >
             <div className="flex items-center">
               <Info size={24} color={isDarkMode ? "#FFF" : "#000"} />
               <span
                 className={`${
                   isDarkMode ? "text-white" : "text-black"
-                } ml-3 font-semibold text-lg`}
+                } ml-3 font-semibold text-lg xs:text-md`}
               >
                 Help
               </span>
             </div>
 
             <div className="flex items-center">
-              <span className="text-gray-400 mr-2 text-sm font-semibold">
+              <span className="text-gray-400 mr-2 text-sm xs:text-xs font-semibold">
                 Get Help
               </span>
               <Settings size={12} color={isDarkMode ? "white" : "#1E1F68"} />

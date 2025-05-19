@@ -33,7 +33,7 @@ const ActionItem: React.FC<ActionItemProps> = ({
   return (
     <button
       onClick={onPress}
-      className={`${defaultBgColor} rounded-lg p-6 py-7 mb-2 flex items-center justify-between w-full`}
+      className={`${defaultBgColor} rounded-lg p-6 ms:p-4 xs:p-2 mb-2 flex items-center justify-between w-full`}
       style={containerStyle}
       disabled={loading}
     >
@@ -42,7 +42,7 @@ const ActionItem: React.FC<ActionItemProps> = ({
         <span
           className={`${
             isDarkMode ? "text-white" : "text-black"
-          } ml-3 font-semibold text-lg`}
+          } ml-3 font-semibold text-lg sm:text-md xs:text-sm`}
         >
           {title}
         </span>
@@ -50,7 +50,7 @@ const ActionItem: React.FC<ActionItemProps> = ({
 
       <div className="flex items-center">
         {actionText && (
-          <span className="text-gray-400 mr-2 text-sm font-semibold">
+          <span className="text-gray-400 mr-2 text-sm xs:text-xs font-semibold">
             {actionText}
           </span>
         )}

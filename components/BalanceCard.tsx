@@ -26,19 +26,19 @@ const BalanceCard = () => {
 
   return (
     <div
-      className={`p-8 rounded-lg mb-4 mt-6 ${
+      className={`p-8 xs:p-5 rounded-lg mb-4 mt-6 xs:mt-4 ${
         isDarkMode ? "bg-primary-1400" : "bg-primary-1200"
       }`}
     >
       <div className="flex justify-between items-center">
         <div>
           <p
-            className={`text-2xl font-bold ${
+            className={`text-2xl xs:text-xl font-bold ${
               isDarkMode ? "text-white" : "text-primary-1400"
             }`}
           >
             {isLoading || isRefreshing ? (
-              <div className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+              <div className="w-5 h-5 xs:w-4 xs:h-4 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
             ) : (
               `₦${
                 user?.balance?.toLocaleString("en-US", {
@@ -48,7 +48,7 @@ const BalanceCard = () => {
             )}
           </p>
           <p
-            className={`text-sm ${
+            className={`text-sm xs:text-xs ${
               isDarkMode ? "text-gray-300" : "text-gray-600"
             }`}
           >
@@ -61,7 +61,11 @@ const BalanceCard = () => {
           disabled={isLoading || isRefreshing}
           className={`${isRefreshing ? "animate-spin" : ""}`}
         >
-          <RefreshCw size={20} color={isDarkMode ? "white" : "#1E1F68"} />
+          <RefreshCw
+            size={20}
+            color={isDarkMode ? "white" : "#1E1F68"}
+            className="xs:w-4 xs:h-4"
+          />
         </button>
       </div>
     </div>

@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useState, useEffect } from "react";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { X } from "lucide-react";
@@ -45,18 +44,22 @@ const TransactionFilterModal: React.FC<TransactionFilterModalProps> = ({
       const today = new Date();
       const threeMonthsAgo = new Date();
       threeMonthsAgo.setMonth(today.getMonth() - 3);
-      
+
       const sixMonthsAgo = new Date();
       sixMonthsAgo.setMonth(today.getMonth() - 6);
-      
+
       // Check if dates approximately match 3-month or 6-month periods
       // Using getTime() / 86400000 to get days for rough comparison
-      const fromDayDiff3Month = Math.abs(Math.floor(initialFromDate.getTime() / 86400000) - 
-                                         Math.floor(threeMonthsAgo.getTime() / 86400000));
-      
-      const fromDayDiff6Month = Math.abs(Math.floor(initialFromDate.getTime() / 86400000) - 
-                                         Math.floor(sixMonthsAgo.getTime() / 86400000));
-      
+      const fromDayDiff3Month = Math.abs(
+        Math.floor(initialFromDate.getTime() / 86400000) -
+          Math.floor(threeMonthsAgo.getTime() / 86400000)
+      );
+
+      const fromDayDiff6Month = Math.abs(
+        Math.floor(initialFromDate.getTime() / 86400000) -
+          Math.floor(sixMonthsAgo.getTime() / 86400000)
+      );
+
       if (fromDayDiff3Month < 3) {
         setActiveFilter("3months");
       } else if (fromDayDiff6Month < 3) {
@@ -93,7 +96,7 @@ const TransactionFilterModal: React.FC<TransactionFilterModalProps> = ({
     const endDate = new Date();
     const startDate = new Date();
     startDate.setMonth(endDate.getMonth() - 3);
-    
+
     setFromDate(startDate);
     setToDate(endDate);
     setActiveFilter("3months");
@@ -104,7 +107,7 @@ const TransactionFilterModal: React.FC<TransactionFilterModalProps> = ({
     const endDate = new Date();
     const startDate = new Date();
     startDate.setMonth(endDate.getMonth() - 6);
-    
+
     setFromDate(startDate);
     setToDate(endDate);
     setActiveFilter("6months");
@@ -128,7 +131,7 @@ const TransactionFilterModal: React.FC<TransactionFilterModalProps> = ({
   return (
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
       <div
-        className="w-full max-w-md rounded-t-xl p-6 absolute bottom-0"
+        className="w-full max-w-md rounded-t-xl p-6 xs:p-4 absolute bottom-0"
         style={{
           backgroundColor,
           borderTopWidth: 1,
@@ -136,32 +139,43 @@ const TransactionFilterModal: React.FC<TransactionFilterModalProps> = ({
         }}
       >
         {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold" style={{ color: textColor }}>
+        <div className="flex justify-between items-center mb-6 xs:mb-4">
+          <h2
+            className="text-xl xs:text-lg font-bold"
+            style={{ color: textColor }}
+          >
             Filter By
           </h2>
           <button onClick={onClose}>
-            <X size={24} color={textColor} />
+            <X size={24} color={textColor} className="xs:w-5 xs:h-5" />
           </button>
         </div>
 
         {/* Quick Filters */}
-        <div className="flex space-x-3 mb-6">
+        <div className="flex space-x-3 xs:space-x-2 mb-6 xs:mb-4">
           <button
-            className="flex-1 py-2 px-4 rounded-lg text-center"
+            className="flex-1 py-2 xs:py-1.5 px-4 xs:px-3 rounded-lg text-center xs:text-sm"
             style={{
-              backgroundColor: activeFilter === "3months" ? buttonActiveBg : buttonInactiveBg,
-              color: activeFilter === "3months" ? buttonActiveText : buttonInactiveText,
+              backgroundColor:
+                activeFilter === "3months" ? buttonActiveBg : buttonInactiveBg,
+              color:
+                activeFilter === "3months"
+                  ? buttonActiveText
+                  : buttonInactiveText,
             }}
             onClick={apply3MonthFilter}
           >
             Last 3 months
           </button>
           <button
-            className="flex-1 py-2 px-4 rounded-lg text-center"
+            className="flex-1 py-2 xs:py-1.5 px-4 xs:px-3 rounded-lg text-center xs:text-sm"
             style={{
-              backgroundColor: activeFilter === "6months" ? buttonActiveBg : buttonInactiveBg,
-              color: activeFilter === "6months" ? buttonActiveText : buttonInactiveText,
+              backgroundColor:
+                activeFilter === "6months" ? buttonActiveBg : buttonInactiveBg,
+              color:
+                activeFilter === "6months"
+                  ? buttonActiveText
+                  : buttonInactiveText,
             }}
             onClick={apply6MonthFilter}
           >
@@ -170,16 +184,16 @@ const TransactionFilterModal: React.FC<TransactionFilterModalProps> = ({
         </div>
 
         {/* From Date */}
-        <div className="mb-4">
+        <div className="mb-4 xs:mb-3">
           <label
-            className="block mb-2 font-medium"
+            className="block mb-2 xs:mb-1 font-medium xs:text-sm"
             style={{ color: textColor }}
           >
             From date
           </label>
           <input
             type="date"
-            className="h-14 px-4 rounded-lg w-full"
+            className="h-14 xs:h-12 px-4 xs:px-3 rounded-lg w-full xs:text-sm"
             style={{ backgroundColor: inputBgColor, color: textColor }}
             value={formatDate(fromDate)}
             onChange={handleFromDateChange}
@@ -187,16 +201,16 @@ const TransactionFilterModal: React.FC<TransactionFilterModalProps> = ({
         </div>
 
         {/* To Date */}
-        <div className="mb-6">
+        <div className="mb-6 xs:mb-4">
           <label
-            className="block mb-2 font-medium"
+            className="block mb-2 xs:mb-1 font-medium xs:text-sm"
             style={{ color: textColor }}
           >
             To date
           </label>
           <input
             type="date"
-            className="h-14 px-4 rounded-lg w-full"
+            className="h-14 xs:h-12 px-4 xs:px-3 rounded-lg w-full xs:text-sm"
             style={{ backgroundColor: inputBgColor, color: textColor }}
             value={formatDate(toDate)}
             onChange={handleToDateChange}
@@ -204,7 +218,7 @@ const TransactionFilterModal: React.FC<TransactionFilterModalProps> = ({
         </div>
 
         {/* Buttons */}
-        <div className="mb-4">
+        <div className="mb-4 xs:mb-3">
           <CustomButton
             title="Filter"
             size="lg"
@@ -213,7 +227,10 @@ const TransactionFilterModal: React.FC<TransactionFilterModalProps> = ({
           />
         </div>
 
-        <button className="w-full text-center py-2" onClick={handleClear}>
+        <button
+          className="w-full text-center py-2 xs:text-sm"
+          onClick={handleClear}
+        >
           <span className="text-primary-400 font-medium">Clear filter</span>
         </button>
       </div>

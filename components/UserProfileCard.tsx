@@ -37,7 +37,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
 
   return (
     <div
-      className={`${defaultBgColor} rounded-lg p-6 mb-2 flex items-center`}
+      className={`${defaultBgColor} rounded-lg p-6 xs:p-4 mb-2 flex items-center`}
       style={containerStyle}
     >
       {loading ? (
@@ -50,7 +50,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
       ) : (
         <>
           <div
-            className={`w-12 h-12 rounded-full mr-4 border-primary-400 border-2 relative overflow-hidden ${
+            className={`w-12 h-12 xs:w-10 xs:h-10 rounded-full mr-4 xs:mr-3 border-primary-400 border-2 relative overflow-hidden ${
               isDarkMode ? "bg-primary-400" : "bg-primary-1900"
             }`}
           >
@@ -73,20 +73,24 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
               <p
                 className={`${
                   isDarkMode ? "text-gray-400" : "text-primary-600"
-                } text-xs mb-1`}
+                } text-xs xs:text-[10px] mb-1`}
               >
                 Welcome Back
               </p>
             )}
-            <p className="text-white text-lg font-bold">{name || ""}</p>
+            <p className="text-white text-lg xs:text-base font-bold">
+              {name || ""}
+            </p>
             <div className="flex items-center mt-1">
               <div className="w-2 h-2 rounded-full bg-primary-400 mr-2"></div>
-              <p className="text-white text-xs uppercase">{status}</p>
+              <p className="text-white text-xs xs:text-[10px] uppercase">
+                {status}
+              </p>
             </div>
           </div>
           {showEditButton && onEditPress && (
-            <button onClick={onEditPress} className="p-2">
-              <Pencil size={16} className="text-white" />
+            <button onClick={onEditPress} className="p-2 xs:p-1">
+              <Pencil size={16} className="text-white xs:w-4 xs:h-4" />
             </button>
           )}
         </>

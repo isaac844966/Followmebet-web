@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useTheme } from "@/lib/contexts/ThemeContext";
@@ -20,7 +19,7 @@ const WalletHeader: React.FC<WalletHeaderProps> = ({ title, icon }) => {
 
   return (
     <div>
-      <div className={`pt-4 px-4 pb-4 ${backgroundColor}`}>
+      <div className={`pt-4 px-4 xs:px-3 pb-4 ${backgroundColor}`}>
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <Image
@@ -28,7 +27,7 @@ const WalletHeader: React.FC<WalletHeaderProps> = ({ title, icon }) => {
               alt="Logo"
               width={120}
               height={48}
-              className="object-contain"
+              className="object-contain xs:w-[100px]"
             />
           </div>
 
@@ -37,14 +36,14 @@ const WalletHeader: React.FC<WalletHeaderProps> = ({ title, icon }) => {
               <p
                 className={`${
                   isDarkMode ? "text-white" : "text-black"
-                } text-xs mr-1 font-bold`}
+                } text-xs xs:text-[10px] mr-1 font-bold`}
               >
                 My Account
               </p>
               <p
                 className={`${
                   isDarkMode ? "text-white" : "text-black"
-                } font-bold text-base mr-2`}
+                } font-bold text-base xs:text-sm mr-2`}
               >
                 ₦
                 {user?.balance?.toLocaleString("en-US", {
@@ -54,7 +53,7 @@ const WalletHeader: React.FC<WalletHeaderProps> = ({ title, icon }) => {
             </div>
 
             <button onClick={() => router.push("/settings")}>
-              <div className="w-8 h-8 rounded-full bg-primary-400 overflow-hidden">
+              <div className="w-8 h-8 xs:w-7 xs:h-7 rounded-full bg-primary-400 overflow-hidden">
                 {user?.avatarUrl && (
                   <Image
                     src={user.avatarUrl || "/placeholder.svg"}
@@ -71,13 +70,13 @@ const WalletHeader: React.FC<WalletHeaderProps> = ({ title, icon }) => {
       </div>
 
       <div
-        className={`px-4 py-2 pb-6 gap-2 flex items-center ${backgroundColor}`}
+        className={`px-4 xs:px-3 py-2 pb-6 xs:pb-4 gap-2 flex items-center ${backgroundColor}`}
       >
         {icon}
         <p
           className={`${
             isDarkMode ? "text-white" : "text-black"
-          } font-bold text-xl`}
+          } font-bold text-xl xs:text-lg`}
         >
           {title}
         </p>

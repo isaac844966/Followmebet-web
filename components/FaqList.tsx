@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useState } from "react";
 import FaqItem from "./FaqItem";
 
@@ -21,7 +20,7 @@ const FaqList: React.FC<FaqListProps> = ({ faqs, className }) => {
   };
 
   return (
-    <div className={`space-y-4 pb-6 ${className || ""}`}>
+    <div className={`space-y-4 xs:space-y-3 pb-6 xs:pb-4 ${className || ""}`}>
       {faqs.map((faq, index) => (
         <FaqItem
           key={index}

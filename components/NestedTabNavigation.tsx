@@ -40,12 +40,13 @@ const NestedTabNavigation: React.FC<Props> = ({
   const tabInactiveBg = isDarkMode ? "#1A1942" : "#F4F4F4";
   const subTabActiveBg = isDarkMode ? "#272785" : "#E8E8FF";
   const subTabInactiveBg = isDarkMode ? "#1A1942" : "#F0F0F0";
- const backgroundColor = isDarkMode ? "bg-[#1E1F68]" : "bg-[#F4F4F4]";
- const subBackground = isDarkMode ? "bg-[#0B0B3F]" : "bg-white";
+  const backgroundColor = isDarkMode ? "bg-[#1E1F68]" : "bg-[#F4F4F4]";
+  const subBackground = isDarkMode ? "bg-[#0B0B3F]" : "bg-white";
+
   return (
     <div className={`w-full ${containerStyle}`}>
       {/* Main Tabs */}
-      <div className={`${subBackground} h-3`}></div>
+      <div className={`${subBackground} h-3 xs:h-2`}></div>
 
       <div className={`flex overflow-hidden ${tabStyle}`}>
         {tabs.map((tab) => {
@@ -54,7 +55,7 @@ const NestedTabNavigation: React.FC<Props> = ({
             <button
               key={tab.key}
               onClick={() => onTabChange(tab.key)}
-              className={`flex-1 py-4 ${isActive ? "font-medium" : ""}`}
+              className={`flex-1 py-4 xs:py-3 ${isActive ? "font-medium" : ""}`}
               style={{
                 backgroundColor: isActive ? tabActiveBg : tabInactiveBg,
               }}
@@ -80,7 +81,7 @@ const NestedTabNavigation: React.FC<Props> = ({
                       : isDarkMode
                       ? "text-gray-400"
                       : "text-gray-500"
-                  }`}
+                  } xs:text-sm`}
                 >
                   {tab.label}
                 </span>
@@ -89,17 +90,17 @@ const NestedTabNavigation: React.FC<Props> = ({
           );
         })}
       </div>
-      <div className={`${subBackground} h-3`}></div>
+      <div className={`${subBackground} h-3 xs:h-2`}></div>
       {/* Sub-Tabs */}
       {activeTabObj?.subTabs && activeTabObj.showSubTabs && (
-        <div className={`flex overflow-hidden  ${subTabStyle}`}>
+        <div className={`flex overflow-hidden ${subTabStyle}`}>
           {activeTabObj.subTabs.map((sub) => {
             const isActive = sub.key === activeSubTab;
             return (
               <button
                 key={sub.key}
                 onClick={() => onTabChange(activeTab, sub.key)}
-                className="flex-1 py-4"
+                className="flex-1 py-4 xs:py-3"
                 style={{
                   backgroundColor: isActive ? subTabActiveBg : subTabInactiveBg,
                 }}
@@ -125,7 +126,7 @@ const NestedTabNavigation: React.FC<Props> = ({
                         : isDarkMode
                         ? "text-gray-400"
                         : "text-gray-500"
-                    }`}
+                    } xs:text-sm`}
                   >
                     {sub.label}
                   </span>

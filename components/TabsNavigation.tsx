@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import Link from "next/link";
 import { Home, TrendingUp, PlusCircle, ListChecks, Wallet } from "lucide-react";
@@ -25,7 +24,7 @@ const TabIcon = ({ focused, icon, title }: TabIconProps) => {
             : isDarkMode
             ? "text-gray-400 font-normal"
             : "text-primary-600 font-normal"
-        } mt-1 text-xs text-center`}
+        } mt-1 text-xs xs:text-[10px] text-center`}
       >
         {title}
       </span>
@@ -48,41 +47,59 @@ const TabsNavigation = ({ currentPath }: TabsNavigationProps) => {
     {
       name: "Home",
       path: "/dashboard",
-      icon: (focused: boolean) => <Home size={22} color={iconColor(focused)} />,
+      icon: (focused: boolean) => (
+        <Home size={22} color={iconColor(focused)} className="xs:w-5 xs:h-5" />
+      ),
     },
     {
       name: "Bet Market",
       path: "/bet-market",
       icon: (focused: boolean) => (
-        <TrendingUp size={22} color={iconColor(focused)} />
+        <TrendingUp
+          size={22}
+          color={iconColor(focused)}
+          className="xs:w-5 xs:h-5"
+        />
       ),
     },
     {
       name: "Create A Bet",
       path: "/fixtures",
       icon: (focused: boolean) => (
-        <PlusCircle size={22} color={iconColor(focused)} />
+        <PlusCircle
+          size={22}
+          color={iconColor(focused)}
+          className="xs:w-5 xs:h-5"
+        />
       ),
     },
     {
       name: "My Bets",
       path: "/my-bets",
       icon: (focused: boolean) => (
-        <ListChecks size={22} color={iconColor(focused)} />
+        <ListChecks
+          size={22}
+          color={iconColor(focused)}
+          className="xs:w-5 xs:h-5"
+        />
       ),
     },
     {
       name: "Wallet",
       path: "/wallet",
       icon: (focused: boolean) => (
-        <Wallet size={22} color={iconColor(focused)} />
+        <Wallet
+          size={22}
+          color={iconColor(focused)}
+          className="xs:w-5 xs:h-5"
+        />
       ),
     },
   ];
 
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 border-t flex justify-between items-center px-2 py-3 z-10"
+      className="fixed bottom-0 left-0 right-0 border-t flex justify-between items-center px-2 xs:px-1 py-3 xs:py-2 z-10"
       style={{
         backgroundColor,
         borderTopColor: isDarkMode ? "#2A2463" : "#E5E7EB",
