@@ -201,7 +201,7 @@ const Dashboard = () => {
           {/* Stats Cards */}
           <div className="grid grid-cols-2 gap-2">
             <div
-              className="rounded-lg py-4 px-3 "
+              className="rounded-lg py-8 px-4 "
               style={{ backgroundColor: isDarkMode ? "#1E1F68" : "#E8E8FF" }}
             >
               <p
