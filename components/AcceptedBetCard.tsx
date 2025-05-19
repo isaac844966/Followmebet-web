@@ -243,7 +243,7 @@ const AcceptedBetCard: React.FC<AcceptedBetCardProps> = ({
             <p
               className={`${getPredictionColor(
                 bet.ownerPrediction
-              )} font-semibold mb-1 xs:text-sm`}
+              )} font-semibold mb-1 text-sm`}
             >
               {getPredictionText(bet.ownerPrediction, bet.condition)}
             </p>
@@ -257,7 +257,7 @@ const AcceptedBetCard: React.FC<AcceptedBetCardProps> = ({
             <p
               className={`${getPredictionColor(
                 bet.challengerPrediction
-              )} font-semibold mb-1 xs:text-sm`}
+              )} font-semibold mb-1 text-sm`}
             >
               {getPredictionText(bet.challengerPrediction, bet.condition)}
             </p>
@@ -272,11 +272,11 @@ const AcceptedBetCard: React.FC<AcceptedBetCardProps> = ({
           className={`flex-col justify-center items-center border-t-[0.5px] ${dividerColor} pt-2 text-center`}
         >
           <p
-            className={`${secondaryTextColor} text-[10px] uppercase mb-1 tracking-wider`}
+            className={`${secondaryTextColor} text-sm  text-[10px] uppercase mb-1 tracking-wider`}
           >
             POTENTIAL WIN
           </p>
-          <p className={`${textColor} font-bold text-md`}>
+          <p className={`${textColor} font-bold text-sm`}>
             ₦{(bet.potentialWin * (1 - bet.fee / 100)).toFixed(2)}
           </p>
         </div>

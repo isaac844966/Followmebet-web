@@ -115,7 +115,7 @@ const PrivateBetCard: React.FC<PrivateBetCardProps> = ({
                   className="object-cover"
                 />
               </div>
-              <p className={textColor}>
+              <p className={` text-sm ${textColor}`}>
                 {bet.owner.nickname ||
                   `${bet.owner.firstname} ${bet.owner.lastname}`}
               </p>
@@ -134,7 +134,7 @@ const PrivateBetCard: React.FC<PrivateBetCardProps> = ({
               {formattedDate(bet.time)}
             </p>
             <div className="flex items-center">
-              <p className={`${textColor} mr-2`}>Me</p>
+              <p className={`${textColor} mr-2 text-sm`}>Me</p>
               <div className="relative w-6 h-6 rounded-full overflow-hidden">
                 <Image
                   src={
@@ -221,7 +221,7 @@ const PrivateBetCard: React.FC<PrivateBetCardProps> = ({
                     className="object-cover"
                   />
                 </div>
-                <p className={` xs:text-sm ${textColor}`}>
+                <p className={` ${textColor}`}>
                   {bet.challenger.nickname ||
                     `${bet.challenger.firstname} ${bet.challenger.lastname}`}
                 </p>
@@ -229,7 +229,7 @@ const PrivateBetCard: React.FC<PrivateBetCardProps> = ({
             ) : (
               <>
                 <span className={`${textColor} mr-1`}>🏆</span>
-                <p className={` xs:text-sm ${textColor}`}>BetMarket</p>
+                <p className={`text-sm ${textColor}`}>BetMarket</p>
               </>
             )}
           </div>
@@ -237,7 +237,7 @@ const PrivateBetCard: React.FC<PrivateBetCardProps> = ({
 
         {/* Actions */}
         <div className="flex justify-between items-center">
-          <p className={`${textColor} font-bold`}>
+          <p className={`${textColor} font-bold text-sm`}>
             ₦{(bet.totalAmount / 2).toLocaleString()}
           </p>
 

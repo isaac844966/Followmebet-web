@@ -94,39 +94,27 @@ export default function CreateBetPage() {
     setSelectedDate(today);
   }, []);
 
-  // Set up intersection observer for infinite scrolling
   useEffect(() => {
-    // Clean up any existing observer
-    if (observerRef.current) {
-      observerRef.current.disconnect();
-    }
-
-    // Create a new observer
+    // Set up intersection observer for infinite scrolling
     observerRef.current = new IntersectionObserver(
       (entries) => {
-        if (entries[0]?.isIntersecting) {
+        if (entries[0].isIntersecting) {
           handleLoadMore();
         }
       },
-      {
-        root: null, // Use viewport as root
-        rootMargin: "100px", // Trigger earlier
-        threshold: 0.1, // Trigger when 10% visible
-      }
+      { threshold: 0.1 }
     );
 
-    // Start observing the load more element if it exists
     if (loadMoreRef.current) {
       observerRef.current.observe(loadMoreRef.current);
     }
 
     return () => {
-      // Clean up
       if (observerRef.current) {
         observerRef.current.disconnect();
       }
     };
-  }, [activeTab, selectedDate, paginationLoading]); // Re-create when key dependencies change
+  }, [activeTab, selectedDate]);
 
   useEffect(() => {
     const dateKey = getCurrentDateKey();
@@ -255,14 +243,6 @@ export default function CreateBetPage() {
         (category) => category.items.length > 0
       );
 
-      console.log(
-        `Loaded ${
-          filteredCategories.length
-        } soccer categories with offset ${newOffset}, hasMore: ${
-          response.total > newOffset + ITEMS_PER_PAGE
-        }`
-      );
-
       // Update fixtures data with new response
       setFixturesData((prev) => {
         // Create a new soccer object to avoid mutation
@@ -383,14 +363,6 @@ export default function CreateBetPage() {
 
       const response = await getFixtures(params as any);
 
-      console.log(
-        `Loaded ${
-          response.items.length
-        } special categories with offset ${newOffset}, hasMore: ${
-          response.total > newOffset + ITEMS_PER_PAGE
-        }`
-      );
-
       // Filter to only show fixtures with betStatus = "ON"
       const filteredCategories = response.items
         .map((category) => {
@@ -485,26 +457,17 @@ export default function CreateBetPage() {
     }
   };
 
-  const handleLoadMore = useCallback((): void => {
-    if (loading || paginationLoading) {
-      console.log("Already loading, skipping handleLoadMore");
-      return;
+  const handleLoadMore = (): void => {
+    if (!loading && !paginationLoading) {
+      const dateKey = getCurrentDateKey();
+
+      if (activeTab === "soccer" && paginationState.soccer[dateKey]?.hasMore) {
+        fetchSoccerFixtures(false);
+      } else if (activeTab === "special" && paginationState.special.hasMore) {
+        fetchSpecialFixtures(false);
+      }
     }
-
-    const dateKey = getCurrentDateKey();
-
-    console.log("handleLoadMore called", {
-      activeTab,
-      soccerHasMore: paginationState.soccer[dateKey]?.hasMore,
-      specialHasMore: paginationState.special.hasMore,
-    });
-
-    if (activeTab === "soccer" && paginationState.soccer[dateKey]?.hasMore) {
-      fetchSoccerFixtures(false);
-    } else if (activeTab === "special" && paginationState.special.hasMore) {
-      fetchSpecialFixtures(false);
-    }
-  }, [activeTab, paginationState, loading, paginationLoading, selectedDate]);
+  };
 
   // Get current fixtures data based on active tab and selected date
   const getCurrentFixtures = useCallback((): FixtureCategory[] => {
@@ -549,13 +512,6 @@ export default function CreateBetPage() {
       </div>
     );
   };
-
-  // Debug pagination state
-  const currentDateKey = getCurrentDateKey();
-  const currentHasMore =
-    activeTab === "soccer"
-      ? paginationState.soccer[currentDateKey]?.hasMore
-      : paginationState.special.hasMore;
 
   return (
     <div className={`flex-1 min-h-screen `}>
@@ -615,9 +571,7 @@ export default function CreateBetPage() {
                 {getCurrentFixtures().map((category: FixtureCategory) => (
                   <div key={category.id} className="mb-2">
                     <div className="flex items-center mb-2 px-4">
-                      <h3
-                        className={`${textColor} font-medium text-sm mr-2 xs:text-sm`}
-                      >
+                      <h3 className={`${textColor} font-medium text-sm mr-2 xs:text-sm`}>
                         {category.category}
                       </h3>
                       <ChevronRight
@@ -645,28 +599,23 @@ export default function CreateBetPage() {
                   </div>
                 ))}
 
-                {/* Load more trigger - improved visibility */}
-                {paginationLoading ? (
-                  <div className="flex justify-center items-center py-6">
-                    <LoadingSpinner
-                      variant="circular"
-                      size="md"
-                      color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
-                    />
-                  </div>
-                ) : currentHasMore ? (
+                {/* Load more trigger element */}
+                {(activeTab === "soccer" &&
+                  paginationState.soccer[getCurrentDateKey()]?.hasMore) ||
+                (activeTab === "special" && paginationState.special.hasMore) ? (
                   <div
                     ref={loadMoreRef}
-                    className="flex justify-center items-center h-16 py-6"
-                    id="load-more-trigger"
+                    className="flex justify-center items-center"
                   >
-                    {/* Empty div that will trigger the observer */}
+                    {paginationLoading && (
+                      <LoadingSpinner
+                        variant="circular"
+                        size="md"
+                        color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
+                      />
+                    )}
                   </div>
-                ) : (
-                  <div className=" text-sm text-gray-500">
-                   
-                  </div>
-                )}
+                ) : null}
               </div>
             )}
           </div>

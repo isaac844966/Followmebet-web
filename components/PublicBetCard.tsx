@@ -49,7 +49,7 @@ const PublicBetCard: React.FC<BetCardProps> = ({ bet }) => {
           {formattedDate(bet.time)}
         </p>
         <div className="flex items-center">
-          <p className={`${textColor} mr-2`}>Me</p>
+          <p className={`${textColor} mr-2 xs:text-xs`}>Me</p>
           <div className="relative w-6 h-6 rounded-full overflow-hidden">
             <Image
               src={bet.owner.avatarUrl || "/placeholder.svg"}
@@ -111,19 +111,19 @@ const PublicBetCard: React.FC<BetCardProps> = ({ bet }) => {
         {/* Prediction */}
         <div className="flex justify-between items-center mb-3">
           <div className="flex flex-col items-start">
-            <p className={`${textColor} mb-1`}>{bet.fixture.item1.name}</p>
-            <p className="text-green-500">{getPredictionText()}</p>
+            <p className={`${textColor} mb-1 text-sm`}>{bet.fixture.item1.name}</p>
+            <p className="text-green-500 text-sm">{getPredictionText()}</p>
           </div>
 
           <div className="flex items-center">
             <span className={`${textColor} mr-1`}>🏆</span>
-            <p className={`${textColor}`}>BetMarket</p>
+            <p className={`${textColor} text-sm`}>BetMarket</p>
           </div>
         </div>
 
         {/* Amount and Delete Button */}
         <div className="flex justify-between items-center">
-          <p className={`${textColor} font-bold`}>
+          <p className={`${textColor} font-bold text-sm`}>
             ₦{(bet.totalAmount / 2).toLocaleString()}
           </p>
           <button
