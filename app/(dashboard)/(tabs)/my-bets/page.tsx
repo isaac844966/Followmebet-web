@@ -537,17 +537,9 @@ const MyBetsPage = () => {
 
       <div
         ref={contentContainerRef}
-        className={`${subBackground} flex-1 overflow-y-auto`}
-        style={{
-          height: "calc(100vh - 10px)",
-          paddingTop: "calc(220px + 56px + 16px)",
-          paddingBottom: "64px",
-          paddingLeft: "16px",
-          paddingRight: "16px",
-        }}
+        className={`${subBackground} flex-1 overflow-y-auto h-[calc(100vh-10px)] pt-[calc(220px+56px+16px)] xs:pt-[calc(180px+56px+16px)] pb-16 px-4`}
       >
         {renderBets()}
-
       </div>
     </div>
   );

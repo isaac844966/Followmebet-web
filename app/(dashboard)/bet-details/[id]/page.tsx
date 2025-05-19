@@ -298,13 +298,13 @@ const BetDetailsPage = () => {
   return (
     <div className={`min-h-screen ${backgroundColor}`}>
       {/* Header */}
-      <div className=" py-3 sticky top-0 z-10 bg-inherit mt-6">
+      <div className=" py-3 sticky top-0 z-10 bg-inherit pt-6">
         <BetDetailsCard bet={bet} resultToShow={resultToShow} />
       </div>
 
       {/* Match Details Card */}
 
-      <div className="flex-1 px-4 pb-24 overflow-y-auto">
+      <div className="flex-1 px-2 pb-24 overflow-y-auto">
         {/* Staker Card */}
         <StakerCard owner={bet.owner} />
 
@@ -371,6 +371,7 @@ const BetDetailsPage = () => {
               onClick={handlePlaceBet}
               loading={loading}
               title={fromAllBet ? "Place Bet" : "Accept Bet"}
+              size="lg"
             />
           )}
           {/* Decline Button - only show for PrivateBet */}
@@ -379,6 +380,7 @@ const BetDetailsPage = () => {
               title="Decline Bet"
               className="w-full py-6 border-2 text-red-500 border-[#FF3B30] bg-transparent"
               onClick={() => setShowDeclineModal(true)}
+              size="lg"
             />
           )}
           {/* Delete Button - only show for PublicBet when owner */}
@@ -387,6 +389,7 @@ const BetDetailsPage = () => {
               title="Delete"
               onClick={() => setShowDeclineModal(true)}
               className="w-full py-6 bg-red-600 hover:bg-red-700 text-white font-medium"
+              size="lg"
             />
           )}
         </div>

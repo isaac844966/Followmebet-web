@@ -220,8 +220,8 @@ const SummaryPage = () => {
 
   return (
     <div className={` ${backgroundColor} pb-0`}>
-      <div className="fixed top-10 left-0 right-0 z-20">
-
+      <div className="fixed top-0 left-0 right-0 z-20 ">
+        <div className={`pt-6 ${backgroundColor} `}></div>
         {/* Match Details */}
         <BetDetailsCard bet={mockBet as any} />
       </div>
@@ -279,7 +279,7 @@ const SummaryPage = () => {
           onClick={handlePlaceBet}
           disabled={submitting}
           size="lg"
-          className="w-full mt-6 mb-2"
+          className="w-full mt-6 "
         />
       </div>
 

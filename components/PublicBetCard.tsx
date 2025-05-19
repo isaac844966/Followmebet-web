@@ -42,14 +42,14 @@ const PublicBetCard: React.FC<BetCardProps> = ({ bet }) => {
   };
 
   return (
-    <div className="mb-4">
+    <div className="mb-4 xs:mb-3">
       {/* Date and User at top */}
-      <div className="flex justify-between items-center mb-2">
+      <div className="flex justify-between items-center mb-2 xs:mb-1">
         <p className={`text-xs xs:text-[10px] ${secondaryTextColor}`}>
           {formattedDate(bet.time)}
         </p>
         <div className="flex items-center">
-          <p className={`${textColor} mr-2 xs:text-sm`}>Me</p>
+          <p className={`${textColor} mr-2 xs:mr-1 xs:text-xs`}>Me</p>
           <div className="relative w-6 h-6 xs:w-5 xs:h-5 rounded-full overflow-hidden">
             <Image
               src={bet.owner.avatarUrl || "/placeholder.svg"}
@@ -66,7 +66,7 @@ const PublicBetCard: React.FC<BetCardProps> = ({ bet }) => {
         className={`${cardBg} border-[0.2px] border-[#62629e] p-3 xs:p-2 shadow-sm w-[98%] rounded-tl-lg rounded-bl-lg rounded-br-lg`}
       >
         {/* League and Match Time Row */}
-        <div className="flex justify-between items-center mb-2">
+        <div className="flex justify-between items-center mb-2 xs:mb-1">
           <p
             className={`${secondaryTextColor} text-xs xs:text-[10px] w-40 xs:w-32 line-clamp-2`}
           >
@@ -78,9 +78,9 @@ const PublicBetCard: React.FC<BetCardProps> = ({ bet }) => {
         </div>
 
         {/* Teams */}
-        <div className="flex justify-between items-center mb-3 px-1 border-[#62629e] border-b-[0.2px] pb-2">
+        <div className="flex justify-between items-center mb-3 xs:mb-2 px-1 border-[#62629e] border-b-[0.2px] pb-2 xs:pb-1.5">
           <div className="flex-1 flex items-center">
-            <div className="relative w-6 h-6 xs:w-5 xs:h-5 mr-2 xs:mr-1">
+            <div className="relative w-6 h-6 xs:w-4 xs:h-4 mr-2 xs:mr-1">
               <Image
                 src={bet.fixture.item1.logoUrl || "/placeholder.svg"}
                 alt="Team 1 logo"
@@ -88,22 +88,26 @@ const PublicBetCard: React.FC<BetCardProps> = ({ bet }) => {
                 className="object-contain"
               />
             </div>
-            <p className={`${textColor} text-sm xs:text-xs flex-1 truncate`}>
+            <p
+              className={`${textColor} text-sm xs:text-[10px] flex-1 truncate`}
+            >
               {bet.fixture.item1.name}
             </p>
           </div>
 
-          <p className={`${secondaryTextColor} mx-2 text-xs xs:text-[10px]`}>
+          <p
+            className={`${secondaryTextColor} mx-2 xs:mx-1 text-xs xs:text-[10px]`}
+          >
             Vs
           </p>
 
           <div className="flex-1 flex items-center justify-end">
             <p
-              className={`${textColor} text-sm xs:text-xs flex-1 text-right truncate`}
+              className={`${textColor} text-sm xs:text-[10px] flex-1 text-right truncate`}
             >
               {bet.fixture.item2.name}
             </p>
-            <div className="relative w-6 h-6 xs:w-5 xs:h-5 ml-2 xs:ml-1">
+            <div className="relative w-6 h-6 xs:w-4 xs:h-4 ml-2 xs:ml-1">
               <Image
                 src={bet.fixture.item2.logoUrl || "/placeholder.svg"}
                 alt="Team 2 logo"
@@ -115,27 +119,29 @@ const PublicBetCard: React.FC<BetCardProps> = ({ bet }) => {
         </div>
 
         {/* Prediction */}
-        <div className="flex justify-between items-center mb-3">
+        <div className="flex justify-between items-center mb-3 xs:mb-2">
           <div className="flex flex-col items-start">
-            <p className={`${textColor} mb-1 xs:text-xs`}>
+            <p className={`${textColor} mb-1 xs:mb-0.5 xs:text-[10px]`}>
               {bet.fixture.item1.name}
             </p>
-            <p className="text-green-500 xs:text-xs">{getPredictionText()}</p>
+            <p className="text-green-500 xs:text-[10px]">
+              {getPredictionText()}
+            </p>
           </div>
 
           <div className="flex items-center">
-            <span className={`${textColor} mr-1`}>🏆</span>
-            <p className={`${textColor} xs:text-xs`}>BetMarket</p>
+            <span className={`${textColor} mr-1 xs:text-xs`}>🏆</span>
+            <p className={`${textColor} xs:text-[10px]`}>BetMarket</p>
           </div>
         </div>
 
         {/* Amount and Delete Button */}
         <div className="flex justify-between items-center">
-          <p className={`${textColor} font-bold xs:text-sm`}>
+          <p className={`${textColor} font-bold xs:text-xs`}>
             ₦{(bet.totalAmount / 2).toLocaleString()}
           </p>
           <button
-            className="bg-[#FC0900] px-6 xs:px-4 py-3 xs:py-2 rounded text-white xs:text-xs"
+            className="bg-[#FC0900] px-6 xs:px-3 py-3 xs:py-1.5 rounded text-white xs:text-[10px]"
             onClick={() =>
               router.push(
                 `/bet-details/${
