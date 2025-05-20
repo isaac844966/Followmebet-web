@@ -16,8 +16,7 @@ export default function ProtectedRoute({
   type,
 }: ProtectedRouteProps) {
   const router = useRouter();
-  const { token, user, setLoading } = useAuthStore();
-  const [isLoading, setIsLocalLoading] = useState(true);
+  const { token, user, isLoading, setLoading } = useAuthStore();
   const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {
@@ -26,8 +25,8 @@ export default function ProtectedRoute({
 
     const checkAuth = async () => {
       try {
+        // Set loading state at the beginning
         setLoading(true);
-        setIsLocalLoading(true);
 
         // Get token from both store and localStorage to ensure consistency
         const storedToken = useAuthStore.getState().token;
@@ -109,20 +108,26 @@ export default function ProtectedRoute({
             return;
           }
         }
+
+        // Only set authChecked to true after all checks and redirects
+        setAuthChecked(true);
       } catch (error) {
         // On any unexpected error, redirect to login as a fallback
+        console.error("Auth check error:", error);
         router.replace("/login");
       } finally {
-        setAuthChecked(true);
-        setIsLocalLoading(false);
+        // Only remove loading after everything is complete
         setLoading(false);
       }
     };
 
+    // Reset authChecked when component mounts or type changes
+    setAuthChecked(false);
     checkAuth();
-  }, [router, token, user, setLoading, type]);
+  }, [router, setLoading, type]);
 
-  if (isLoading) {
+  // Show splash screen if loading or auth hasn't been checked yet
+  if (isLoading || !authChecked) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Image
@@ -136,5 +141,5 @@ export default function ProtectedRoute({
     );
   }
 
-  return authChecked ? <>{children}</> : null;
+  return <>{children}</>;
 }
