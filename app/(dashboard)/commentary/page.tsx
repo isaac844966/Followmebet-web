@@ -12,6 +12,7 @@ import { useMatchEvents } from "@/hooks/use-match-event";
 import { useStandings } from "@/hooks/use-standing";
 import StandingsTab from "@/components/commentary/StandingsTabs";
 import BackButton from "@/components/BackButton";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function CommentaryPage() {
   const router = useRouter();
@@ -69,22 +70,9 @@ export default function CommentaryPage() {
   const matchStatus = fixtureData?.status || "NS";
   const matchMinute = fixtureData?.status_elapse || "";
 
-  // Reusable loading component
-  const LoadingIndicator = () => (
-    <div className="flex-1 flex items-center justify-center">
-      <Loader2 className="h-8 w-8 xs:h-6 xs:w-6 text-primary animate-spin" />
-    </div>
-  );
+ 
 
-  // Reusable error component
-  const ErrorComponent = ({ error }: { error: string }) => (
-    <div className="flex-1 flex items-center justify-center p-4 xs:p-2">
-      <p className={`${textColor} text-center mb-4 xs:text-sm`}>{error}</p>
-    </div>
-  );
 
-  // Calculate the total height of fixed elements for content padding
-  // Back button (56px) + Match header (approx 120px) + Tab navigation (48px)
   const fixedHeaderHeight = "224px";
 
   return (
@@ -92,7 +80,7 @@ export default function CommentaryPage() {
       {/* Fixed Header Section */}
       <div className={`fixed top-0 left-0 right-0 z-10 ${backgroundColor}`}>
         {/* Back Button */}
-          <BackButton title="Commentary" />
+        <BackButton title="Commentary" />
 
         {/* Match Header */}
         <MatchHeader
@@ -121,9 +109,11 @@ export default function CommentaryPage() {
           {activeTab === 0 && (
             <>
               {eventsLoading ? (
-                <LoadingIndicator />
-              ) : eventsError ? (
-                <ErrorComponent error={eventsError} />
+                <LoadingSpinner
+                  variant="circular"
+                  size="lg"
+                  color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
+                />
               ) : (
                 <CommentaryTab
                   events={events}
@@ -141,9 +131,11 @@ export default function CommentaryPage() {
           {activeTab === 1 && (
             <>
               {standingsLoading ? (
-                <LoadingIndicator />
-              ) : standingsError ? (
-                <ErrorComponent error={standingsError} />
+                <LoadingSpinner
+                  variant="circular"
+                  size="lg"
+                  color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
+                />
               ) : (
                 <StandingsTab
                   standings={standings}

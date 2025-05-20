@@ -38,11 +38,9 @@ const Deposit = () => {
         return;
       }
 
-      // Open the payment gateway in a new tab
-      window.open(authorizationUrl, "_blank");
-
-      // Alternatively, you could redirect in the same window:
-      // window.location.href = authorizationUrl;
+      router.push(
+        `/payment-gateway?url=${encodeURIComponent(authorizationUrl)}`
+      );
     } catch (error) {
       console.error("Deposit error:", error);
     } finally {

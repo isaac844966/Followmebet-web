@@ -60,14 +60,14 @@ const StandingsTab: React.FC<StandingsTabProps> = ({
     return (
       <div
         key={item.id || item.name}
-        className={`flex items-center py-3 xs:py-2 border-b-[0.3px] border-gray-600 ${rowBgColor}`}
+        className={`flex items-center py-3  border-b-[0.3px] border-gray-600 ${rowBgColor}`}
       >
-        <div className="w-10 xs:w-8 flex justify-center">
+        <div className="w-10  flex justify-center">
           <div
-            className={`${rankColor} w-6 h-6 xs:w-5 xs:h-5 rounded-full flex items-center justify-center`}
+            className={`${rankColor} w-6 h-6  rounded-full flex items-center justify-center`}
           >
             <span
-              className={`font-bold xs:text-xs ${
+              className={`font-bold text-sm ${
                 isDarkMode
                   ? "text-white"
                   : index < 7
@@ -82,9 +82,9 @@ const StandingsTab: React.FC<StandingsTabProps> = ({
           </div>
         </div>
 
-        <div className="flex items-center flex-1 ml-2 xs:ml-1">
+        <div className="flex items-center flex-1 ml-2 ">
           {item.logo ? (
-            <div className="relative w-6 h-6 xs:w-5 xs:h-5 mr-2 xs:mr-1">
+            <div className="relative w-6 h-6  mr-2 ">
               <Image
                 src={item.logo || "/placeholder.svg"}
                 alt={item.name}
@@ -93,12 +93,12 @@ const StandingsTab: React.FC<StandingsTabProps> = ({
               />
             </div>
           ) : (
-            <div className="w-6 h-6 xs:w-5 xs:h-5 mr-2 xs:mr-1" />
+            <div className="w-6 h-6  mr-2 " />
           )}
           <span
             className={`${textColor} ${
               isMatchTeam ? "font-bold" : "font-medium"
-            } max-w-[10rem] xs:max-w-[8rem] text-sm xs:text-xs`}
+            } max-w-[10rem]  text-sm `}
             style={{
               textOverflow: "ellipsis",
               overflow: "hidden",
@@ -109,20 +109,18 @@ const StandingsTab: React.FC<StandingsTabProps> = ({
           </span>
         </div>
 
-        <div className="w-10 xs:w-8 flex justify-center">
-          <span className={`${secondaryTextColor} xs:text-xs`}>
-            {item.played}
-          </span>
+        <div className="w-10  flex justify-center">
+          <span className={`${secondaryTextColor} text-sm`}>{item.played}</span>
         </div>
 
-        <div className="w-14 xs:w-10 flex justify-center">
-          <span className={`${secondaryTextColor} xs:text-xs`}>
+        <div className="w-14  flex justify-center">
+          <span className={`${secondaryTextColor} text-sm`}>
             {item.goalsDiff > 0 ? `+${item.goalsDiff}` : item.goalsDiff}
           </span>
         </div>
 
-        <div className="w-10 xs:w-8 flex justify-center">
-          <span className={`${textColor} font-bold xs:text-xs`}>
+        <div className="w-10  flex justify-center">
+          <span className={`${textColor} font-bold text-sm`}>
             {item.points}
           </span>
         </div>
@@ -131,17 +129,13 @@ const StandingsTab: React.FC<StandingsTabProps> = ({
   };
 
   return (
-    <div className="flex-1 px-4 xs:px-2 overflow-auto">
+    <div className="flex-1 px-2 overflow-auto">
       {loading ? (
         <LoadingSpinner
           variant="circular"
           size="lg"
           color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
         />
-      ) : error ? (
-        <div className="flex-1 flex justify-center items-center py-20 xs:py-12">
-          <p className={`${textColor} xs:text-sm`}>{error}</p>
-        </div>
       ) : standings.length > 0 ? (
         <div className="flex-1">
           {/* League Header */}
@@ -149,7 +143,7 @@ const StandingsTab: React.FC<StandingsTabProps> = ({
             className={`${cardBackground} rounded-lg mt-4 p-3 xs:p-2 flex items-center`}
           >
             {categoryId && (
-              <div className="relative w-8 h-8 xs:w-6 xs:h-6 mr-3 xs:mr-2">
+              <div className="relative w-8 h-8 xs:w-6 xs:h-6 mr-3 ">
                 <Image
                   src={`https://media.api-sports.io/football/leagues/${categoryId}.png`}
                   alt={leagueName}
@@ -164,21 +158,21 @@ const StandingsTab: React.FC<StandingsTabProps> = ({
           </div>
 
           {/* Table Header */}
-          <div className="flex items-center py-3 xs:py-2 border-b-[0.3px] border-gray-600">
-            <div className="w-10 xs:w-8 flex justify-center">
-              <span className={`${secondaryTextColor} xs:text-xs`}>#</span>
+          <div className="flex items-center py-3  border-b-[0.3px] border-gray-600">
+            <div className="w-10  flex justify-center">
+              <span className={`${secondaryTextColor} text-sm`}>#</span>
             </div>
-            <div className="flex-1 ml-2 xs:ml-1">
-              <span className={`${secondaryTextColor} xs:text-xs`}>Team</span>
+            <div className="flex-1 ml-2 ">
+              <span className={`${secondaryTextColor} text-sm`}>Team</span>
             </div>
-            <div className="w-10 xs:w-8 flex justify-center">
-              <span className={`${secondaryTextColor} xs:text-xs`}>P</span>
+            <div className="w-10  flex justify-center">
+              <span className={`${secondaryTextColor} text-sm`}>P</span>
             </div>
-            <div className="w-14 xs:w-10 flex justify-center">
-              <span className={`${secondaryTextColor} xs:text-xs`}>DIFF</span>
+            <div className="w-14  flex justify-center">
+              <span className={`${secondaryTextColor} text-sm`}>DIFF</span>
             </div>
-            <div className="w-10 xs:w-8 flex justify-center">
-              <span className={`${secondaryTextColor} xs:text-xs`}>PTS</span>
+            <div className="w-10  flex justify-center">
+              <span className={`${secondaryTextColor} text-sm`}>PTS</span>
             </div>
           </div>
 

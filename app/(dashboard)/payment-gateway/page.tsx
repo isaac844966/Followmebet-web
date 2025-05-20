@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { fetchUserProfile } from "@/lib/services/authService";
 
@@ -8,9 +8,10 @@ const PaymentGateway = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const url = searchParams.get("url");
+
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     if (!url) {
@@ -20,58 +21,62 @@ const PaymentGateway = () => {
 
     const handlePaymentResponse = async () => {
       try {
-        await fetchUserProfile();
+        await fetchUserProfile(); 
         router.replace("/wallet");
       } catch (error) {
         console.error("Failed to fetch profile after payment:", error);
         setError(
           "Failed to update wallet information. Please check your payment status."
         );
-        setTimeout(() => router.replace("/wallet"), 3000);
+        setTimeout(() => router.replace("/wallet"), 2000);
       }
     };
 
-    // Function to monitor iframe URL changes
     const checkIframeUrl = () => {
       const iframe = iframeRef.current;
       if (!iframe) return;
 
       try {
         const currentUrl = iframe.contentWindow?.location.href;
-        console.log("Current iframe URL:", currentUrl);
 
         if (
           currentUrl &&
-          currentUrl.includes("paymentReference=") &&
-          currentUrl.includes("followmebet.com.ng")
+          currentUrl.includes("payment-gateway/redirect") 
         ) {
-          console.log("Payment reference detected in URL, completing payment");
+          console.log("Redirect URL detected in iframe.");
+          clearInterval(interval); 
           handlePaymentResponse();
         }
-      } catch (e) {
-        // Cross-origin restriction error, we can't access the URL directly
-        console.log(
-          "Cannot access iframe URL due to cross-origin restrictions"
-        );
+      } catch (err) {
+        console.log("Cross-origin: cannot read iframe URL.");
       }
     };
 
-    // Set interval to check URL (since we can't use onNavigationStateChange like in React Native)
     const interval = setInterval(checkIframeUrl, 1000);
 
-    return () => {
-      clearInterval(interval);
-    };
+    return () => clearInterval(interval);
   }, [url, router]);
 
   const handleIframeLoad = () => {
     setIsLoading(false);
   };
 
-  const handleIframeError = () => {
-    setIsLoading(false);
-    setError("Failed to load payment gateway. Please try again.");
-  };
+  return (
+    <div>
+   
+
+      {url && (
+        <iframe
+          ref={iframeRef}
+          src={url}
+          onLoad={handleIframeLoad}
+          className="w-full h-[100vh] border-0"
+          allow="payment"
+        />
+      )}
+
+    </div>
+  );
 };
 
 export default PaymentGateway;

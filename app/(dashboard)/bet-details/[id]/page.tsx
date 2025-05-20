@@ -20,6 +20,7 @@ import CustomModal from "@/components/CustomModal";
 import CustomButton from "@/components/CustomButton";
 import StatusModal from "@/components/StatusModal";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { Button } from "@/components/ui/button";
 
 // Types for better type safety
 type PredictionType = "WIN" | "LOSE" | "DRAW" | null;
@@ -367,22 +368,23 @@ const BetDetailsPage = () => {
               size="lg"
             />
           )}
-          {/* Decline Button - only show for PrivateBet */}
           {showDeclineButton && (
-            <CustomButton
-              title="Decline Bet"
-              className="w-full py-6 border-2 border-[#FF3B30] bg-transparent"
-              textClassName="text-black"
+            
+            <Button
+              className={`w-full py-8 border-2 border-[#FF3B30] bg-transparent text-md font-medium ${
+                isDarkMode ? "text-white" : "text-black"
+              } `}
               onClick={() => setShowDeclineModal(true)}
-              size="lg"
-            />
+            >
+              Decline Bet
+            </Button>
           )}
           {/* Delete Button - only show for PublicBet when owner */}
           {showDeleteButton && (
             <CustomButton
               title="Delete"
               onClick={() => setShowDeclineModal(true)}
-              className="w-full py-6 bg-red-600 hover:bg-red-700 text-white font-medium"
+              className="w-full py-6 bg-red-600 hover:bg-red-700 text-white font-medium "
               size="lg"
             />
           )}

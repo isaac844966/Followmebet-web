@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import BackButton from "@/components/BackButton";
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
+import { CustomSwitch } from "@/components/ui/custom-switch";
 import { Loader2 } from "lucide-react";
 
 export default function ThemeSettings() {
@@ -50,7 +50,7 @@ export default function ThemeSettings() {
     <div className={`${backgroundColor} min-h-screen px-2`}>
       <BackButton title="Theme" />
 
-      <div className="flex flex-col  mt-6 relative pb-24">
+      <div className="flex flex-col mt-6 relative pb-24">
         {/* Theme Options */}
         <div
           className={`${
@@ -60,11 +60,10 @@ export default function ThemeSettings() {
           <p className={`${isDarkMode ? "text-primary-1200" : "text-black"}`}>
             Dark Theme {isDarkMode ? "(Current)" : ""}
           </p>
-          <Switch
+          <CustomSwitch
             id="dark-theme"
             checked={darkThemeEnabled}
             onCheckedChange={handleDarkThemeToggle}
-            
           />
         </div>
 
@@ -76,7 +75,7 @@ export default function ThemeSettings() {
           <p className={`${isDarkMode ? "text-primary-1200" : "text-black"}`}>
             Light Theme {!isDarkMode ? "(Current)" : ""}
           </p>
-          <Switch
+          <CustomSwitch
             id="light-theme"
             checked={lightThemeEnabled}
             onCheckedChange={handleLightThemeToggle}
@@ -86,7 +85,7 @@ export default function ThemeSettings() {
         {/* Save Button */}
         <div className="fixed bottom-8 left-4 right-4 mx-auto max-w-md">
           <Button
-            className="w-full py-8 bg-[#FFA726] hover:bg-[#FF9800] text-black font-semibold"
+            className="w-full py-8 bg-[#FFA726] hover:bg-[#FF9800] text-white font-medium font-semibold"
             onClick={saveChanges}
             disabled={!hasChanges || loading}
           >

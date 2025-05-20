@@ -187,6 +187,7 @@ export default function CommentaryTab({
                 alt="penalty"
                 width={20}
                 height={20}
+                color="#000"
               />
             </div>
           );
@@ -197,6 +198,8 @@ export default function CommentaryTab({
               alt="penalty"
               width={20}
               height={20}
+              color="#000"
+              
             />
           </div>
         );
@@ -392,7 +395,7 @@ export default function CommentaryTab({
                       )}
                     </div>
                     {icon && (
-                      <div className="absolute left-[47%]  flex gap-2 xs:gap-1">
+                      <div className="absolute left-[48%]  flex gap-2 xs:gap-1">
                         <div>{icon}</div>
                         <span
                           className={`text-sm xs:text-xs ${secondaryTextColor}`}
