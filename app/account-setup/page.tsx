@@ -8,7 +8,7 @@ import { handleApiError } from "@/lib/utils/handleApiError"
 import { login } from "@/lib/services/authService"
 import BackButton from "@/components/BackButton"
 import UserProfileForm from "@/components/UserProfileForm"
-import toast from "react-hot-toast"
+// import toast from "react-hot-toast"
 import { useStatusModal } from "@/lib/contexts/useStatusModal"
 import StatusModal from "@/components/StatusModal"
 
@@ -70,7 +70,7 @@ const AccountSetup = () => {
       }
 
       await editProfile(data)
-      toast.success("Account setup complete!")
+      showSuccessModal("Account setup complete!");
 
       const storedMobile = localStorage.getItem("registeredMobile")
       const storedPassword = localStorage.getItem("userPassword")

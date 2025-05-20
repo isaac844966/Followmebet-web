@@ -21,18 +21,18 @@ export default function Home() {
       <div className="flex flex-col min-h-screen pb-8">
         <div className="items-center mt-20 text-center">
           <h1
-            className={`text-6xl xs:text-4xl text-center font-bold ${
+            className={`text-6xl  text-center font-bold ${
               isDarkMode ? "text-white" : "text-light-text"
             }`}
           >
             Bet With
           </h1>
-          <h1 className="text-6xl xs:text-4xl text-center text-primary-400 font-bold">
+          <h1 className="text-6xl text-center text-primary-400 font-bold">
             Friends
           </h1>
         </div>
 
-        <div className="items-center justify-center mb-8 mt-52 xs:mt-32 flex">
+        <div className="items-center justify-center mb-8 mt-40  flex">
           <Image
             src="/app-icon.png"
             alt="App Icon"

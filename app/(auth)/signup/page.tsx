@@ -10,11 +10,19 @@ import PhoneInput from "@/components/PhoneInput"
 import CustomInput from "@/components/CustomInput"
 import CustomButton from "@/components/CustomButton"
 import Link from "next/link"
-import toast from "react-hot-toast"
+// import toast from "react-hot-toast"
+import { useStatusModal } from "@/lib/contexts/useStatusModal"
+import StatusModal from "@/components/StatusModal"
 
 const SignUp = () => {
   const { isDarkMode } = useTheme()
   const router = useRouter()
+   const {
+     modalState,
+     showErrorModal,
+     showSuccessModal,
+     hideModal: hideStatusModal,
+   } = useStatusModal();
 
   const [phoneNumber, setPhoneNumber] = useState("")
   const [password, setPassword] = useState("")
@@ -85,7 +93,7 @@ const SignUp = () => {
 
       router.replace("/otp")
     } catch (error: any) {
-      handleApiError(error, toast.error as any, "Registration failed", "Error")
+      handleApiError(error, showErrorModal , "Registration failed", "Error")
     } finally {
       setLoading(false)
     }
@@ -105,7 +113,9 @@ const SignUp = () => {
 
         <div className="flex mb-12 sm:mb-10 xs:mb-6">
           <p
-            className={`${isDarkMode ? "text-white" : "text-black"} text-md xs:text-sm`}
+            className={`${
+              isDarkMode ? "text-white" : "text-black"
+            } text-md xs:text-sm`}
           >
             Already have an account?{" "}
           </p>
@@ -150,6 +160,14 @@ const SignUp = () => {
           onClick={handleSignUp}
           buttonStyle={{ marginBottom: 24, marginTop: 40 }}
           className="w-full"
+        />
+        <StatusModal
+          visible={modalState.visible}
+          onClose={() => hideStatusModal()}
+          title={modalState.title}
+          message={modalState.message}
+          buttonText={modalState.buttonText}
+          type={modalState.type}
         />
       </div>
     </div>

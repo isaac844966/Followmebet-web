@@ -34,66 +34,66 @@ const OpenChallengesTab: React.FC<OpenChallengesTabProps> = ({
   router,
 }) => {
   // Render a bet item
-  const renderBetItem = (item: BetMarketItem) => {
-    const predictionColor =
-      item.ownerPrediction === "WIN"
-        ? "text-green-500"
-        : item.ownerPrediction === "LOSE"
-        ? "text-green-500"
-        : "text-yellow-500";
+   const renderBetItem = (item: BetMarketItem) => {
+     const predictionColor =
+       item.ownerPrediction === "WIN"
+         ? "text-green-500"
+         : item.ownerPrediction === "LOSE"
+         ? "text-green-500"
+         : "text-yellow-500";
 
-    return (
-      <button
-        key={`bet-item-${item.id}`}
-        className="flex items-center justify-between py-3 xs:py-2 border-b border-gray-700 w-full text-left"
-        onClick={() =>
-          router.push(`/bet-details/${item.id}?fromCreateBet=true`)
-        }
-      >
-        <div className="flex items-center">
-          <div className="relative w-7 h-7 xs:w-6 xs:h-6 mr-3 xs:mr-2">
-            <Image
-              src={item.owner.avatarUrl || "/placeholder.svg"}
-              alt={item.owner.nickname}
-              fill
-              className={`${
-                isDarkMode ? "border-white" : "border-[#FBB03B]"
-              } border rounded-full object-cover`}
-            />
-          </div>
-          <div>
-            <p className={`${textColor} font-medium text-sm xs:text-xs`}>
-              {item.owner.nickname} predict
-            </p>
-            <div className="flex items-center">
-              <p
-                className={`${textColor} text-sm xs:text-xs max-w-[120px] xs:max-w-[100px]`}
-                style={{
-                  textOverflow: "ellipsis",
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {item.ownerPrediction === "WIN"
-                  ? item.fixture.item1.name
-                  : item.ownerPrediction === "LOSE"
-                  ? item.fixture.item2.name
-                  : item.fixture.item1.name}{" "}
-                <span className={predictionColor}>
-                  {item.ownerPrediction === "LOSE"
-                    ? "WIN"
-                    : item.ownerPrediction}
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
-        <p className={`${textColor} font-bold text-sm xs:text-xs`}>
-          ₦{(item.totalAmount / 2).toLocaleString()}
-        </p>
-      </button>
-    );
-  };
+     const fixtureData = encodeURIComponent(JSON.stringify(item));
+
+     return (
+       <button
+         key={`bet-item-${item.id}`}
+         className="flex items-center justify-between py-3 xs:py-2 border-b border-gray-700 w-full text-left"
+         onClick={() =>
+           router.push(
+             `/bet-details/${item.id}?fromCreateBet=true&itemData=${fixtureData}`
+           )
+         }
+       >
+         <div className="flex items-center">
+           <div className="relative w-7 h-7 xs:w-6 xs:h-6 mr-3 xs:mr-2">
+             <Image
+               src={item.owner.avatarUrl || "/placeholder.svg"}
+               alt={item.owner.nickname}
+               fill
+               className={`${
+                 isDarkMode ? "border-white" : "border-[#FBB03B]"
+               } border rounded-full object-cover`}
+             />
+           </div>
+           <div>
+             <p className={`${textColor} font-medium text-sm xs:text-xs`}>
+               {item.owner.nickname} predict
+             </p>
+             <div className="flex items-center">
+               <p
+                 className={`${textColor} text-sm xs:text-xs`}
+                
+               >
+                 {item.ownerPrediction === "WIN"
+                   ? item.fixture.item1.name
+                   : item.ownerPrediction === "LOSE"
+                   ? item.fixture.item2.name
+                   : item.fixture.item1.name}{" "}
+                 <span className={predictionColor}>
+                   {item.ownerPrediction === "LOSE"
+                     ? "WIN"
+                     : item.ownerPrediction}
+                 </span>
+               </p>
+             </div>
+           </div>
+         </div>
+         <p className={`${textColor} font-bold text-sm xs:text-xs`}>
+           ₦{(item.totalAmount / 2).toLocaleString()}
+         </p>
+       </button>
+     );
+   };
 
   // Render empty state for bets
   const renderEmptyBets = () => {
