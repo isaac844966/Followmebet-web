@@ -59,30 +59,18 @@ export const getDevicePushToken = async (): Promise<string | null> => {
 /**
  * Configure notification handling for foreground messages
  */
-
-/**
- * Configure notification handling for foreground messages
- */
 export const configureNotifications = () => {
   if (typeof window === "undefined" || !messaging) return;
 
   return onMessage(messaging, (payload) => {
+    console.log("Message received in foreground:", payload);
 
-    const title =
-      payload.notification?.title ||
-      payload.data?.title ||
-      "New Notification";
+    if (Notification.permission === "granted" && payload.notification) {
+      const { title, body } = payload.notification;
 
-    const body =
-      payload.notification?.body ||
-      payload.data?.body ||
-      "You have a new message";
-
-    if (Notification.permission === "granted") {
-      new Notification(title, {
-        body,
-        icon: "/app-icon.png",
-        badge: "/app-icon.png",
+      new Notification(title || "New Notification", {
+        body: body || "",
+        icon: "/notification-icon.png",
       });
     }
   });
@@ -107,6 +95,7 @@ export const initializeFirebaseMessaging = async () => {
     }
 
     const token = await getDevicePushToken();
+    console.log(token);
 
     if (token) {
       await updateNotificationToken({ deviceToken: token });
