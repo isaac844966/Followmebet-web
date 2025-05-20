@@ -22,6 +22,7 @@ import { StakeCard } from "@/components/bet-details/StakeCard";
 import { OpponentCard } from "@/components/bet-details/OpponentCard";
 import StatusModal from "@/components/StatusModal";
 import CustomButton from "@/components/CustomButton";
+import { fetchUserProfile } from "@/lib/services/authService";
 
 // Define the interface for search params
 interface SummaryPageParams {
@@ -117,12 +118,9 @@ const SummaryPage = () => {
       };
 
       const response = await createBetMarket(payload);
-      console.log(response);
-
-      // Extract the challenger's registration status from the response
+      await fetchUserProfile();
       const isRegistered = response?.challenger?.isRegistered;
 
-      // Determine team name based on prediction
       const ownerTeam = `${
         prediction === "LOSE" ? fixture?.item2?.name : fixture?.item1?.name
       } `;

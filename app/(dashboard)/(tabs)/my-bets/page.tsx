@@ -4,11 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { useAuthStore } from "@/lib/store/authStore";
-import {
-  type BetStatus,
-  type BetType,
-  getBetTransactions,
-} from "@/lib/services/bet-historyService";
 import NestedTabNavigation, {
   type TabItem,
 } from "@/components/NestedTabNavigation";
@@ -20,6 +15,7 @@ import { Trophy } from "lucide-react";
 import WalletHeader from "@/components/WalletHeader";
 import EmptyState from "@/components/EmptyState";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { useBets } from "@/hooks/use-bet";
 
 const MyBetsPage = () => {
   const { isDarkMode } = useTheme();
@@ -38,43 +34,19 @@ const MyBetsPage = () => {
   const [activeVisibilityTab, setActiveVisibilityTab] =
     useState<string>(initialSubTab);
 
-  // Separate state for each tab combination
-  const [publicPendingBets, setPublicPendingBets] = useState<any[]>([]);
-  const [privatePendingBets, setPrivatePendingBets] = useState<any[]>([]);
-  const [acceptedBets, setAcceptedBets] = useState<any[]>([]);
-  const [settledBets, setSettledBets] = useState<any[]>([]);
+  // Add a new state to track if this is the initial page load
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
-  // Loading states for each tab
-  const [loadingPublicPending, setLoadingPublicPending] =
-    useState<boolean>(false);
-  const [loadingPrivatePending, setLoadingPrivatePending] =
-    useState<boolean>(false);
-  const [loadingAccepted, setLoadingAccepted] = useState<boolean>(false);
-  const [loadingSettled, setLoadingSettled] = useState<boolean>(false);
-
-  // Initial loading states for each tab
-  const [initialLoadingPublicPending, setInitialLoadingPublicPending] =
-    useState(true);
-  const [initialLoadingPrivatePending, setInitialLoadingPrivatePending] =
-    useState(true);
-  const [initialLoadingAccepted, setInitialLoadingAccepted] = useState(true);
-  const [initialLoadingSettled, setInitialLoadingSettled] = useState(true);
-
-  // More data available states for each tab
-  const [hasMorePublicPending, setHasMorePublicPending] =
-    useState<boolean>(true);
-  const [hasMorePrivatePending, setHasMorePrivatePending] =
-    useState<boolean>(true);
-  const [hasMoreAccepted, setHasMoreAccepted] = useState<boolean>(true);
-  const [hasMoreSettled, setHasMoreSettled] = useState<boolean>(true);
-
-  // Track if initial data has been loaded for each tab
-  const initialDataLoadedRef = useRef({
-    publicPending: false,
-    privatePending: false,
-    accepted: false,
-    settled: false,
-  });
+  // Use our custom hook to manage bets data
+  const { bets, isLoading, hasMore, loadMore, refresh, isCached } = useBets(
+    activeStatusTab,
+    activeVisibilityTab,
+    {
+      refreshOnMount: true,
+      limit: 20,
+      forceRefresh: isInitialLoad, // Force refresh on initial load
+    }
+  );
 
   // Observer for infinite scrolling
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -82,17 +54,6 @@ const MyBetsPage = () => {
 
   // Ref for the content container
   const contentContainerRef = useRef<HTMLDivElement>(null);
-
-  const LIMIT = 20;
-  const STATUS_MAP: Record<string, BetStatus> = {
-    pending: "PENDING",
-    accepted: "ACTIVE",
-    settled: "COMPLETED",
-  };
-  const VISIBILITY_MAP: Record<string, BetType> = {
-    public: "PUBLIC",
-    private: "PRIVATE",
-  };
 
   const subTabs: TabItem[] = [
     { key: "public", label: `${user?.pendingPublicBets || 0} Public Bets` },
@@ -127,177 +88,44 @@ const MyBetsPage = () => {
     if (contentContainerRef.current) {
       contentContainerRef.current.scrollTop = 0;
     }
-
-    // Reset hasMore flags when changing tabs to ensure fresh data loading
-    if (tabKey === "pending" && subTabKey === "public") {
-      setHasMorePublicPending(true);
-    } else if (tabKey === "pending" && subTabKey === "private") {
-      setHasMorePrivatePending(true);
-    } else if (tabKey === "accepted") {
-      setHasMoreAccepted(true);
-    } else if (tabKey === "settled") {
-      setHasMoreSettled(true);
-    }
-
-    // Clear existing data when changing tabs
-    if (tabKey === "pending" && subTabKey === "public") {
-      setPublicPendingBets([]);
-      initialDataLoadedRef.current.publicPending = false;
-    } else if (tabKey === "pending" && subTabKey === "private") {
-      setPrivatePendingBets([]);
-      initialDataLoadedRef.current.privatePending = false;
-    } else if (tabKey === "accepted") {
-      setAcceptedBets([]);
-      initialDataLoadedRef.current.accepted = false;
-    } else if (tabKey === "settled") {
-      setSettledBets([]);
-      initialDataLoadedRef.current.settled = false;
-    }
-
-    // Set initial loading state when changing tabs
-    const currentTab = getCurrentTabKey(
-      tabKey,
-      subTabKey || (tabKey === "pending" ? "public" : "")
-    );
-    if (!initialDataLoadedRef.current[currentTab]) {
-      setCurrentInitialLoading(true, tabKey, subTabKey);
-    }
   };
 
-  // Helper function to get the appropriate state setters based on current tab
-  const getCurrentTabStateHandlers = (
-    statusTab = activeStatusTab,
-    visibilityTab = activeVisibilityTab
-  ) => {
-    if (statusTab === "pending" && visibilityTab === "public") {
-      return {
-        setBets: setPublicPendingBets,
-        setLoading: setLoadingPublicPending,
-        setHasMoreData: setHasMorePublicPending,
-        bets: publicPendingBets,
-        loading: loadingPublicPending,
-        hasMoreData: hasMorePublicPending,
-        initialLoading: initialLoadingPublicPending,
-        setInitialLoading: setInitialLoadingPublicPending,
-      };
-    } else if (statusTab === "pending" && visibilityTab === "private") {
-      return {
-        setBets: setPrivatePendingBets,
-        setLoading: setLoadingPrivatePending,
-        setHasMoreData: setHasMorePrivatePending,
-        bets: privatePendingBets,
-        loading: loadingPrivatePending,
-        hasMoreData: hasMorePrivatePending,
-        initialLoading: initialLoadingPrivatePending,
-        setInitialLoading: setInitialLoadingPrivatePending,
-      };
-    } else if (statusTab === "accepted") {
-      return {
-        setBets: setAcceptedBets,
-        setLoading: setLoadingAccepted,
-        setHasMoreData: setHasMoreAccepted,
-        bets: acceptedBets,
-        loading: loadingAccepted,
-        hasMoreData: hasMoreAccepted,
-        initialLoading: initialLoadingAccepted,
-        setInitialLoading: setInitialLoadingAccepted,
-      };
-    } else {
-      // Settled tab
-      return {
-        setBets: setSettledBets,
-        setLoading: setLoadingSettled,
-        setHasMoreData: setHasMoreSettled,
-        bets: settledBets,
-        loading: loadingSettled,
-        hasMoreData: hasMoreSettled,
-        initialLoading: initialLoadingSettled,
-        setInitialLoading: setInitialLoadingSettled,
-      };
-    }
+  // Handle bet decline/delete
+  const handleBetAction = () => {
+    refresh();
   };
 
-  // Get the current tab's key for tracking loaded state
-  const getCurrentTabKey = (
-    statusTab = activeStatusTab,
-    visibilityTab = activeVisibilityTab
-  ) => {
-    if (statusTab === "pending") {
-      return visibilityTab === "public" ? "publicPending" : "privatePending";
-    } else if (statusTab === "accepted") {
-      return "accepted";
-    } else {
-      return "settled";
+  // Add a new useEffect to handle the initial load state
+  useEffect(() => {
+    // If this is the initial load, set it to false after the first render
+    if (isInitialLoad) {
+      setIsInitialLoad(false);
     }
-  };
+  }, [isInitialLoad]);
 
-  // Set initial loading state for current tab
-  const setCurrentInitialLoading = (
-    value: boolean,
-    statusTab = activeStatusTab,
-    visibilityTab = activeVisibilityTab
-  ) => {
-    const currentTab = getCurrentTabKey(statusTab, visibilityTab);
-    if (currentTab === "publicPending") {
-      setInitialLoadingPublicPending(value);
-    } else if (currentTab === "privatePending") {
-      setInitialLoadingPrivatePending(value);
-    } else if (currentTab === "accepted") {
-      setInitialLoadingAccepted(value);
-    } else if (currentTab === "settled") {
-      setInitialLoadingSettled(value);
-    }
-  };
+  // Add a useEffect to handle page refresh using the beforeunload event
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      // This will run when the page is about to be refreshed
+      // We can't do async operations here, but we can set a flag in sessionStorage
+      sessionStorage.setItem("betPageRefreshed", "true");
+    };
 
-  // Generic fetch function that works with the current active tab
-  const fetchCurrentTabBets = async (
-    statusTab = activeStatusTab,
-    visibilityTab = activeVisibilityTab
-  ) => {
-    const { setBets, setLoading, setHasMoreData, bets, loading } =
-      getCurrentTabStateHandlers(statusTab, visibilityTab);
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
-    const currentTab = getCurrentTabKey(statusTab, visibilityTab);
-
-    if (loading) {
-      return;
+    // Check if the page was refreshed
+    const wasRefreshed = sessionStorage.getItem("betPageRefreshed") === "true";
+    if (wasRefreshed) {
+      // Clear the flag
+      sessionStorage.removeItem("betPageRefreshed");
+      // Force a refresh of the data
+      setIsInitialLoad(true);
     }
 
-    setLoading(true);
-
-    try {
-      const betType =
-        statusTab === "pending" ? VISIBILITY_MAP[visibilityTab] : undefined;
-
-      const response = await getBetTransactions({
-        status: STATUS_MAP[statusTab],
-        bet_type: betType,
-        limit: LIMIT,
-        offset: bets.length,
-      });
-
-      const items = response.data?.items || [];
-
-      if (items.length < LIMIT) {
-        setHasMoreData(false);
-      } else {
-        setHasMoreData(true);
-      }
-
-      setBets([...bets, ...items]);
-
-      initialDataLoadedRef.current[currentTab] = true;
-    } catch (error) {
-      setHasMoreData(false); 
-    } finally {
-      setLoading(false);
-      setCurrentInitialLoading(false, statusTab, visibilityTab);
-    }
-  };
-
-  const fetchPrivatePendingBets = () => {
-    fetchCurrentTabBets("pending", "private");
-  };
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
   useEffect(() => {
     if (observerRef.current) {
@@ -306,18 +134,14 @@ const MyBetsPage = () => {
 
     const options = {
       root: null,
-      rootMargin: "300px", // Increased margin to load earlier
+      rootMargin: "300px",
       threshold: 0.1,
     };
 
     const callback = (entries: IntersectionObserverEntry[]) => {
       const [entry] = entries;
-      if (entry.isIntersecting) {
-        const { loading, hasMoreData } = getCurrentTabStateHandlers();
-        if (!loading && hasMoreData) {
-          console.log("Intersection triggered, fetching more data...");
-          fetchCurrentTabBets();
-        }
+      if (entry.isIntersecting && !isLoading && hasMore) {
+        loadMore();
       }
     };
 
@@ -327,7 +151,6 @@ const MyBetsPage = () => {
     // Immediately attach to the current loadMoreRef if it exists
     if (loadMoreRef.current) {
       observerRef.current.observe(loadMoreRef.current);
-      console.log("Observer created and attached to loadMoreRef");
     }
 
     return () => {
@@ -335,19 +158,7 @@ const MyBetsPage = () => {
         observerRef.current.disconnect();
       }
     };
-  }, [activeStatusTab, activeVisibilityTab]);
-
-  // Effect to fetch data when component mounts or tab changes
-  useEffect(() => {
-    const currentTab = getCurrentTabKey();
-
-    // Reset state when tab changes
-    if (!initialDataLoadedRef.current[currentTab]) {
-      setCurrentInitialLoading(true);
-      console.log(`Initial data load for ${currentTab}`);
-      fetchCurrentTabBets();
-    }
-  }, [activeStatusTab, activeVisibilityTab]);
+  }, [activeStatusTab, activeVisibilityTab, isLoading, hasMore]);
 
   // Add effect to handle scroll position change
   useEffect(() => {
@@ -357,12 +168,12 @@ const MyBetsPage = () => {
           contentContainerRef.current;
 
         // Check if we're close to the bottom (within 200px)
-        if (scrollHeight - scrollTop - clientHeight < 200) {
-          const { loading, hasMoreData } = getCurrentTabStateHandlers();
-          if (!loading && hasMoreData) {
-            console.log("Near bottom of scroll, loading more data...");
-            fetchCurrentTabBets();
-          }
+        if (
+          scrollHeight - scrollTop - clientHeight < 200 &&
+          !isLoading &&
+          hasMore
+        ) {
+          loadMore();
         }
       }
     };
@@ -377,37 +188,24 @@ const MyBetsPage = () => {
         contentContainer.removeEventListener("scroll", handleScroll);
       }
     };
-  }, [
-    activeStatusTab,
-    activeVisibilityTab,
-    publicPendingBets.length,
-    privatePendingBets.length,
-    acceptedBets.length,
-    settledBets.length,
-  ]);
+  }, [activeStatusTab, activeVisibilityTab, isLoading, hasMore, bets.length]);
 
-  // Get current data and loading state based on active tabs
-  const getCurrentTabData = () => {
-    const { bets, loading, initialLoading, hasMoreData } =
-      getCurrentTabStateHandlers();
-    return { bets, loading, initialLoading, hasMoreData };
-  };
-
-  const { bets, initialLoading, hasMoreData, loading } = getCurrentTabData();
-
-  // Force re-render of loadMoreRef on tab change
+  // Add an effect to handle page visibility changes (for when user returns to the page)
   useEffect(() => {
-    // Force re-render of loadMoreRef when active tab changes
-    if (loadMoreRef.current && observerRef.current) {
-      observerRef.current.unobserve(loadMoreRef.current);
-      setTimeout(() => {
-        if (loadMoreRef.current && observerRef.current) {
-          observerRef.current.observe(loadMoreRef.current);
-          console.log("Re-attached observer after tab change");
-        }
-      }, 100);
-    }
-  }, [activeStatusTab, activeVisibilityTab]);
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        // User has returned to the page - force a refresh
+        refresh();
+      }
+    };
+
+    // Add event listener for visibility change
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [refresh]);
 
   // Get the appropriate message for empty state
   const getEmptyStateMessage = () => {
@@ -431,7 +229,7 @@ const MyBetsPage = () => {
 
   // Render bet items based on active tab
   const renderBets = () => {
-    if (initialLoading) {
+    if (isLoading && bets.length === 0) {
       return (
         <div className="flex justify-center items-center h-full">
           <LoadingSpinner
@@ -443,7 +241,7 @@ const MyBetsPage = () => {
       );
     }
 
-    if (bets.length === 0) {
+    if (bets.length === 0 && !isLoading) {
       return (
         <EmptyState
           type="bet"
@@ -481,8 +279,8 @@ const MyBetsPage = () => {
                   key={`private-pending-${bet.id}-${index}`}
                   bet={bet}
                   currentUserId={currentUserId}
-                  onDelete={() => fetchPrivatePendingBets()}
-                  onDecline={() => fetchPrivatePendingBets()}
+                  onDelete={handleBetAction}
+                  onDecline={handleBetAction}
                 />
               );
             } else {
@@ -499,13 +297,13 @@ const MyBetsPage = () => {
         })}
 
         {/* Load more trigger element */}
-        {hasMoreData && (
+        {hasMore && (
           <div
             ref={loadMoreRef}
             className="h-20 w-full flex justify-center items-center"
             id="load-more-trigger"
           >
-            {loading && !initialLoading && (
+            {isLoading && (
               <LoadingSpinner
                 variant="circular"
                 size="md"

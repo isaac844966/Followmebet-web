@@ -91,7 +91,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
       <div
         ref={modalRef}
         className={`${
-          isDarkMode ? "bg-[#2E3192]" : "bg-white"
+          isDarkMode ? "bg-[#2D2A6E]" : "bg-white"
         } rounded-xl p-8 pt-16 items-center max-w-[85%] w-[500px] shadow-lg`}
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}

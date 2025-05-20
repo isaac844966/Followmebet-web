@@ -13,7 +13,7 @@ interface WalletHeaderProps {
 
 const WalletHeader: React.FC<WalletHeaderProps> = ({ title, icon }) => {
   const { isDarkMode } = useTheme();
-  const user = useAuthStore((state) => state.user);
+  const { user } = useAuthStore();
   const backgroundColor = isDarkMode ? "bg-primary-100" : "bg-gray-100";
   const router = useRouter();
 

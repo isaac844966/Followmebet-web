@@ -26,6 +26,8 @@ const SuccessPage = () => {
   const predictionAmount = searchParams?.get("predictionAmount") ?? "";
 
   const { modalState, showInfoModal, hideModal } = useStatusModal();
+  const frombetdetails = searchParams.get("frombetdetails");
+  const isFromBetDetails = frombetdetails === "true";
 
   useEffect(() => {
     // Only show invite prompt if friend isn't registered and we have their phone number
@@ -73,11 +75,15 @@ const SuccessPage = () => {
       <div className="flex flex-col items-center px-4">
         <SuccessIcon size={80} color="#FFA726" />
         <h1 className={`${textColor} text-center text-2xl font-bold mt-6`}>
-          Successfully declared Challenge
+          {isFromBetDetails
+            ? "Challenge Accepted Succussfully"
+            : "Challenge Decleared SuccessFully"}
         </h1>
         <p className={`${textColor} text-center mt-4 opacity-80`}>
           {isRegistered === "false"
             ? "Your friend will need to download the app to accept your challenge."
+            : isFromBetDetails
+            ? "You've successfully accepeted the challenge!"
             : "Your challenge has been sent successfully!"}
         </p>
       </div>

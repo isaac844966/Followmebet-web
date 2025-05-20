@@ -23,6 +23,7 @@ const Dashboard = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
+    
     initializeFirebaseMessaging();
   }, []);
 

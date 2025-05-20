@@ -202,11 +202,7 @@ const BetDetailsPage = () => {
         prediction: selectedApiPrediction,
       });
       await fetchUserProfile();
-
-      setStatusModalType("success");
-      setStatusModalTitle("Bet Placed Successfully");
-      setStatusModalMessage("Your bet has been placed successfully!");
-      setShowStatusModal(true);
+      router.push("/success-page?frombetdetails=true");
     } catch (err: any) {
       setStatusModalType("error");
       setStatusModalTitle("Bet Failed");
@@ -378,7 +374,8 @@ const BetDetailsPage = () => {
           {showDeclineButton && (
             <CustomButton
               title="Decline Bet"
-              className="w-full py-6 border-2 text-red-500 border-[#FF3B30] bg-transparent"
+              className="w-full py-6 border-2 border-[#FF3B30] bg-transparent"
+              textClassName="text-black"
               onClick={() => setShowDeclineModal(true)}
               size="lg"
             />

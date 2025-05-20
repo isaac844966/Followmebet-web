@@ -84,6 +84,7 @@ const PrivateBetCard: React.FC<PrivateBetCardProps> = ({
       setIsLoading(false);
     }
   };
+  
 
   return (
     <div className="mb-4">

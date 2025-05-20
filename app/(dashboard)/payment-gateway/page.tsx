@@ -37,8 +37,6 @@ const PaymentGateway = () => {
       if (!iframe) return;
 
       try {
-        // This will throw a security error if the iframe is cross-origin
-        // We need to use a different approach for cross-origin iframes
         const currentUrl = iframe.contentWindow?.location.href;
         console.log("Current iframe URL:", currentUrl);
 

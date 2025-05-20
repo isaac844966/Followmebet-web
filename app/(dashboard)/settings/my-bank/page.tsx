@@ -12,8 +12,12 @@ import { Button } from "@/components/ui/button";
 import CustomModal from "@/components/CustomModal";
 import StatusModal from "@/components/StatusModal";
 import { Loader2, Plus } from "lucide-react";
-import { deleteBankAccount, getBankAccounts } from "@/lib/services/bank-service";
+import {
+  deleteBankAccount,
+  getBankAccounts,
+} from "@/lib/services/bank-service";
 import { handleApiError } from "@/lib/utils/handleApiError";
+import CustomButton from "@/components/CustomButton";
 
 interface BankAccount {
   id: string;
@@ -168,10 +172,10 @@ export default function Banks() {
   };
 
   return (
-    <div className={`${backgroundColor} min-h-screen px-4`}>
+    <div className={`${backgroundColor} min-h-screen px-2`}>
       <BackButton title="Banks" />
 
-      <div className="flex-1 px-4 mt-6 pb-24">
+      <div className="flex-1 px-2 mt-4 pb-24">
         {loading && !isRefreshing ? (
           <div className="flex-1 flex items-center justify-center min-h-[50vh]">
             <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
@@ -212,27 +216,18 @@ export default function Banks() {
                 isDeleting={deletingId === item.id}
               />
             ))}
-
-            <button
-              className="w-full py-4 text-blue-500 font-medium"
-              onClick={handleRefresh}
-              disabled={!isOnline || isRefreshing}
-            >
-              {isRefreshing ? "Refreshing..." : "Pull to refresh"}
-            </button>
           </div>
         )}
 
         {/* Add Bank Button */}
         <div className="fixed bottom-8 left-4 right-4 mx-auto max-w-md">
-          <Button
-            className="w-full py-6 bg-[#FFA726] hover:bg-[#FF9800] text-black font-semibold"
+          <CustomButton
+            title="Add New Bank"
+            className="w-full"
             onClick={() => router.push("/settings/add-bank")}
             disabled={loading || !isOnline}
-          >
-            <Plus size={20} className="mr-2" />
-            Add New Bank
-          </Button>
+            size="lg"
+          />
         </div>
       </div>
 
@@ -251,7 +246,7 @@ export default function Banks() {
                 )}? This action cannot be undone.`
               : "Are you sure you want to delete this bank account?"
           }
-          primaryButtonText="Yes, Delete"
+          primaryButtonText={loading ? "Deleting" : "Yes, Delete"}
           secondaryButtonText="Cancel"
           onPrimaryButtonPress={confirmDeleteBank}
           onSecondaryButtonPress={() => setModalVisible(false)}

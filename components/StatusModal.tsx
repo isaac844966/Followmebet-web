@@ -3,8 +3,7 @@
 import type React from "react";
 import type { ReactNode } from "react";
 import { useTheme } from "@/lib/contexts/ThemeContext";
-import { AlertCircle, CheckCircle, Info, X } from "lucide-react";
-import SuccessIcon from "./SuccessIcon";
+import { AlertCircle, Check, CheckCircle, Info, X } from "lucide-react";
 
 type StatusType = "success" | "error" | "warning" | "info";
 
@@ -41,39 +40,49 @@ const StatusModal: React.FC<StatusModalProps> = ({
     switch (type) {
       case "success":
         return {
-          primary: "#FBB03B",
+          primary: "#4CAF50",
           light: "#E8F5E9",
-          dark: "#FBB03B",
+          dark: "#2E7D32",
+          buttonLight: "#FBB03B",
+          buttonDark: "#0f0d3e",
         };
       case "error":
         return {
-          primary: "#FC0900",
+          primary: "#E53935",
           light: "#FFEBEE",
-          dark: "#FC0900",
+          dark: "#C62828",
+          buttonLight: "#FBB03B",
+          buttonDark: "#0f0d3e",
         };
       case "warning":
         return {
           primary: "#FFC107",
           light: "#FFF8E1",
           dark: "#F57F17",
+          buttonLight: "#FBB03B",
+          buttonDark: "#2D2A6E",
         };
       case "info":
         return {
-          primary: "rgb(255,167,38)",
+          primary: "#2196F3",
           light: "#E3F2FD",
-          dark: "rgb(255,167,38)",
+          dark: "#1565C0",
+          buttonLight: "#FBB03B",
+          buttonDark: "#2D2A6E",
         };
       default:
         return {
           primary: "#4CAF50",
           light: "#E8F5E9",
           dark: "#2E7D32",
+          buttonLight: "#FBB03B",
+          buttonDark: "#fff",
         };
     }
   };
 
   const colors = getTypeColors();
-  const buttonColor = colors.primary;
+  const buttonColor = isDarkMode ? colors.buttonDark : colors.buttonLight;
   const buttonTextColor = "#FFFFFF";
 
   const handleOverlayPress = () => {
@@ -97,14 +106,14 @@ const StatusModal: React.FC<StatusModalProps> = ({
     switch (type) {
       case "success":
         return (
-          <div className="w-20 h-20 xs:w-16 xs:h-16 rounded-full border-8 xs:border-6 border-primary-400 flex items-center justify-center">
-            <SuccessIcon className="xs:w-8 xs:h-8" />
+          <div className="w-20 h-20 xs:w-16 xs:h-16 rounded-full bg-[#4CAF50] flex items-center justify-center">
+            <Check size={48} color="#FFFFFF" className="xs:w-8 xs:h-8" />
           </div>
         );
       case "error":
         return (
-          <div className="w-20 h-20 xs:w-16 xs:h-16 rounded-full border-8 xs:border-6 border-red-500 flex items-center justify-center">
-            <X size={48} color="#FC0900" className="xs:w-8 xs:h-8" />
+          <div className="w-20 h-20 xs:w-16 xs:h-16 rounded-full bg-[#E53935] flex items-center justify-center">
+            <X size={48} color="#FFFFFF" className="xs:w-8 xs:h-8" />
           </div>
         );
       case "warning":
@@ -141,7 +150,7 @@ const StatusModal: React.FC<StatusModalProps> = ({
       <div className="relative" onClick={(e) => e.stopPropagation()}>
         <div
           className={`${
-            isDarkMode ? "bg-primary-500" : "bg-white"
+            isDarkMode ? "bg-[#2D2A6E]" : "bg-white"
           } rounded-xl p-6 xs:p-4 items-center flex flex-col max-w-md w-[85vw] shadow-lg`}
         >
           <div className="mb-6 xs:mb-4 mt-2">{renderIcon()}</div>
@@ -158,7 +167,7 @@ const StatusModal: React.FC<StatusModalProps> = ({
 
           <p
             className={`${
-              isDarkMode ? "text-primary-800" : "text-primary-700"
+              isDarkMode ? "text-white/80" : "text-gray-700"
             } text-base xs:text-sm mb-16 xs:mb-10 text-center font-medium leading-6`}
           >
             {message}
