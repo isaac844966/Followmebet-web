@@ -175,6 +175,7 @@ export default function CommentaryTab({
                 alt="missed penalty"
                 width={20}
                 height={20}
+                color="#000"
               />
             </div>
           );
@@ -192,7 +193,7 @@ export default function CommentaryTab({
         return (
           <div className="w-5 h-5 xs:w-4 xs:h-4">
             <Image
-              src="/images/penalty_goal.png"
+              src="/images/goal.png"
               alt="penalty"
               width={20}
               height={20}
@@ -375,13 +376,13 @@ export default function CommentaryTab({
                   <div className="flex items-center w-full">
                     <div>
                       <p
-                        className={`${textColor} font-bold w-32 xs:w-24 text-left truncate xs:text-sm`}
+                        className={`${textColor} font-bold w-32  text-left truncate xs:text-sm`}
                       >
                         {playerName}
                       </p>
                       {assistName && (
                         <p
-                          className={`${secondaryTextColor} font-medium text-sm xs:text-xs w-32 xs:w-24 text-left truncate`}
+                          className={`${secondaryTextColor} font-medium text-sm xs:text-xs w-32  text-left truncate`}
                         >
                           {event.event_type?.toLowerCase() === "goal"
                             ? "Assist: "
@@ -391,7 +392,7 @@ export default function CommentaryTab({
                       )}
                     </div>
                     {icon && (
-                      <div className="absolute left-[43%] xs:left-[40%] flex gap-2 xs:gap-1">
+                      <div className="absolute left-[47%]  flex gap-2 xs:gap-1">
                         <div>{icon}</div>
                         <span
                           className={`text-sm xs:text-xs ${secondaryTextColor}`}
@@ -405,7 +406,7 @@ export default function CommentaryTab({
                   // Away team event (right side)
                   <div className="flex items-center justify-end w-full">
                     {icon && (
-                      <div className="absolute right-[50%] xs:right-[45%] flex gap-2 xs:gap-1">
+                      <div className="absolute right-[47%]  flex gap-2 ">
                         <span
                           className={`text-sm xs:text-xs ${secondaryTextColor}`}
                         >
@@ -416,13 +417,13 @@ export default function CommentaryTab({
                     )}
                     <div className="text-right">
                       <p
-                        className={`${textColor} font-bold text-sm xs:text-xs w-40 xs:w-28 text-right truncate`}
+                        className={`${textColor} font-bold text-sm xs:text-xs w-40  text-right truncate`}
                       >
                         {playerName}
                       </p>
                       {assistName && (
                         <p
-                          className={`${secondaryTextColor} font-medium text-sm xs:text-xs w-40 xs:w-28 text-right truncate`}
+                          className={`${secondaryTextColor} font-medium text-sm xs:text-xs w-40  text-right truncate`}
                         >
                           {event.event_type?.toLowerCase() === "goal"
                             ? "Assist: "
@@ -462,13 +463,13 @@ export default function CommentaryTab({
             <div className="p-3 xs:p-2">
               <div className="flex items-center">
                 <span
-                  className={`${secondaryTextColor} text-base xs:text-sm w-12 xs:w-10`}
+                  className={`${secondaryTextColor} text-base xs:text-sm w-12 `}
                 >
                   HT
                 </span>
                 {htScore && (
                   <span
-                    className={`${textColor} text-md xs:text-sm font-bold absolute left-[47%] xs:left-[45%]`}
+                    className={`${textColor} text-md xs:text-sm font-bold absolute left-[47%] `}
                   >
                     {htScore}
                   </span>
@@ -489,12 +490,12 @@ export default function CommentaryTab({
             <div className="p-3 xs:p-2">
               <div className="flex items-center">
                 <span
-                  className={`${secondaryTextColor} text-base xs:text-sm w-12 xs:w-10`}
+                  className={`${secondaryTextColor} text-base xs:text-sm w-12 `}
                 >
                   FT
                 </span>
                 <span
-                  className={`${textColor} text-md xs:text-sm font-bold absolute left-[47%] xs:left-[45%]`}
+                  className={`${textColor} text-md xs:text-sm font-bold absolute left-[47%] `}
                 >
                   {ftScore}
                 </span>

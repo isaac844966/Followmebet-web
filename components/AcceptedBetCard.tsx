@@ -184,7 +184,7 @@ const AcceptedBetCard: React.FC<AcceptedBetCardProps> = ({
                 />
               </div>
               <p
-                className={`${textColor}  w-26 xs:w-20 text-sm xs:text-xs font-semibold max-w-[7rem]  truncate`}
+                className={`${textColor}  w-26 xs:w-20 text-sm font-semibold max-w-[7rem]  truncate`}
               >
                 {leftTeam.name}
               </p>
@@ -217,7 +217,7 @@ const AcceptedBetCard: React.FC<AcceptedBetCardProps> = ({
             {/* Team 2 (Right) */}
             <div className="flex-1 flex items-center justify-end">
               <p
-                className={`${textColor} text-sm font-semibold flex-1 text-right max-w-[7rem]  truncate`}
+                className={`${textColor} text-sm font-semibold flex-1 text-right  max-w-[7rem]  truncate`}
               >
                 {rightTeam.name}
               </p>
@@ -243,7 +243,7 @@ const AcceptedBetCard: React.FC<AcceptedBetCardProps> = ({
             <p
               className={`${getPredictionColor(
                 bet.ownerPrediction
-              )} font-semibold mb-1 text-sm`}
+              )} font-semibold mb-1 text-sm `}
             >
               {getPredictionText(bet.ownerPrediction, bet.condition)}
             </p>

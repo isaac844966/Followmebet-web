@@ -136,7 +136,7 @@ const SettledBetCard: React.FC<SettledBetCardProps> = ({
 
   return (
     <div
-      className="mb-4 w-full cursor-pointer -mt-16 xs:-mt-10"
+      className="mb-4 w-full cursor-pointer -mt-20 xs:-mt-10"
       onClick={() =>
         router.push(
           `/bet-details/${
