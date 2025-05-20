@@ -47,10 +47,10 @@ export default function ThemeSettings() {
   };
 
   return (
-    <div className={`${backgroundColor} min-h-screen px-4`}>
+    <div className={`${backgroundColor} min-h-screen px-2`}>
       <BackButton title="Theme" />
 
-      <div className="flex flex-col px-4 mt-6 relative pb-24">
+      <div className="flex flex-col  mt-6 relative pb-24">
         {/* Theme Options */}
         <div
           className={`${
@@ -64,6 +64,7 @@ export default function ThemeSettings() {
             id="dark-theme"
             checked={darkThemeEnabled}
             onCheckedChange={handleDarkThemeToggle}
+            
           />
         </div>
 
@@ -85,7 +86,7 @@ export default function ThemeSettings() {
         {/* Save Button */}
         <div className="fixed bottom-8 left-4 right-4 mx-auto max-w-md">
           <Button
-            className="w-full py-6 bg-[#FFA726] hover:bg-[#FF9800] text-black font-semibold"
+            className="w-full py-8 bg-[#FFA726] hover:bg-[#FF9800] text-black font-semibold"
             onClick={saveChanges}
             disabled={!hasChanges || loading}
           >

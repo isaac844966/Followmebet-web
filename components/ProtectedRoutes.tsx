@@ -16,7 +16,8 @@ export default function ProtectedRoute({
   type,
 }: ProtectedRouteProps) {
   const router = useRouter();
-  const { token, user, isLoading, setLoading } = useAuthStore();
+  const { token, user, setLoading } = useAuthStore();
+  const [isCheckingAuth, setIsCheckingAuth] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {
@@ -24,10 +25,13 @@ export default function ProtectedRoute({
     if (typeof window === "undefined") return;
 
     const checkAuth = async () => {
-      try {
-        // Set loading state at the beginning
-        setLoading(true);
+      // Only set checking state for dashboard routes
+      // Don't show loading for auth flows or account setup
+      if (type === "dashboard") {
+        setIsCheckingAuth(true);
+      }
 
+      try {
         // Get token from both store and localStorage to ensure consistency
         const storedToken = useAuthStore.getState().token;
         const localStorageToken = localStorage.getItem("authToken");
@@ -45,6 +49,7 @@ export default function ProtectedRoute({
             return;
           }
           // Otherwise allow access to auth pages
+          setAuthChecked(true);
         }
         // For dashboard and other protected pages
         else if (type === "dashboard") {
@@ -75,6 +80,8 @@ export default function ProtectedRoute({
             router.replace("/account-setup");
             return;
           }
+
+          setAuthChecked(true);
         }
         // For account setup page
         else if (type === "account-setup") {
@@ -107,17 +114,16 @@ export default function ProtectedRoute({
             router.replace("/dashboard");
             return;
           }
-        }
 
-        // Only set authChecked to true after all checks and redirects
-        setAuthChecked(true);
+          setAuthChecked(true);
+        }
       } catch (error) {
         // On any unexpected error, redirect to login as a fallback
         console.error("Auth check error:", error);
         router.replace("/login");
       } finally {
-        // Only remove loading after everything is complete
-        setLoading(false);
+        // Always turn off the checking state
+        setIsCheckingAuth(false);
       }
     };
 
@@ -126,8 +132,7 @@ export default function ProtectedRoute({
     checkAuth();
   }, [router, setLoading, type]);
 
-  // Show splash screen if loading or auth hasn't been checked yet
-  if (isLoading || !authChecked) {
+  if (isCheckingAuth && type === "dashboard") {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Image
@@ -141,5 +146,5 @@ export default function ProtectedRoute({
     );
   }
 
-  return <>{children}</>;
+  return authChecked ? <>{children}</> : null;
 }
