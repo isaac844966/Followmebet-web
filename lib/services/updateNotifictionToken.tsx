@@ -70,7 +70,7 @@ export const configureNotifications = () => {
 
       new Notification(title || "New Notification", {
         body: body || "",
-        icon: "/notification-icon.png",
+        icon: "/app-icon.png",
       });
     }
   });
