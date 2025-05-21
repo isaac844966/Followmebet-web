@@ -6,6 +6,7 @@ import { useTheme } from "@/lib/contexts/ThemeContext";
 import TransactionItem from "./TrasactionItem";
 import { getTransaction } from "@/lib/services/walletService";
 import LoadingSpinner from "./LoadingSpinner";
+import { fetchUserProfile } from "@/lib/services/authService";
 
 const RecentTransactions = () => {
   const { isDarkMode } = useTheme();
@@ -35,6 +36,7 @@ const RecentTransactions = () => {
       }
 
       const res = await getTransaction();
+      await fetchUserProfile();
       const items = res.data.items.slice(0, 2) || [];
 
       const mapped = items.map((item: any) => {

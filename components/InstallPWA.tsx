@@ -1,27 +1,37 @@
-// components/InstallPrompt.tsx
 "use client";
 
 import usePWAInstallPrompt from "@/hooks/usePWAIntsallPrompt";
+import { useState } from "react";
+import CustomModal from "./CustomModal";
 
 export default function InstallPrompt() {
   const { isInstallable, promptInstall } = usePWAInstallPrompt();
+  const [isModalVisible, setIsModalVisible] = useState(true);
 
   if (!isInstallable) return null;
 
+  const handleInstall = async () => {
+    const installed = await promptInstall();
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-white rounded-xl shadow-lg p-6 w-[90%] max-w-sm text-center">
-        <h2 className="text-lg font-bold mb-2">Install FollowMeBet</h2>
-        <p className="text-sm text-gray-600 mb-4">
-          Add to your home screen for quicker access and a smoother experience.
-        </p>
-        <button
-          onClick={promptInstall}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition"
-        >
-          Install Now
-        </button>
-      </div>
-    </div>
+    <CustomModal
+      visible={isInstallable && isModalVisible}
+      onClose={handleCancel}
+      title="Install FollowMeBet"
+      message="Add to your home screen for quicker access and a smoother experience."
+      primaryButtonText="Install Now"
+      secondaryButtonText="Not Now"
+      onPrimaryButtonPress={handleInstall}
+      onSecondaryButtonPress={handleCancel}
+      primaryButtonColor="#4F46E5" 
+      primaryTextColor="#FFFFFF"
+      hideCloseOnOverlayPress={false}
+    />
   );
 }
