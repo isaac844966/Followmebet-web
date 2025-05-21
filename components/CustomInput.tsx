@@ -82,6 +82,9 @@ const CustomInput: React.FC<CustomInputProps> = ({
             } font-bold text-base xs:text-sm w-full ${className || ""} ${
               !editable ? "opacity-70 cursor-not-allowed" : ""
             }`}
+            style={{
+              fontSize: "16px", 
+            }}
             placeholder={placeholder || ""}
             type={isPassword && !showPassword ? "password" : "text"}
             autoComplete={isPassword ? "off" : "on"}

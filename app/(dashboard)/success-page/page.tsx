@@ -55,7 +55,7 @@ const SuccessPage = () => {
 
     // Small delay to ensure modal is closed before proceeding
     setTimeout(() => {
-      const message = `Hey ${opponentName} I'm inviting you to join me in a bet for the upcoming match between ${matchName}. I'm backing ${ownerTeam} ${prediction} and I have staked ${predictionAmount} result. To accept the challenge, kindly download and install the app from https://followmebet.com.ng. Let the game begin!`;
+      const message = `Hey ${opponentName} I'm inviting you to join me in a bet for the upcoming match between ${matchName}. I'm backing ${ownerTeam} ${prediction} and I have staked ${predictionAmount} result. To accept the challenge, kindly register, download and install the app from https://followmebet.com.ng. Let the game begin!`;
 
       // For web, we'll use mailto: or sms: protocol
       const encodedMessage = encodeURIComponent(message);
