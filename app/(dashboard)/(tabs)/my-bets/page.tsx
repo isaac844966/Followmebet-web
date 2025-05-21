@@ -24,8 +24,8 @@ const MyBetsPage = () => {
   const iconColor = isDarkMode ? "#FBB03B" : "#1E1F68";
   const textColor = isDarkMode ? "text-white" : "text-gray-800";
   const searchParams = useSearchParams();
-  const initialTab = searchParams.get("initialTab") || "pending";
-  const initialSubTab = searchParams.get("initialSubTab") || "public";
+  const initialTab = searchParams.get("tab") || "pending";
+  const initialSubTab = searchParams.get("subTab") || "public";
 
   const user = useAuthStore((state) => state.user);
   const currentUserId = user?.id || "";

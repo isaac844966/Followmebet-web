@@ -16,7 +16,7 @@ interface CustomInputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   editable?: boolean;
   className?: string;
-  maxLength?: string;
+  maxLength?: number; // Changed from string to number
 }
 
 const CustomInput: React.FC<CustomInputProps> = ({
@@ -88,6 +88,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
             value={value || ""}
             onChange={handleChange}
             disabled={!editable}
+            maxLength={maxLength}
             {...props}
           />
           {isPassword && (

@@ -391,7 +391,7 @@ export default function PinEntry() {
 
   return (
     <div className={`${backgroundColor} min-h-screen`}>
-      <div className="flex flex-col px-6 pt-2 h-full">
+      <div className="flex flex-col px-2 pt-2 h-full">
         <BackButton
           title=""
           iconColor={isDarkMode ? "white" : "black"}
@@ -408,7 +408,7 @@ export default function PinEntry() {
             </p>
           </div>
         )}
-        <div className="flex items-center justify-center mb-8 mt-8">
+        <div className="flex items-center justify-center mb-8 mt-4">
           <p
             className={`${
               isDarkMode ? "text-white" : "text-black"

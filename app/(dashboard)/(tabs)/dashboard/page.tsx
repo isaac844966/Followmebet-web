@@ -10,7 +10,6 @@ import { Info, RefreshCw, Settings, ChevronRight } from "lucide-react";
 import CustomButton from "@/components/CustomButton";
 import { fetchUserProfile } from "@/lib/services/authService";
 import { initializeFirebaseMessaging } from "@/lib/services/updateNotifictionToken";
-import { text } from "stream/consumers";
 
 const Dashboard = () => {
   const { isDarkMode } = useTheme();
@@ -23,7 +22,6 @@ const Dashboard = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
-    
     initializeFirebaseMessaging();
   }, []);
 
@@ -32,7 +30,15 @@ const Dashboard = () => {
     await fetchUserProfile();
     setRefreshing(false);
   }, []);
-
+  const navigateToBets = (statusTab: string, visibilityTab?: string) => {
+    if (statusTab === "accepted") {
+      router.push("/my-bets?tab=accepted");
+    } else if (statusTab === "settled") {
+      router.push("/my-bets?tab=settled");
+    } else if (statusTab === "pending") {
+      router.push(`/my-bets?tab=pending&subTab=${visibilityTab || "public"}`);
+    }
+  };
   return (
     <div className="flex-1 min-h-screen" style={{ backgroundColor }}>
       {/* Fixed header */}
@@ -110,6 +116,8 @@ const Dashboard = () => {
                     src={
                       user?.avatarUrl ||
                       "https://avatar.iran.liara.run/public/41" ||
+                      "/placeholder.svg" ||
+                      "/placeholder.svg" ||
                       "/placeholder.svg"
                     }
                     alt="User Avatar"
@@ -198,8 +206,9 @@ const Dashboard = () => {
           {/* Stats Cards */}
           <div className="grid grid-cols-2 gap-2">
             <div
-              className="rounded-lg py-4 px-4 "
+              className="rounded-lg py-4 px-4 cursor-pointer hover:opacity-90 transition-opacity relative"
               style={{ backgroundColor: isDarkMode ? "#1E1F68" : "#E8E8FF" }}
+              onClick={() => navigateToBets("pending", "public")}
             >
               <p
                 className={`${secondaryTextColor} text-md xs:text-sm font-semibold`}
@@ -207,24 +216,31 @@ const Dashboard = () => {
                 Total Pending Public Bets
               </p>
 
-              <div className="flex items-center justify-between mt-1">
-                {isLoading ? (
-                  <div className="w-4 h-4 xs:w-3 xs:h-3 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
-                ) : (
-                  <p
-                    className={`${
-                      isDarkMode ? "text-white" : "text-primary-100"
-                    } text-xl xs:text-lg font-bold text-center`}
-                  >
-                    {user?.pendingPublicBets || 0}
-                  </p>
-                )}
+              {isLoading ? (
+                <div className="w-4 h-4 xs:w-3 xs:h-3 border-2 border-t-transparent border-white rounded-full animate-spin mt-3"></div>
+              ) : (
+                <p
+                  className={`${
+                    isDarkMode ? "text-white" : "text-primary-100"
+                  } text-xl xs:text-lg font-bold mt-3`}
+                >
+                  {user?.pendingPublicBets || 0}
+                </p>
+              )}
+
+              <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                <ChevronRight
+                  size={16}
+                  color={isDarkMode ? "white" : "#1E1F68"}
+                  className="xs:w-3 xs:h-3"
+                />
               </div>
             </div>
 
             <div
-              className="rounded-lg py-4 px-4 "
+              className="rounded-lg py-4 px-4 cursor-pointer hover:opacity-90 transition-opacity ] relative"
               style={{ backgroundColor: isDarkMode ? "#1E1F68" : "#FFFBE8" }}
+              onClick={() => navigateToBets("pending", "private")}
             >
               <p
                 className={`${secondaryTextColor} text-md xs:text-sm font-semibold`}
@@ -232,26 +248,33 @@ const Dashboard = () => {
                 Total Pending Private Bets
               </p>
 
-              <div className="flex items-center justify-between mt-1">
-                {isLoading ? (
-                  <div className="w-4 h-4 xs:w-3 xs:h-3 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
-                ) : (
-                  <p
-                    className={`${
-                      isDarkMode ? "text-white" : "text-primary-100"
-                    } text-xl xs:text-lg font-bold`}
-                  >
-                    {user?.pendingPrivateBets || 0}
-                  </p>
-                )}
+              {isLoading ? (
+                <div className="w-4 h-4 xs:w-3 xs:h-3 border-2 border-t-transparent border-white rounded-full animate-spin mt-3"></div>
+              ) : (
+                <p
+                  className={`${
+                    isDarkMode ? "text-white" : "text-primary-100"
+                  } text-xl xs:text-lg font-bold mt-3`}
+                >
+                  {user?.pendingPrivateBets || 0}
+                </p>
+              )}
+
+              <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                <ChevronRight
+                  size={16}
+                  color={isDarkMode ? "white" : "#1E1F68"}
+                  className="xs:w-3 xs:h-3"
+                />
               </div>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
             <div
-              className="rounded-lg py-4 px-4 "
+              className="rounded-lg py-4 px-4 cursor-pointer hover:opacity-90 transition-opacity  xs:h-[100px] relative"
               style={{ backgroundColor: isDarkMode ? "#1E1F68" : "#FDEFFF" }}
+              onClick={() => navigateToBets("accepted")}
             >
               <p
                 className={`${secondaryTextColor} text-md xs:text-sm font-semibold`}
@@ -259,41 +282,52 @@ const Dashboard = () => {
                 Total Accepted Bets
               </p>
 
-              <div className="flex items-center justify-between mt-1">
-                {isLoading ? (
-                  <div className="w-4 h-4 xs:w-3 xs:h-3 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
-                ) : (
-                  <p className={`${textColor} text-xl xs:text-lg font-bold`}>
-                    {user?.openBets || 0}
-                  </p>
-                )}
+              {isLoading ? (
+                <div className="w-4 h-4 xs:w-3 xs:h-3 border-2 border-t-transparent border-white rounded-full animate-spin mt-3"></div>
+              ) : (
+                <p className={`${textColor} text-xl xs:text-lg font-bold mt-3`}>
+                  {user?.openBets || 0}
+                </p>
+              )}
+
+              <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                <ChevronRight
+                  size={16}
+                  color={isDarkMode ? "white" : "#1E1F68"}
+                  className="xs:w-3 xs:h-3"
+                />
               </div>
             </div>
 
             <div
-              className="rounded-lg py-4 px-3 "
+              className="rounded-lg py-4 px-4 cursor-pointer hover:opacity-90 transition-opacity xs:h-[100px] relative"
               style={{ backgroundColor: isDarkMode ? "#1E1F68" : "#E9FFE8" }}
+              onClick={() => navigateToBets("settled")}
             >
               <p
-                className={`${
-                  secondaryTextColor
-                } text-md xs:text-sm font-semibold`}
+                className={`${secondaryTextColor} text-md xs:text-sm font-semibold`}
               >
                 Total Settled Bets
               </p>
 
-              <div className="flex items-center justify-between mt-1">
-                {isLoading ? (
-                  <div className="w-4 h-4 xs:w-3 xs:h-3 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
-                ) : (
-                  <p
-                    className={`${
-                      isDarkMode ? "text-white" : "text-primary-100"
-                    } text-xl xs:text-lg font-bold`}
-                  >
-                    {user?.completedBets || 0}
-                  </p>
-                )}
+              {isLoading ? (
+                <div className="w-4 h-4 xs:w-3 xs:h-3 border-2 border-t-transparent border-white rounded-full animate-spin mt-3"></div>
+              ) : (
+                <p
+                  className={`${
+                    isDarkMode ? "text-white" : "text-primary-100"
+                  } text-xl xs:text-lg font-bold mt-3`}
+                >
+                  {user?.completedBets || 0}
+                </p>
+              )}
+
+              <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                <ChevronRight
+                  size={16}
+                  color={isDarkMode ? "white" : "#1E1F68"}
+                  className="xs:w-3 xs:h-3"
+                />
               </div>
             </div>
           </div>
@@ -303,7 +337,7 @@ const Dashboard = () => {
             href="/transactions"
             className={`${
               isDarkMode ? "bg-primary-1400" : "bg-blue-50"
-            } rounded-lg p-8 xs:p-6 flex items-center justify-between`}
+            } rounded-lg p-4 xs:p-3 flex items-center justify-between`}
           >
             <div className="flex items-center">
               <Info
@@ -320,7 +354,7 @@ const Dashboard = () => {
               </span>
             </div>
 
-            <div className="flex items-center">
+            <div className="flex items-center self-center">
               <span className="text-gray-400 mr-2 xs:mr-1 text-xs xs:text-[10px] font-semibold">
                 View
               </span>
@@ -336,7 +370,7 @@ const Dashboard = () => {
             href="/help"
             className={`${
               isDarkMode ? "bg-primary-1400" : "bg-blue-50"
-            } rounded-lg p-8 xs:p-6 flex items-center justify-between`}
+            } rounded-lg p-4 xs:p-3 flex items-center justify-between`}
           >
             <div className="flex items-center">
               <Info
@@ -353,7 +387,7 @@ const Dashboard = () => {
               </span>
             </div>
 
-            <div className="flex items-center">
+            <div className="flex items-center self-center">
               <span className="text-gray-400 mr-2 xs:mr-1 text-xs xs:text-[10px] font-semibold">
                 Get Help
               </span>

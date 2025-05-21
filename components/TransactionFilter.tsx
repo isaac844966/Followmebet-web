@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import { Filter, X } from "lucide-react";
 import CustomButton from "./CustomButton";
@@ -87,6 +87,40 @@ const TransactionFilter: React.FC<TransactionFilterProps> = ({
       ? months.slice(0, currentMonthIndex + 1)
       : months;
 
+  // Update start/end dates when filter duration changes
+  useEffect(() => {
+    if (filterDuration === "Last 3 months") {
+      const now = new Date();
+      const currentMonth = now.toLocaleString("en-US", { month: "short" });
+      const currentYear = now.getFullYear();
+
+      const threeMonthsAgo = new Date();
+      threeMonthsAgo.setMonth(now.getMonth() - 3);
+      const threeMonthsMonth = threeMonthsAgo.toLocaleString("en-US", {
+        month: "short",
+      });
+      const threeMonthsYear = threeMonthsAgo.getFullYear();
+
+      setStartDate(`${threeMonthsMonth}, ${threeMonthsYear}`);
+      setEndDate(`${currentMonth}, ${currentYear}`);
+    } else if (filterDuration === "Last 6 months") {
+      const now = new Date();
+      const currentMonth = now.toLocaleString("en-US", { month: "short" });
+      const currentYear = now.getFullYear();
+
+      const sixMonthsAgo = new Date();
+      sixMonthsAgo.setMonth(now.getMonth() - 6);
+      const sixMonthsMonth = sixMonthsAgo.toLocaleString("en-US", {
+        month: "short",
+      });
+      const sixMonthsYear = sixMonthsAgo.getFullYear();
+
+      setStartDate(`${sixMonthsMonth}, ${sixMonthsYear}`);
+      setEndDate(`${currentMonth}, ${currentYear}`);
+    }
+    // Don't update dates for "Custom" to preserve user selections
+  }, [filterDuration]);
+
   // Handle month selection
   const handleMonthSelection = (month: string) => {
     const shortMonth = month.substring(0, 3);
@@ -95,9 +129,13 @@ const TransactionFilter: React.FC<TransactionFilterProps> = ({
     if (dateSelectionFor === "start") {
       setStartDate(formattedDate);
       setActiveFilterTab("Time Frame");
+      // Set to custom since user is selecting specific dates
+      setFilterDuration("Custom");
     } else if (dateSelectionFor === "end") {
       setEndDate(formattedDate);
       setActiveFilterTab("Time Frame");
+      // Set to custom since user is selecting specific dates
+      setFilterDuration("Custom");
     }
   };
 
@@ -424,15 +462,20 @@ const TransactionFilter: React.FC<TransactionFilterProps> = ({
                         setSelectedYear(year);
                         setActiveFilterTab("Date");
                       }}
+                      disabled={filterDuration !== "Custom"}
                     >
                       <span
                         className={`${
                           isDarkMode ? "text-white" : "text-black"
-                        } xs:text-sm`}
+                        } xs:text-sm ${
+                          filterDuration !== "Custom" ? "opacity-70" : ""
+                        }`}
                       >
                         {startDate}
                       </span>
-                      <span className="ml-2">›</span>
+                      {filterDuration === "Custom" && (
+                        <span className="ml-2">›</span>
+                      )}
                     </button>
                   </div>
 
@@ -453,15 +496,20 @@ const TransactionFilter: React.FC<TransactionFilterProps> = ({
                         setSelectedYear(year);
                         setActiveFilterTab("Date");
                       }}
+                      disabled={filterDuration !== "Custom"}
                     >
                       <span
                         className={`${
                           isDarkMode ? "text-white" : "text-black"
-                        } xs:text-sm`}
+                        } xs:text-sm ${
+                          filterDuration !== "Custom" ? "opacity-70" : ""
+                        }`}
                       >
                         {endDate}
                       </span>
-                      <span className="ml-2">›</span>
+                      {filterDuration === "Custom" && (
+                        <span className="ml-2">›</span>
+                      )}
                     </button>
                   </div>
 
