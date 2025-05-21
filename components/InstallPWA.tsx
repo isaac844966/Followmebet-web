@@ -3,6 +3,7 @@
 import usePWAInstallPrompt from "@/hooks/usePWAIntsallPrompt";
 import { useState } from "react";
 import CustomModal from "./CustomModal";
+import Image from "next/image";
 
 export default function InstallPrompt() {
   const { isInstallable, promptInstall } = usePWAInstallPrompt();
@@ -18,13 +19,20 @@ export default function InstallPrompt() {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-
+    const message = (
+      <>
+        <p>
+          Add to your home screen for quicker access and a smoother experience.
+        </p>
+        <Image src="/image/app-icon" alt="followmebet" />
+      </>
+    );
   return (
     <CustomModal
       visible={isInstallable && isModalVisible}
       onClose={handleCancel}
       title="Install FollowMeBet"
-      message="Add to your home screen for quicker access and a smoother experience."
+      message={message}
       primaryButtonText="Install Now"
       secondaryButtonText="Not Now"
       onPrimaryButtonPress={handleInstall}

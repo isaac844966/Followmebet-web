@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import CustomModal from "./CustomModal";
+import Image from "next/image";
 
 export default function IosInstallPrompt() {
   const [showPrompt, setShowPrompt] = useState(false);
@@ -31,14 +32,17 @@ export default function IosInstallPrompt() {
 
   const message = (
     <>
-      To install this app on your iPhone or iPad, tap the{" "}
-      <span className="font-semibold">Share</span> icon in Safari and then
-      select <span className="font-semibold">"Add to Home Screen"</span>.
+      <p>
+        To install this app on your iPhone or iPad, tap the{" "}
+        <span className="font-semibold">Share</span> icon in Safari and then
+        select <span className="font-semibold">"Add to Home Screen"</span>.
+      </p>
+      <Image src="/image/app-icon" alt="followmebet" />
     </>
   );
 
   return (
-    <CustomModal  
+    <CustomModal
       visible={showPrompt}
       onClose={handleClose}
       title="Install FollowMeBet"
