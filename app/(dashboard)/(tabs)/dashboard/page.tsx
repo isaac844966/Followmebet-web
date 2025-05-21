@@ -100,6 +100,7 @@ const Dashboard = () => {
         </div>
       </div>
       <InstallPWA />
+      <IosInstallPrompt />
       {/* Main content with padding to account for fixed header */}
       <div className="px-2 max-w-4xl mx-auto pt-28">
         <div className="space-y-3 xs:space-y-2 pb-20 xs:pb-16">
