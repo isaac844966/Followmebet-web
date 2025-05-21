@@ -98,6 +98,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+      <InstallPWA />
 
       {/* Main content with padding to account for fixed header */}
       <div className="px-2 max-w-4xl mx-auto pt-28">
@@ -401,7 +402,6 @@ const Dashboard = () => {
           </Link>
         </div>
       </div>
-      <InstallPWA/>
     </div>
   );
 };

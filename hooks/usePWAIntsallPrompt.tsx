@@ -1,31 +1,32 @@
+// usePWAInstallPrompt.ts
 import { useEffect, useState } from "react";
 
 export default function usePWAInstallPrompt() {
-  const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isInstallable, setIsInstallable] = useState(false);
 
   useEffect(() => {
-    const handler = (e: Event) => {
-      e.preventDefault(); // Prevent auto prompt
+    const handler = (e: any) => {
+      e.preventDefault();
       setDeferredPrompt(e);
       setIsInstallable(true);
     };
 
     window.addEventListener("beforeinstallprompt", handler);
 
-    return () => window.removeEventListener("beforeinstallprompt", handler);
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handler);
+    };
   }, []);
 
   const promptInstall = async () => {
     if (!deferredPrompt) return;
-
-    const promptEvent = deferredPrompt as any;
-    promptEvent.prompt();
-
-    const result = await promptEvent.userChoice;
-    console.log("User choice:", result);
-    setDeferredPrompt(null);
-    setIsInstallable(false);
+    deferredPrompt.prompt();
+    const choice = await deferredPrompt.userChoice;
+    if (choice.outcome === "accepted") {
+      setDeferredPrompt(null);
+      setIsInstallable(false);
+    }
   };
 
   return { isInstallable, promptInstall };
