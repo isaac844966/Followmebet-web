@@ -22,7 +22,7 @@ export default function InstallPrompt() {
   const title = (
     <>
       <Image
-        src="/images/app-icon.png"
+        src="/app-icon.png"
         alt="followmebet"
         width={120}
         height={48}

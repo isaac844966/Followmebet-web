@@ -48,7 +48,7 @@ const TabsNavigation = ({ currentPath }: TabsNavigationProps) => {
       name: "Home",
       path: "/dashboard",
       icon: (focused: boolean) => (
-        <Home size={22} color={iconColor(focused)} className="xs:w-5 xs:h-5" />
+        <Home size={22} color={iconColor(focused)} className="xs:w-6 xs:h-6" />
       ),
     },
     {
@@ -58,7 +58,7 @@ const TabsNavigation = ({ currentPath }: TabsNavigationProps) => {
         <TrendingUp
           size={22}
           color={iconColor(focused)}
-          className="xs:w-5 xs:h-5"
+          className="xs:w-6 xs:h-6"
         />
       ),
     },
@@ -69,7 +69,7 @@ const TabsNavigation = ({ currentPath }: TabsNavigationProps) => {
         <PlusCircle
           size={22}
           color={iconColor(focused)}
-          className="xs:w-5 xs:h-5"
+          className="xs:w-6 xs:h-6"
         />
       ),
     },
@@ -80,7 +80,7 @@ const TabsNavigation = ({ currentPath }: TabsNavigationProps) => {
         <ListChecks
           size={22}
           color={iconColor(focused)}
-          className="xs:w-5 xs:h-5"
+          className="xs:w-6 xs:h-6"
         />
       ),
     },
@@ -91,7 +91,7 @@ const TabsNavigation = ({ currentPath }: TabsNavigationProps) => {
         <Wallet
           size={22}
           color={iconColor(focused)}
-          className="xs:w-5 xs:h-5"
+          className="xs:w-6 xs:h-6"
         />
       ),
     },
