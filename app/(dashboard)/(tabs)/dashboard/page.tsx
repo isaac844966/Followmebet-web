@@ -11,6 +11,7 @@ import CustomButton from "@/components/CustomButton";
 import { fetchUserProfile } from "@/lib/services/authService";
 import { initializeFirebaseMessaging } from "@/lib/services/updateNotifictionToken";
 import InstallPWA from "@/components/InstallPWA";
+import IosInstallPrompt from "@/components/IosInstallPropt";
 
 const Dashboard = () => {
   const { isDarkMode } = useTheme();
@@ -99,7 +100,7 @@ const Dashboard = () => {
         </div>
       </div>
       <InstallPWA />
-
+      <IosInstallPrompt />
       {/* Main content with padding to account for fixed header */}
       <div className="px-2 max-w-4xl mx-auto pt-28">
         <div className="space-y-3 xs:space-y-2 pb-20 xs:pb-16">
@@ -372,31 +373,29 @@ const Dashboard = () => {
             href="/help"
             className={`${
               isDarkMode ? "bg-primary-1400" : "bg-blue-50"
-            } rounded-lg p-4 xs:p-3 flex items-center justify-between`}
+            } rounded-lg p-4  flex items-center justify-between`}
           >
             <div className="flex items-center">
               <Info
                 size={20}
                 color={isDarkMode ? "white" : "#1E1F68"}
-                className="xs:w-4 xs:h-4"
               />
               <span
                 className={`${
                   isDarkMode ? "text-white" : "text-black"
-                } ml-3 xs:ml-2 font-semibold text-base xs:text-sm`}
+                } ml-3  font-semibold text-base `}
               >
                 Help
               </span>
             </div>
 
             <div className="flex items-center self-center">
-              <span className="text-gray-400 mr-2 xs:mr-1 text-xs xs:text-[10px] font-semibold">
+              <span className="text-gray-400 mr-2 text-xs  font-semibold">
                 Get Help
               </span>
               <ChevronRight
                 size={16}
                 color={isDarkMode ? "white" : "#1E1F68"}
-                className="xs:w-3 xs:h-3"
               />
             </div>
           </Link>
