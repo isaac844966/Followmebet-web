@@ -21,7 +21,11 @@ export default function RootLayout({
       <head>
         {/* PWA Meta Tags */}
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content={isDarkMode?"#0B0B3F":"#fff"} />
+        <meta name="theme-color" content={isDarkMode ? "#0B0B3F" : "#fff"} />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        />
         <link rel="icon" href="/app-icon.png" />
         <link rel="apple-touch-icon" href="/app-icon.png" />
         <meta name="mobile-web-app-capable" content="yes" />

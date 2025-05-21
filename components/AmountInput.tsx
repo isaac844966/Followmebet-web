@@ -96,6 +96,9 @@ const AmountInput: React.FC<AmountInputProps> = ({
               inputMode="numeric"
               placeholder="0"
               className={`w-full bg-transparent ${inputTextColor} text-lg sm:text-xl font-bold focus:outline-none truncate`}
+              style={{
+                fontSize: "16px",
+              }}
             />
           </div>
 
