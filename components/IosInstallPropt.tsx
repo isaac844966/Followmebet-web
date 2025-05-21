@@ -32,24 +32,27 @@ export default function IosInstallPrompt() {
 
   const message = (
     <>
-      <p>
+      <p className="text-base xs:text-sm">
         To install this app on your iPhone or iPad, tap the{" "}
         <span className="font-semibold">Share</span> icon in Safari and then
         select <span className="font-semibold">"Add to Home Screen"</span>.
       </p>
     </>
   );
+
   const title = (
     <>
       <Image
         src="/app-icon.png"
         alt="followmebet"
+        width={48}
         height={48}
-        className="mb-2"
+        className="mb-2 w-12 h-12 xs:w-10 xs:h-10"
       />
-      <p>Install FollowMeBet</p>
+      <p className="text-2xl xs:text-xl">Install FollowMeBet</p>
     </>
   );
+
   return (
     <CustomModal
       visible={showPrompt}
