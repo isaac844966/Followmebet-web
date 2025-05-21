@@ -144,7 +144,7 @@ const SelectOpponentPage = () => {
 
     // Validate phone number
     if (!phoneNumber.trim()) {
-      setPhoneError("Phone number is required.");
+      setPhoneError("Opponent phone number is required.");
       valid = false;
     } else if (!validatePhoneNumber(phoneNumber)) {
       setPhoneError("Please enter a valid phone number.");
@@ -311,7 +311,7 @@ const SelectOpponentPage = () => {
             {/* Phone Input */}
             <div className="space-y-2">
               <PhoneInput
-                placeholder="Mobile Number"
+                placeholder="Opponent Mobile Number"
                 value={phoneNumber}
                 onChangeText={setPhoneNumber}
                 error={phoneError}
@@ -322,11 +322,11 @@ const SelectOpponentPage = () => {
             {/* Opponent Name */}
             <div className="space-y-2">
               <CustomInput
-                placeholder="Opponent"
+                placeholder="Opponent Name"
                 onChange={(e) => setOpponentName(e.target.value)}
                 error={opponentNameError}
                 value={opponentName}
-                label="Opponent"
+                label="Opponent Name"
               />
             </div>
 
