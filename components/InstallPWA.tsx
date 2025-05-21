@@ -29,7 +29,7 @@ export default function InstallPrompt() {
       secondaryButtonText="Not Now"
       onPrimaryButtonPress={handleInstall}
       onSecondaryButtonPress={handleCancel}
-      primaryButtonColor="#4F46E5" 
+      primaryButtonColor="#4F46E5"
       primaryTextColor="#FFFFFF"
       hideCloseOnOverlayPress={false}
     />
