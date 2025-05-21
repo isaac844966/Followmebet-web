@@ -54,9 +54,9 @@ const Login = () => {
 
       router.push("/dashboard");
     } catch (error: any) {
-      if (error.status === 422 && error.errors) {
+      if (error.status === 422 && error.errors ) {
         setErrors(error.errors);
-      } else if (error.status === 401 && error.errors?.general) {
+      } else if (error.status === 401 || error.status === 404 && error.errors?.general) {
         showErrorModal(error.errors.general, "Login Error");
       } else {
         handleApiError(error, showErrorModal, "Login failed", "Something went wrong");
