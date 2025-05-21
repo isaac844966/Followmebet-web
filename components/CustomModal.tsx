@@ -92,19 +92,17 @@ const CustomModal: React.FC<CustomModalProps> = ({
         ref={modalRef}
         className={`${
           isDarkMode ? "bg-[#2D2A6E]" : "bg-white"
-        } rounded-xl p-6 pt-16 items-center max-w-[85%] w-[500px] shadow-lg`}
+        } rounded-xl p-6  items-center max-w-[85%] w-[500px] shadow-lg`}
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Title */}
-        <h2
+        <div
           id="modal-title"
-          className={`${
-            isDarkMode ? "text-white" : "text-black"
-          } text-2xl font-bold mb-3 text-center`}
+          className="flex flex-col items-center justify-center gap-2 mb-6"
         >
           {title}
-        </h2>
+        </div>
 
         {/* Message */}
         {typeof message === "string" ? (

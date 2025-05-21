@@ -25,8 +25,9 @@ export default function InstallPrompt() {
       <Image
         src="/app-icon.png"
         alt="followmebet"
-        width={48}
-        height={20}
+        width={80} 
+        height={40}
+        className="mb-2"
       />
       <p className="text-2xl xs:text-xl">Install FollowMeBet</p>
     </>
