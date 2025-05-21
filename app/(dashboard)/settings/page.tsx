@@ -31,12 +31,14 @@ export default function SettingsPage() {
     try {
       await logout();
       router.replace("/login");
+      router.refresh(); 
     } catch (error) {
       console.error("Logout error:", error);
     } finally {
       setIsLoggingOut(false);
     }
   };
+
 
   return (
     <div className={`${backgroundColor} min-h-screen`}>

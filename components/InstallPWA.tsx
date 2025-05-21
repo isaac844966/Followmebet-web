@@ -1,16 +1,15 @@
+// App.jsx or InstallPrompt.jsx
 import React, { useEffect, useState } from "react";
 
-const InstallPWA = () => {
+const InstallPrompt = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallButton, setShowInstallButton] = useState(false);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
-      // Prevent the automatic prompt
-      e.preventDefault();
-      // Save the event so it can be triggered later
-      setDeferredPrompt(e);
-      setShowInstallButton(true);
+      e.preventDefault(); // Prevent the default mini-infobar
+      setDeferredPrompt(e); // Save the event for triggering later
+      setShowInstallButton(true); // Show your custom install button
     };
 
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
@@ -23,28 +22,25 @@ const InstallPWA = () => {
     };
   }, []);
 
-  const handleInstallClick = () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === "accepted") {
-          console.log("User accepted the A2HS prompt");
-        } else {
-          console.log("User dismissed the A2HS prompt");
-        }
-        setDeferredPrompt(null);
-        setShowInstallButton(false);
-      });
-    }
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log(`User response to install prompt: ${outcome}`);
+
+    setDeferredPrompt(null); // Clear the saved prompt
+    setShowInstallButton(false); // Hide the install button
   };
 
   return (
-    <div>
+    <>
       {showInstallButton && (
         <button onClick={handleInstallClick}>Install App</button>
       )}
-    </div>
+    </>
   );
 };
 
-export default InstallPWA;
+export default InstallPrompt;
