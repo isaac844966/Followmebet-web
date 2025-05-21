@@ -19,20 +19,24 @@ export default function InstallPrompt() {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-    const message = (
-      <>
-        <p>
-          Add to your home screen for quicker access and a smoother experience.
-        </p>
-        <Image src="/image/app-icon" alt="followmebet" />
-      </>
-    );
+  const title = (
+    <>
+      <Image
+        src="/images/app-icon.png"
+        alt="followmebet"
+        width={120}
+        height={48}
+        className="mb-2"
+      />
+      <p>Install FollowMeBet</p>
+    </>
+  );
   return (
     <CustomModal
       visible={isInstallable && isModalVisible}
       onClose={handleCancel}
-      title="Install FollowMeBet"
-      message={message}
+      title={title}
+      message="Add to your home screen for quicker access and a smoother experience."
       primaryButtonText="Install Now"
       secondaryButtonText="Not Now"
       onPrimaryButtonPress={handleInstall}

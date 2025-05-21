@@ -7,7 +7,7 @@ import { useTheme } from "@/lib/contexts/ThemeContext";
 interface CustomModalProps {
   visible: boolean;
   onClose: () => void;
-  title: string;
+  title: string| ReactNode;
   message?: string | ReactNode;
   primaryButtonText: string;
   secondaryButtonText?: string;

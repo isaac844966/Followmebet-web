@@ -37,15 +37,25 @@ export default function IosInstallPrompt() {
         <span className="font-semibold">Share</span> icon in Safari and then
         select <span className="font-semibold">"Add to Home Screen"</span>.
       </p>
-      <Image src="/image/app-icon" alt="followmebet" />
     </>
   );
-
+  const title = (
+    <>
+      <Image
+        src="/images/app-icon.png"
+        alt="followmebet"
+        width={120}
+        height={48}
+        className="mb-2"
+      />
+      <p>Install FollowMeBet</p>
+    </>
+  );
   return (
     <CustomModal
       visible={showPrompt}
       onClose={handleClose}
-      title="Install FollowMeBet"
+      title={title}
       message={message}
       primaryButtonText="Got it"
       secondaryButtonText="Maybe later"
