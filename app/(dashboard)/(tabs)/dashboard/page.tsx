@@ -10,6 +10,7 @@ import { Info, RefreshCw, Settings, ChevronRight } from "lucide-react";
 import CustomButton from "@/components/CustomButton";
 import { fetchUserProfile } from "@/lib/services/authService";
 import { initializeFirebaseMessaging } from "@/lib/services/updateNotifictionToken";
+import InstallPWA from "@/components/InstallPWA";
 
 const Dashboard = () => {
   const { isDarkMode } = useTheme();
@@ -400,6 +401,7 @@ const Dashboard = () => {
           </Link>
         </div>
       </div>
+      <InstallPWA/>
     </div>
   );
 };
