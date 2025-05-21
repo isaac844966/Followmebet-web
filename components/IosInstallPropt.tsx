@@ -46,8 +46,7 @@ export default function IosInstallPrompt() {
         src="/app-icon.png"
         alt="followmebet"
         width={48}
-        height={48}
-        className="mb-2 w-12 h-12 xs:w-10 xs:h-10"
+        height={20}
       />
       <p className="text-2xl xs:text-xl">Install FollowMeBet</p>
     </>

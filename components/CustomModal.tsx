@@ -92,7 +92,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
         ref={modalRef}
         className={`${
           isDarkMode ? "bg-[#2D2A6E]" : "bg-white"
-        } rounded-xl p-8 pt-16 items-center max-w-[85%] w-[500px] shadow-lg`}
+        } rounded-xl p-6 pt-16 items-center max-w-[85%] w-[500px] shadow-lg`}
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
       >
@@ -116,14 +116,14 @@ const CustomModal: React.FC<CustomModalProps> = ({
             {message}
           </p>
         ) : (
-          <div className="mb-10">{message}</div>
+          <div className="mb-6">{message}</div>
         )}
 
         {/* Buttons */}
         <div className="flex w-full justify-between mt-2">
           {/* Primary Button */}
           <button
-            className={`rounded-lg py-5 flex items-center justify-center ${
+            className={`rounded-lg py-3 flex items-center justify-center ${
               secondaryButtonText ? "flex-1 mr-2" : "w-full"
             }`}
             style={{
@@ -138,7 +138,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
           {/* Secondary Button (optional) */}
           {secondaryButtonText && (
             <button
-              className="rounded-lg py-5 flex items-center justify-center flex-1 ml-2"
+              className="rounded-lg py-3 flex items-center justify-center flex-1 ml-2"
               style={{
                 backgroundColor: defaultSecondaryButtonColor,
                 border: `1px solid ${borderColor}`,
