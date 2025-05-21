@@ -27,7 +27,6 @@ export default function InstallPrompt() {
         alt="followmebet"
         width={80} 
         height={40}
-        className="mb-2"
       />
       <p className="text-2xl xs:text-xl">Install FollowMeBet</p>
     </>

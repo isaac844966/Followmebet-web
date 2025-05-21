@@ -109,7 +109,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
           <p
             className={`${
               isDarkMode ? "text-gray-300" : "text-gray-700"
-            } text-lg mb-10 text-center leading-5 font-medium`}
+            } text-md xs:text-sm mb-6 text-center leading-5 font-medium`}
           >
             {message}
           </p>
