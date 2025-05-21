@@ -7,7 +7,7 @@ import { useTheme } from "@/lib/contexts/ThemeContext";
 interface CustomModalProps {
   visible: boolean;
   onClose: () => void;
-  title: string | ReactNode;
+  title: string| ReactNode;
   message?: string | ReactNode;
   primaryButtonText: string;
   secondaryButtonText?: string;
@@ -92,38 +92,38 @@ const CustomModal: React.FC<CustomModalProps> = ({
         ref={modalRef}
         className={`${
           isDarkMode ? "bg-[#2D2A6E]" : "bg-white"
-        } rounded-xl p-8 xs:p-6 pt-16 xs:pt-12 items-center max-w-[85%] w-[500px] xs:w-[90%] shadow-lg`}
+        } rounded-xl p-8 pt-16 items-center max-w-[85%] w-[500px] shadow-lg`}
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Title */}
-        <div
+        <h2
           id="modal-title"
           className={`${
             isDarkMode ? "text-white" : "text-black"
-          } text-2xl xs:text-xl font-bold mb-3 text-center flex flex-col items-center`}
+          } text-2xl font-bold mb-3 text-center`}
         >
           {title}
-        </div>
+        </h2>
 
         {/* Message */}
         {typeof message === "string" ? (
           <p
             className={`${
               isDarkMode ? "text-gray-300" : "text-gray-700"
-            } text-lg xs:text-base mb-10 xs:mb-6 text-center leading-5 xs:leading-normal font-medium`}
+            } text-lg mb-10 text-center leading-5 font-medium`}
           >
             {message}
           </p>
         ) : (
-          <div className="mb-10 xs:mb-6">{message}</div>
+          <div className="mb-10">{message}</div>
         )}
 
         {/* Buttons */}
         <div className="flex w-full justify-between mt-2">
           {/* Primary Button */}
           <button
-            className={`rounded-lg py-5 xs:py-4 flex items-center justify-center ${
+            className={`rounded-lg py-5 flex items-center justify-center ${
               secondaryButtonText ? "flex-1 mr-2" : "w-full"
             }`}
             style={{
@@ -132,15 +132,13 @@ const CustomModal: React.FC<CustomModalProps> = ({
             }}
             onClick={onPrimaryButtonPress}
           >
-            <span className="text-base xs:text-sm font-medium">
-              {primaryButtonText}
-            </span>
+            <span className="text-base font-medium">{primaryButtonText}</span>
           </button>
 
           {/* Secondary Button (optional) */}
           {secondaryButtonText && (
             <button
-              className="rounded-lg py-5 xs:py-4 flex items-center justify-center flex-1 ml-2"
+              className="rounded-lg py-5 flex items-center justify-center flex-1 ml-2"
               style={{
                 backgroundColor: defaultSecondaryButtonColor,
                 border: `1px solid ${borderColor}`,
@@ -148,7 +146,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
               }}
               onClick={onSecondaryButtonPress || onClose}
             >
-              <span className="text-base xs:text-sm font-medium">
+              <span className="text-base font-medium">
                 {secondaryButtonText}
               </span>
             </button>
