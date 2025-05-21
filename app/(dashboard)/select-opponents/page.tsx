@@ -311,22 +311,23 @@ const SelectOpponentPage = () => {
             {/* Phone Input */}
             <div className="space-y-2">
               <PhoneInput
-                placeholder="Opponent Mobile Number"
+                placeholder="Phone Number"
                 value={phoneNumber}
                 onChangeText={setPhoneNumber}
                 error={phoneError}
                 maxLength={10}
+                label="Opponent Phone Number"
               />
             </div>
 
             {/* Opponent Name */}
             <div className="space-y-2">
               <CustomInput
-                placeholder="Opponent Name"
+                placeholder=" Name"
                 onChange={(e) => setOpponentName(e.target.value)}
                 error={opponentNameError}
                 value={opponentName}
-                label="Opponent Name"
+                label=" Opponent Name"
               />
             </div>
 
