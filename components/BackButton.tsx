@@ -54,12 +54,11 @@ const BackButton: React.FC<BackButtonProps> = ({
     }
   };
 
-  const backgroundColor = isDarkMode ? "bg-[#0B0B3F]" : "bg-white";
   const defaultIconColor = iconColor || (isDarkMode ? "#FFFFFF" : "#000");
 
   return (
     <div
-      className={`flex items-center justify-between pb-8 ${backgroundColor} pt-4 w-full`}
+      className={`flex items-center justify-between pb-8  pt-4 w-full`}
     >
       <button
         onClick={handlePress}
