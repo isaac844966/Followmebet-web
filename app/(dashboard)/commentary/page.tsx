@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
 import { useTheme } from "@/lib/contexts/ThemeContext";
 import MatchHeader from "@/components/commentary/MatchHeader";
 import TabNavigation from "@/components/commentary/TabNavigation";
@@ -27,21 +26,17 @@ export default function CommentaryPage() {
   const category = searchParams.get("category") || "";
   const categoryId = searchParams.get("categoryId") || "";
 
-  // Get live fixture data using our custom hook
   const { liveFixtureData } = useLiveFixtureData();
   const fixtureData = eventCode ? liveFixtureData[eventCode] : null;
 
-  // Get match events using our custom hook
   const {
     events,
     loading: eventsLoading,
     error: eventsError,
   } = useMatchEvents(eventCode);
 
-  // Tab state
-  const [activeTab, setActiveTab] = useState(0); // 0 for Commentary, 1 for Standings
+  const [activeTab, setActiveTab] = useState(0);
 
-  // Get standings data using our custom hook
   const {
     standings,
     loading: standingsLoading,
@@ -54,10 +49,7 @@ export default function CommentaryPage() {
   const textColor = isDarkMode ? "text-white" : "text-gray-800";
   const secondaryTextColor = isDarkMode ? "text-gray-300" : "text-gray-500";
 
-  const handleNavigate = () => {
-    router.push("/create-bet");
-  };
-
+  
   const handleTabChange = (index: number) => {
     setActiveTab(index);
   };
@@ -70,19 +62,14 @@ export default function CommentaryPage() {
   const matchStatus = fixtureData?.status || "NS";
   const matchMinute = fixtureData?.status_elapse || "";
 
- 
-
-
-  const fixedHeaderHeight = "224px";
 
   return (
-    <div className={`min-h-screen ${backgroundColor}`}>
-      {/* Fixed Header Section */}
-      <div className={`fixed top-0 left-0 right-0 z-10 ${backgroundColor}`}>
-        {/* Back Button */}
+    <div
+      className={`h-screen flex flex-col ${backgroundColor} overflow-hidden`}
+    >
+      <div className={`${backgroundColor}`}>
         <BackButton title="Commentary" />
 
-        {/* Match Header */}
         <MatchHeader
           team1={team1}
           team2={team2}
@@ -95,25 +82,24 @@ export default function CommentaryPage() {
           primaryBg={primaryBg}
           textColor={textColor}
           isDarkMode={isDarkMode}
+          category={category}
         />
 
-        {/* Tab Navigation */}
         <TabNavigation activeTab={activeTab} onTabChange={handleTabChange} />
       </div>
 
-      {/* Content Area with padding to account for fixed header */}
-      <div className={`pt-[${fixedHeaderHeight}] xs:pt-[270px] min-h-screen`}>
-        {/* Tab Content */}
+      <div className="flex-1 overflow-hidden">
         <div className="h-full">
-          {/* Commentary Tab */}
           {activeTab === 0 && (
-            <>
+            <div className="h-full overflow-y-auto">
               {eventsLoading ? (
-                <LoadingSpinner
-                  variant="circular"
-                  size="lg"
-                  color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
-                />
+                <div className="flex justify-center items-center h-full">
+                  <LoadingSpinner
+                    variant="circular"
+                    size="lg"
+                    color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
+                  />
+                </div>
               ) : (
                 <CommentaryTab
                   events={events}
@@ -124,18 +110,20 @@ export default function CommentaryPage() {
                   isDarkMode={isDarkMode}
                 />
               )}
-            </>
+            </div>
           )}
 
           {/* Standings Tab */}
           {activeTab === 1 && (
-            <>
+            <div className="h-full overflow-y-auto">
               {standingsLoading ? (
-                <LoadingSpinner
-                  variant="circular"
-                  size="lg"
-                  color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
-                />
+                <div className="flex justify-center items-center h-full">
+                  <LoadingSpinner
+                    variant="circular"
+                    size="lg"
+                    color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
+                  />
+                </div>
               ) : (
                 <StandingsTab
                   standings={standings}
@@ -151,7 +139,7 @@ export default function CommentaryPage() {
                   isDarkMode={isDarkMode}
                 />
               )}
-            </>
+            </div>
           )}
         </div>
       </div>

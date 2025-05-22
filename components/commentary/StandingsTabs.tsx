@@ -178,7 +178,7 @@ export default function StandingsTab({
           </div>
         </div>
       ) : (
-        <div className="flex-1 flex justify-center items-center">
+        <div className="flex-1 flex justify-center items-center py-32">
           <p className={`${textColor} xs:text-sm text-center px-4`}>
             {categoryId
               ? "No standings data available for this league"

@@ -12,6 +12,7 @@ interface MatchHeaderProps {
   primaryBg: string;
   textColor: string;
   isDarkMode: boolean;
+  category: string;
 }
 
 export default function MatchHeader({
@@ -26,13 +27,15 @@ export default function MatchHeader({
   primaryBg,
   textColor,
   isDarkMode,
+  category
 }: MatchHeaderProps) {
   const secondaryTextColor = isDarkMode ? "text-gray-300" : "text-gray-500";
 
   return (
     <div
-      className={`flex items-center justify-center py-6   ${primaryBg}`}
+      className={` py-6 ${primaryBg}`}
     >
+      <h2 className="text-md font-bold text-center mb-2">{category}</h2>
       <div className="flex justify-between items-center w-full px-10 xs:px-6 gap-4 xs:gap-2">
         <div className="flex flex-col items-center flex-1">
           <div className="relative w-12 h-12  mb-2 xs:mb-1">
@@ -93,7 +96,7 @@ export default function MatchHeader({
             />
           </div>
           <p
-            className={`${textColor} text-center font-medium xs:text-sm max-w-[120px] xs:max-w-[90px] truncate`}
+            className={`${textColor} text-center font-medium xs:text-sm max-w-[120px] `}
           >
             {team2}
           </p>

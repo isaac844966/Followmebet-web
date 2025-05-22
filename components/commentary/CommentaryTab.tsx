@@ -182,13 +182,23 @@ export default function CommentaryTab({
         if (info.includes("penalty"))
           return (
             <div className="w-5 h-5 xs:w-4 xs:h-4 ">
-              <Image
-                src="/images/penalty_goal.png"
-                alt="penalty"
-                width={20}
-                height={20}
-                color="#000"
-              />
+              {isDarkMode ? (
+                <Image
+                  src="/images/penalty_goal.png"
+                  alt="penalty"
+                  width={20}
+                  height={20}
+                  color="#000"
+                />
+              ) : (
+                <Image
+                  src="/images/penalty_goal_black.png"
+                  alt="penalty"
+                  width={20}
+                  height={20}
+                  color="#000"
+                />
+              )}
             </div>
           );
         return (
@@ -232,12 +242,21 @@ export default function CommentaryTab({
       case "subst":
         return (
           <div className="w-5 h-5 xs:w-4 xs:h-4 ">
-            <Image
-              src="/images/substitution.png"
-              alt="substitution"
-              width={20}
-              height={20}
-            />
+            {isDarkMode ? (
+              <Image
+                src="/images/substitution.png"
+                alt="substitution"
+                width={20}
+                height={20}
+              />
+            ) : (
+              <Image
+                src="/images/substitution_black.png"
+                alt="substitution"
+                width={20}
+                height={20}
+              />
+            )}
           </div>
         );
 
@@ -256,12 +275,21 @@ export default function CommentaryTab({
         if (info.includes("penalty confirmed"))
           return (
             <div className="w-5 h-5 xs:w-4 xs:h-4 ">
-              <Image
-                src="/images/var_penalty-confirmed.png"
-                alt="var_goal_cancelled"
-                width={20}
-                height={20}
-              />
+              {isDarkMode ? (
+                <Image
+                  src="/images/var_penalty_confirmed.png"
+                  alt="var_goal_cancelled"
+                  width={20}
+                  height={20}
+                />
+              ) : (
+                <Image
+                  src="/images/var_penalty_confirmed_black.png"
+                  alt="var_goal_cancelled"
+                  width={20}
+                  height={20}
+                />
+              )}
             </div>
           );
         return (
@@ -508,7 +536,7 @@ export default function CommentaryTab({
         )}
 
         {allEvents.length === 0 && (
-          <div className="flex items-center justify-center py-20 xs:py-12">
+          <div className="flex items-center justify-center py-32">
             <p className="text-gray-400 text-center xs:text-sm">
               No match events available yet
             </p>
