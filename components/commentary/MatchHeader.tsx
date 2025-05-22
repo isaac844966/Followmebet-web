@@ -32,10 +32,10 @@ export default function MatchHeader({
   const secondaryTextColor = isDarkMode ? "text-gray-300" : "text-gray-500";
 
   return (
-    <div
-      className={` py-6 ${primaryBg}`}
-    >
-      <h2 className="text-md font-bold text-center mb-2">{category}</h2>
+    <div className={` py-6 ${primaryBg}`}>
+      <h2 className="text-md xs:text-sm mb-2 font-medium text-center">
+        {category}
+      </h2>
       <div className="flex justify-between items-center w-full px-10 xs:px-6 gap-4 xs:gap-2">
         <div className="flex flex-col items-center flex-1">
           <div className="relative w-12 h-12  mb-2 xs:mb-1">
@@ -47,7 +47,7 @@ export default function MatchHeader({
             />
           </div>
           <p
-            className={`${textColor} text-center font-medium xs:text-sm max-w-[120px] xs:max-w-[90px] truncate`}
+            className={`${textColor}  text-center font-medium max-w-[120px] xs:max-w-[90px] xs:text-xs truncate`}
           >
             {team1}
           </p>

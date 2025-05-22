@@ -65,11 +65,22 @@ const BetMarketPage = () => {
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
+  // Reference to measure header height
+  const headerRef = useRef<HTMLDivElement>(null);
+  const [headerHeight, setHeaderHeight] = useState(0);
+
   // Tabs configuration
   const tabs: TabItem[] = [
     { key: "soccer", label: "Open Challenge", showSubTabs: false },
     { key: "special", label: "Pool Bet", showSubTabs: false },
   ];
+
+  // Measure header height after render
+  useEffect(() => {
+    if (headerRef.current) {
+      setHeaderHeight(headerRef.current.offsetHeight);
+    }
+  }, []);
 
   // Setup intersection observer for infinite scrolling
   useEffect(() => {
@@ -402,8 +413,7 @@ const BetMarketPage = () => {
                     <Image
                       src={
                         fixture.item1.logoUrl ||
-                        "/placeholder.svg?height=20&width=20" ||
-                        "/placeholder.svg"
+                        "/placeholder.svg?height=20&width=20"
                       }
                       alt="Team 1 logo"
                       fill
@@ -421,8 +431,7 @@ const BetMarketPage = () => {
                     <Image
                       src={
                         fixture.item2.logoUrl ||
-                        "/placeholder.svg?height=20&width=20" ||
-                        "/placeholder.svg"
+                        "/placeholder.svg?height=20&width=20"
                       }
                       alt="Team 2 logo"
                       fill
@@ -478,8 +487,7 @@ const BetMarketPage = () => {
                           <Image
                             src={
                               owner?.avatarUrl ||
-                              "/placeholder.svg?height=28&width=28" ||
-                              "/placeholder.svg"
+                              "/placeholder.svg?height=28&width=28"
                             }
                             alt={`Owner ${index} avatar`}
                             fill
@@ -587,7 +595,7 @@ const BetMarketPage = () => {
   // Render Pool Bet content separately
   const renderPoolBetContent = () => {
     return (
-      <div className="flex-1 flex items-center justify-center h-[calc(100vh-240px)] xs:h-[calc(100vh-200px)]">
+      <div className="flex items-center justify-center h-full">
         <div className="text-center">
           <Trophy
             size={50}
@@ -619,7 +627,7 @@ const BetMarketPage = () => {
     if (loading && !dataFetched) return null;
 
     return (
-      <div className="flex-1 items-center justify-center py-8 xs:py-4 h-[calc(100vh-240px)] xs:h-[calc(100vh-200px)]">
+      <div className="flex items-center justify-center h-full">
         <EmptyState
           type="soccer"
           isDarkMode={isDarkMode}
@@ -634,7 +642,7 @@ const BetMarketPage = () => {
   // Centered loading spinner component
   const renderCenteredLoadingSpinner = () => {
     return (
-      <div className="fixed inset-0 flex items-center justify-center z-30">
+      <div className="flex items-center justify-center h-full">
         <LoadingSpinner
           variant="circular"
           size={initialLoading ? "lg" : "md"}
@@ -645,9 +653,12 @@ const BetMarketPage = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen">
-      {/* Fixed Header */}
-      <div className="fixed top-0 left-0 right-0 z-20">
+    <div className={`h-screen ${backgroundColor} overflow-hidden`}>
+      {/* Fixed Header Section */}
+      <div
+        ref={headerRef}
+        className={`fixed top-0 left-0 right-0 z-20 ${backgroundColor}`}
+      >
         <WalletHeader
           title="Bet Market"
           icon={
@@ -661,38 +672,42 @@ const BetMarketPage = () => {
         />
       </div>
 
-      {/* Loading Spinner - centered and fixed in viewport */}
-      {(initialLoading || (loading && !dataFetched)) &&
-        renderCenteredLoadingSpinner()}
-
+      {/* Content Area - This will take remaining height and be scrollable */}
       <div
-        className={`${subBackground} flex-1 pt-[220px] xs:pt-[190px] pb-8 xs:pb-20 overflow-y-auto scrollbar-hide`}
+        className={`${subBackground} h-screen overflow-y-auto`}
+        style={{ paddingTop: headerHeight || "120px" }}
       >
-        {/* Show Pool Bet content if activeTab is "special" */}
-        {activeTab === "special" ? (
-          renderPoolBetContent()
+        {initialLoading || (loading && !dataFetched) ? (
+          renderCenteredLoadingSpinner()
         ) : (
-          /* Bet Markets List - only render when not in initial loading state */
-          <div className="py-2 xs:py-1">
-            {betMarkets.length > 0 && !initialLoading
-              ? betMarkets.map((category) => renderCategory(category))
-              : !initialLoading && renderEmpty()}
+          <>
+            {/* Show Pool Bet content if activeTab is "special" */}
+            {activeTab === "special" ? (
+              renderPoolBetContent()
+            ) : (
+              /* Bet Markets List */
+              <div className="py-2 xs:py-1">
+                {betMarkets.length > 0
+                  ? betMarkets.map((category) => renderCategory(category))
+                  : renderEmpty()}
 
-            {/* Invisible element for intersection observer */}
-            {hasMore && !initialLoading && (
-              <div ref={loadMoreRef} className="h-4 w-full"></div>
-            )}
+                {/* Invisible element for intersection observer */}
+                {hasMore && (
+                  <div ref={loadMoreRef} className="h-4 w-full"></div>
+                )}
 
-            {loading && !initialLoading && dataFetched && (
-              <div className="flex justify-center my-4 xs:my-2">
-                <LoadingSpinner
-                  variant="circular"
-                  size="md"
-                  color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
-                />
+                {loading && dataFetched && (
+                  <div className="flex justify-center my-4 xs:my-2">
+                    <LoadingSpinner
+                      variant="circular"
+                      size="md"
+                      color={isDarkMode ? "text-[#FBB03B]" : "text-[#1E1F68]"}
+                    />
+                  </div>
+                )}
               </div>
             )}
-          </div>
+          </>
         )}
       </div>
     </div>

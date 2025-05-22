@@ -59,12 +59,7 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({
             />
           </div>
           <p
-            className={`${textColor} text-center font-medium max-w-[120px] xs:max-w-[90px] xs:text-xs`}
-            style={{
-              textOverflow: "ellipsis",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-            }}
+            className={`${textColor}  text-center font-medium max-w-[120px] xs:max-w-[90px] xs:text-xs truncate`}
           >
             {fixture?.item1?.name || "Team 1"}
           </p>
@@ -89,12 +84,7 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({
             />
           </div>
           <p
-            className={`${textColor} text-center font-medium max-w-[120px] xs:max-w-[90px] xs:text-xs`}
-            style={{
-              textOverflow: "ellipsis",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-            }}
+            className={`${textColor}  text-center font-medium max-w-[120px] xs:max-w-[90px] xs:text-xs truncate`}
           >
             {fixture?.item2?.name || "Team 2"}
           </p>
