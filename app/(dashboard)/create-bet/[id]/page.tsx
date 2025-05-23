@@ -268,7 +268,7 @@ export default function CreateBetPage() {
         </div>
 
         {/* Tab 2: Open Challenge */}
-        <div className={`w-full mt-6 xs:mt-2 ${activeTab === 1 ? "block" : "hidden"}`}>
+        <div className={`w-full mt-6 xs:mt-0 ${activeTab === 1 ? "block" : "hidden"}`}>
           <OpenChallengesTab
             bets={bets}
             loading={betsLoading}
@@ -285,7 +285,7 @@ export default function CreateBetPage() {
         </div>
 
         {/* Tab 3: Standings */}
-        <div className={`w-full mt-6 xs:mt-2 ${activeTab === 2 ? "block" : "hidden"}`}>
+        <div className={`w-full mt-6 xs:mt-0 ${activeTab === 2 ? "block" : "hidden"}`}>
           <StandingsTab
             standings={standings}
             loading={standingsLoading}
