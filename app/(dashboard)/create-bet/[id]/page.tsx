@@ -233,7 +233,7 @@ export default function CreateBetPage() {
 
       {/* Fixed header section */}
       <div className="fixed top-0 left-0 right-0 z-10 w-full">
-        <BackButton title="Create bet"/>
+        <BackButton title="Create bet" />
         <MatchDetailsCard fixture={fixture as any} isDarkMode={isDarkMode} />
         {fixture?.eventType !== "Special" && (
           <TabNavigation activeTab={activeTab} onTabChange={handleTabPress} />
@@ -242,7 +242,7 @@ export default function CreateBetPage() {
 
       <div
         ref={tabContentRef}
-        className="flex-1 overflow-y-auto mt-[290px]"
+        className="flex-1 overflow-y-auto mt-[290px] xs:mt-[270px]"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
@@ -268,7 +268,7 @@ export default function CreateBetPage() {
         </div>
 
         {/* Tab 2: Open Challenge */}
-        <div className={`w-full mt-6 ${activeTab === 1 ? "block" : "hidden"}`}>
+        <div className={`w-full mt-6 xs:mt-2 ${activeTab === 1 ? "block" : "hidden"}`}>
           <OpenChallengesTab
             bets={bets}
             loading={betsLoading}
@@ -285,7 +285,7 @@ export default function CreateBetPage() {
         </div>
 
         {/* Tab 3: Standings */}
-        <div className={`w-full mt-6 ${activeTab === 2 ? "block" : "hidden"}`}>
+        <div className={`w-full mt-6 xs:mt-2 ${activeTab === 2 ? "block" : "hidden"}`}>
           <StandingsTab
             standings={standings}
             loading={standingsLoading}
