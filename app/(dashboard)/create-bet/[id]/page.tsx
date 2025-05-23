@@ -242,7 +242,7 @@ export default function CreateBetPage() {
 
       <div
         ref={tabContentRef}
-        className="flex-1 overflow-y-auto mt-[270px]"
+        className="flex-1 overflow-y-auto mt-[290px]"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
@@ -268,7 +268,7 @@ export default function CreateBetPage() {
         </div>
 
         {/* Tab 2: Open Challenge */}
-        <div className={`w-full ${activeTab === 1 ? "block" : "hidden"}`}>
+        <div className={`w-full mt-6 ${activeTab === 1 ? "block" : "hidden"}`}>
           <OpenChallengesTab
             bets={bets}
             loading={betsLoading}
@@ -285,7 +285,7 @@ export default function CreateBetPage() {
         </div>
 
         {/* Tab 3: Standings */}
-        <div className={`w-full ${activeTab === 2 ? "block" : "hidden"}`}>
+        <div className={`w-full mt-6 ${activeTab === 2 ? "block" : "hidden"}`}>
           <StandingsTab
             standings={standings}
             loading={standingsLoading}

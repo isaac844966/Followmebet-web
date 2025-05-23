@@ -36,7 +36,7 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({
     : "";
 
   return (
-    <div className={`${primaryBg} p-4 xs:p-3 border-[0.2px] border-gray-600`}>
+    <div className={`${primaryBg} p-4 xs:p-3 `}>
       <p
         className={`${textColor} text-md xs:text-sm mb-2 font-medium text-center`}
       >

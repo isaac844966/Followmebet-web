@@ -38,7 +38,7 @@ const AmountInput: React.FC<AmountInputProps> = ({
       </div>
 
       <input
-        className={`${inputBg} ${inputText} p-4 xs:p-3 py-6 xs:py-4 rounded-md border-[0.5px] ${
+        className={`${inputBg} ${inputText} p-4 xs:p-3 py-6 xs:py-4 rounded-md ${
           !isAmountValid ? "border-red-500" : "border-[#5554]"
         } mb-2 w-full text-base xs:text-sm`}
         placeholder={`Enter amount (min ${minAmount})`}

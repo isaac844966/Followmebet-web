@@ -219,12 +219,14 @@ const SummaryPage = () => {
   return (
     <div className={` ${backgroundColor} pb-0`}>
       <div className="fixed top-0 left-0 right-0 z-20 ">
-        <div className={`pt-6 ${backgroundColor} `}></div>
+        <div className={` ${backgroundColor} `}>
+          <BackButton title="Summary" />
+        </div>
         {/* Match Details */}
         <BetDetailsCard bet={mockBet as any} />
       </div>
 
-      <div className="flex-1 px-2 overflow-auto mt-[16rem] xs:mt-[14rem]">
+      <div className="flex-1 px-2 overflow-auto mt-[18rem] xs:mt-[14rem]">
         {/* Staker Info */}
         <StakerCard owner={user as BetMarketUser} />
 

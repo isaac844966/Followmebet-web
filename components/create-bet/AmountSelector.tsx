@@ -29,7 +29,7 @@ const AmountSelector: React.FC<AmountSelectorProps> = ({
       </p>
 
       <div
-        className={`grid grid-cols-4 gap-1 px-2 xs:px-1 py-3 xs:py-2 rounded-lg ${cardBackground} border-[0.3px] border-gray-500`}
+        className={`grid grid-cols-4 gap-1 px-2 xs:px-1 py-3 xs:py-2 rounded-lg ${cardBackground}`}
       >
         {amountOptions.map((amount) => (
           <button

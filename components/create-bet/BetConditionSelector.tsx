@@ -29,7 +29,7 @@ const BetConditionSelector: React.FC<BetConditionSelectorProps> = ({
       </p>
 
       <div
-        className={`flex justify-between ${cardBackground} rounded-lg py-3 xs:py-2 px-2 xs:px-1 border-[0.2px] border-gray-600`}
+        className={`flex justify-between ${cardBackground} rounded-lg py-3 xs:py-2 px-2 xs:px-1 `}
       >
         <button
           className={`${

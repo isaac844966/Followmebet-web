@@ -40,7 +40,7 @@ const BetPredictionSelector: React.FC<BetPredictionSelectorProps> = ({
       </p>
 
       <div
-        className={`flex justify-between px-2 xs:px-1 py-3 xs:py-2 rounded-lg ${cardBackground} border-[0.3px] border-gray-600`}
+        className={`flex justify-between px-2 xs:px-1 py-3 xs:py-2 rounded-lg ${cardBackground} `}
       >
         {/* WIN */}
         <button

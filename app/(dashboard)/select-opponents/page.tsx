@@ -18,6 +18,7 @@ import PhoneInput from "@/components/PhoneInput";
 import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import BackButton from "@/components/BackButton";
 
 const SelectOpponentPage = () => {
   const router = useRouter();
@@ -220,11 +221,9 @@ const SelectOpponentPage = () => {
   return (
     <div className={`min-h-screen ${backgroundColor} `}>
       <div
-        className={`fixed top-0 left-0 right-0 z-10 ${backgroundColor} pt-4 pb-2 px-2`}
+        className={`fixed top-0 left-0 right-0 z-10 ${backgroundColor} pt-4`}
       >
-        <h1 className={`text-lg font-bold mb-4 pl-2 ${textColor}`}>
-          Select Opponent
-        </h1>
+        <BackButton title=" Select Opponent" />
         <NestedTabNavigation
           tabs={tabs}
           activeTab={activeTab}
@@ -233,7 +232,7 @@ const SelectOpponentPage = () => {
         />
       </div>
 
-      <div className="flex-1 px-2 pt-32">
+      <div className="flex-1 px-2 pt-40">
         {activeTab === "opponents" ? (
           <div className="h-full">
             {/* Search Bar */}
