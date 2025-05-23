@@ -23,6 +23,7 @@ import { OpponentCard } from "@/components/bet-details/OpponentCard";
 import StatusModal from "@/components/StatusModal";
 import CustomButton from "@/components/CustomButton";
 import { fetchUserProfile } from "@/lib/services/authService";
+import CustomModal from "@/components/CustomModal";
 
 // Define the interface for search params
 interface SummaryPageParams {
@@ -69,18 +70,20 @@ const SummaryPage = () => {
   const [fixture, setFixture] = useState<BetMarketFixture | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [
+    isInsufficientBalanceModalVisible,
+    setIsInsufficientBalanceModalVisible,
+  ] = useState(false);
 
   const { modalState, showSuccessModal, showErrorModal, hideModal } =
     useStatusModal();
 
-  // Extract styling variables for clarity and maintainability
   const backgroundColor = isDarkMode ? "bg-[#0B0B3F]" : "bg-white";
   const textColor = isDarkMode ? "text-white" : "text-black";
   const secondaryTextColor = isDarkMode ? "text-gray-300" : "text-gray-600";
   const cardBackgroundColor = isDarkMode ? "bg-[#1A1942]" : "bg-[#f1f5f9]";
   const innerBackgroundColor = isDarkMode ? "bg-[#0B0B3F]" : "bg-white";
 
-  // Load fixture data from localStorage on component mount
   useEffect(() => {
     const loadFixture = async () => {
       try {
@@ -129,17 +132,14 @@ const SummaryPage = () => {
         response?.condition
       }`;
 
-      // Create a matchName for use in the SMS invitation
       const matchName = `${fixture?.item1?.name} and ${
         fixture?.item2?.name
       } in the ${response?.category as string}`;
 
       const betOwner = response?.challenger?.nickname;
 
-      // Clean up localStorage after successful bet placement
       localStorage.removeItem("betFixtureData");
 
-      // Create a URLSearchParams object for the query parameters
       const queryParams = new URLSearchParams();
       queryParams.set(
         "isRegistered",
@@ -152,16 +152,21 @@ const SummaryPage = () => {
       queryParams.set("prediction", response?.ownerPrediction);
       queryParams.set("predictionAmount", predictionAmount);
 
-      // Navigate to success screen with params using App Router syntax
       router.push(`/success-page?${queryParams.toString()}`);
     } catch (err: any) {
       console.error("Error placing bet:", err);
-      handleApiError(
-        err,
-        showErrorModal,
-        "Failed to place bet. Please try again.",
-        "Error"
-      );
+
+      const errorMessage = err.message || err.toString() || "";
+      if (errorMessage.toLowerCase().includes("insufficient wallet funds")) {
+        setIsInsufficientBalanceModalVisible(true);
+      } else {
+        handleApiError(
+          err,
+          showErrorModal,
+          "Failed to place bet. Please try again.",
+          "Error"
+        );
+      }
     } finally {
       setSubmitting(false);
     }
@@ -171,7 +176,15 @@ const SummaryPage = () => {
     hideModal();
   };
 
-  // Error state
+  const handleDepositRedirect = () => {
+    setIsInsufficientBalanceModalVisible(false);
+    router.push("/wallet");
+  };
+
+  const handleCancelInsufficientBalance = () => {
+    setIsInsufficientBalanceModalVisible(false);
+  };
+
   if (error || !fixture) {
     return (
       <div
@@ -184,7 +197,6 @@ const SummaryPage = () => {
     );
   }
 
-  // Determine which team the user is predicting will win
   const selectedTeamName =
     prediction === "WIN"
       ? fixture?.item1?.name
@@ -192,10 +204,9 @@ const SummaryPage = () => {
       ? fixture?.item2?.name
       : "Draw";
 
-  // Create a mock bet object for the components
   const mockBet = {
     id: "temp-id",
-    owner: user as BetMarketUser, // Cast user to BetMarketUser
+    owner: user as BetMarketUser, 
     fixture: fixture,
     ownerPrediction: prediction,
     challengerPrediction: null,
@@ -273,7 +284,6 @@ const SummaryPage = () => {
         )}
 
         {/* Place Bet Button */}
-
         <CustomButton
           title={submitting ? "Processing..." : "Place Bet"}
           onClick={handlePlaceBet}
@@ -283,7 +293,7 @@ const SummaryPage = () => {
         />
       </div>
 
-      {/* Error Modal */}
+      {/*  Error Modal */}
       <StatusModal
         visible={modalState.visible}
         onClose={handleModalClose}
@@ -291,6 +301,20 @@ const SummaryPage = () => {
         message={modalState.message}
         buttonText={modalState.buttonText}
         type={modalState.type}
+      />
+
+      {/* Insufficient Balance Modal */}
+      <CustomModal
+        visible={isInsufficientBalanceModalVisible}
+        onClose={handleCancelInsufficientBalance}
+        title="Insufficient Balance"
+        message="You don't have enough balance to place this bet. Would you like to deposit funds?"
+        primaryButtonText="Deposit"
+        secondaryButtonText="Cancel"
+        onPrimaryButtonPress={handleDepositRedirect}
+        onSecondaryButtonPress={handleCancelInsufficientBalance}
+        primaryButtonColor="#FBB03B"
+        primaryTextColor="#FFFFFF"
       />
     </div>
   );

@@ -38,7 +38,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
   const { isDarkMode } = useTheme();
   const modalRef = useRef<HTMLDivElement>(null);
 
-  // Default colors based on theme
   const defaultPrimaryButtonColor = primaryButtonColor || "#FFA726";
   const defaultSecondaryButtonColor = secondaryButtonColor || "transparent";
   const defaultPrimaryTextColor = primaryTextColor || "#000000";
@@ -52,7 +51,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
     }
   };
 
-  // Handle escape key press
   useEffect(() => {
     const handleEscapeKey = (e: KeyboardEvent) => {
       if (e.key === "Escape" && !hideCloseOnOverlayPress) {
@@ -62,16 +60,15 @@ const CustomModal: React.FC<CustomModalProps> = ({
 
     if (visible) {
       document.addEventListener("keydown", handleEscapeKey);
-      document.body.style.overflow = "hidden"; // Prevent scrolling when modal is open
+      document.body.style.overflow = "hidden"; 
     }
 
     return () => {
       document.removeEventListener("keydown", handleEscapeKey);
-      document.body.style.overflow = ""; // Restore scrolling when modal is closed
+      document.body.style.overflow = ""; 
     };
   }, [visible, hideCloseOnOverlayPress, onClose]);
 
-  // Focus trap
   useEffect(() => {
     if (visible && modalRef.current) {
       modalRef.current.focus();
@@ -92,7 +89,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
         ref={modalRef}
         className={`${
           isDarkMode ? "bg-[#2D2A6E]" : "bg-white"
-        } rounded-xl p-4  items-center max-w-[85%] w-[500px] shadow-lg`}
+        } rounded-xl p-4 py-6  items-center max-w-[85%] w-[500px] shadow-lg`}
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
       >
@@ -104,7 +101,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
           {title}
         </div>
 
-        {/* Message */}
         {typeof message === "string" ? (
           <p
             className={`${
@@ -117,9 +113,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
           <div className="mb-6">{message}</div>
         )}
 
-        {/* Buttons */}
         <div className="flex w-full justify-between mt-2">
-          {/* Primary Button */}
           <button
             className={`rounded-lg py-3 flex items-center justify-center ${
               secondaryButtonText ? "flex-1 mr-2" : "w-full"
@@ -133,7 +127,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
             <span className="text-base font-medium">{primaryButtonText}</span>
           </button>
 
-          {/* Secondary Button (optional) */}
           {secondaryButtonText && (
             <button
               className="rounded-lg py-3 flex items-center justify-center flex-1 ml-2"
