@@ -595,7 +595,7 @@ const BetMarketPage = () => {
   // Render Pool Bet content separately
   const renderPoolBetContent = () => {
     return (
-      <div className="flex items-center justify-center h-full">
+      <div className="flex items-center justify-center h-full -mt-10">
         <div className="text-center">
           <Trophy
             size={50}
@@ -627,7 +627,7 @@ const BetMarketPage = () => {
     if (loading && !dataFetched) return null;
 
     return (
-      <div className="flex items-center justify-center h-full">
+      <div className="flex items-center justify-center h-full mt-10">
         <EmptyState
           type="soccer"
           isDarkMode={isDarkMode}
