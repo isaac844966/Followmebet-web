@@ -21,6 +21,7 @@ import CustomButton from "@/components/CustomButton";
 import StatusModal from "@/components/StatusModal";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { Button } from "@/components/ui/button";
+import BackButton from "@/components/BackButton";
 
 // Types for better type safety
 type PredictionType = "WIN" | "LOSE" | "DRAW" | null;
@@ -293,6 +294,7 @@ const BetDetailsPage = () => {
     <div className={`min-h-screen ${backgroundColor}`}>
       {/* Header */}
       <div className=" py-3 sticky top-0 z-10 bg-inherit pt-6">
+        <BackButton title="Bet Details"/>
         <BetDetailsCard bet={bet} resultToShow={resultToShow} />
       </div>
 
