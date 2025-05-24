@@ -538,7 +538,7 @@ export default function CreateBetPage() {
     if (initialLoading) return null;
 
     return (
-      <div className="flex-1 flex items-center justify-center py-8">
+      <div className="fixed inset-0 flex items-center justify-center z-10">
         <EmptyState
           type={activeTab === "soccer" ? "soccer" : "special"}
           isDarkMode={isDarkMode}
@@ -600,7 +600,7 @@ export default function CreateBetPage() {
         className={`${backgroundColor} flex-1 pt-2 pb-4 overflow-auto h-full`}
       >
         {initialLoading ? (
-          <div className="flex items-center justify-center h-64">
+          <div className="fixed inset-0 flex items-center justify-center z-10 top-32">
             <LoadingSpinner
               variant="circular"
               size="lg"

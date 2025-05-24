@@ -413,7 +413,8 @@ const BetMarketPage = () => {
                     <Image
                       src={
                         fixture.item1.logoUrl ||
-                        "/placeholder.svg?height=20&width=20"
+                        "/placeholder.svg?height=20&width=20" ||
+                        "/placeholder.svg"
                       }
                       alt="Team 1 logo"
                       fill
@@ -431,7 +432,8 @@ const BetMarketPage = () => {
                     <Image
                       src={
                         fixture.item2.logoUrl ||
-                        "/placeholder.svg?height=20&width=20"
+                        "/placeholder.svg?height=20&width=20" ||
+                        "/placeholder.svg"
                       }
                       alt="Team 2 logo"
                       fill
@@ -487,7 +489,8 @@ const BetMarketPage = () => {
                           <Image
                             src={
                               owner?.avatarUrl ||
-                              "/placeholder.svg?height=28&width=28"
+                              "/placeholder.svg?height=28&width=28" ||
+                              "/placeholder.svg"
                             }
                             alt={`Owner ${index} avatar`}
                             fill
@@ -595,7 +598,9 @@ const BetMarketPage = () => {
   // Render Pool Bet content separately
   const renderPoolBetContent = () => {
     return (
-      <div className="flex items-center justify-center h-full -mt-10">
+      <div
+        className="fixed inset-0 flex items-center justify-center z-10"
+      >
         <div className="text-center">
           <Trophy
             size={50}
@@ -627,7 +632,9 @@ const BetMarketPage = () => {
     if (loading && !dataFetched) return null;
 
     return (
-      <div className="flex items-center justify-center h-full mt-10">
+      <div
+        className="fixed inset-0 flex items-center justify-center z-10"
+      >
         <EmptyState
           type="soccer"
           isDarkMode={isDarkMode}
@@ -642,7 +649,7 @@ const BetMarketPage = () => {
   // Centered loading spinner component
   const renderCenteredLoadingSpinner = () => {
     return (
-      <div className="flex items-center justify-center h-full">
+      <div className="fixed inset-0 flex items-center justify-center z-10">
         <LoadingSpinner
           variant="circular"
           size={initialLoading ? "lg" : "md"}
@@ -674,22 +681,18 @@ const BetMarketPage = () => {
 
       {/* Content Area - This will take remaining height and be scrollable */}
       <div
-        className={`${subBackground} h-screen overflow-y-auto`}
+        className={`${subBackground} h-screen overflow-y-auto relative`}
         style={{ paddingTop: headerHeight || "120px" }}
       >
         {initialLoading || (loading && !dataFetched) ? (
           renderCenteredLoadingSpinner()
         ) : (
           <>
-            {/* Show Pool Bet content if activeTab is "special" */}
-            {activeTab === "special" ? (
-              renderPoolBetContent()
-            ) : (
-              /* Bet Markets List */
+            {/* Only show bet markets list for soccer tab */}
+            {activeTab === "soccer" && (
               <div className="py-2 xs:py-1">
-                {betMarkets.length > 0
-                  ? betMarkets.map((category) => renderCategory(category))
-                  : renderEmpty()}
+                {betMarkets.length > 0 &&
+                  betMarkets.map((category) => renderCategory(category))}
 
                 {/* Invisible element for intersection observer */}
                 {hasMore && (
@@ -710,6 +713,13 @@ const BetMarketPage = () => {
           </>
         )}
       </div>
+
+      {!initialLoading && !(loading && !dataFetched) && (
+        <>
+          {activeTab === "special" && renderPoolBetContent()}
+          {activeTab === "soccer" && betMarkets.length === 0 && renderEmpty()}
+        </>
+      )}
     </div>
   );
 };
