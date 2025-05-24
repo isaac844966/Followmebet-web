@@ -38,7 +38,11 @@ const BetPredictionSelector: React.FC<BetPredictionSelectorProps> = ({
       <p className={`${textColor} text-base xs:text-sm font-medium mb-2`}>
         Select your Prediction
       </p>
-
+      <div className="flex justify-between mb-1">
+        <p className="w-full text-center text-base xs:text-sm font-medium">1</p>
+        <p className="w-full text-center text-base xs:text-sm font-medium">X</p>
+        <p className="w-full text-center text-base xs:text-sm font-medium">2</p>
+      </div>
       <div
         className={`flex justify-between px-2 xs:px-1 py-3 xs:py-2 rounded-lg ${cardBackground} `}
       >
@@ -56,18 +60,9 @@ const BetPredictionSelector: React.FC<BetPredictionSelectorProps> = ({
               selectedPrediction === "WIN"
                 ? activeButtonText
                 : inactiveButtonText
-            } text-center font-medium text-sm xs:text-xs`}
+            } text-center font-medium text-sm xs:text-xs line-clamp-2`}
           >
-            {fixture.item1?.name?.split(" ")[0] || "Team 1"}
-          </span>
-          <span
-            className={`${
-              selectedPrediction === "WIN"
-                ? activeButtonText
-                : inactiveButtonText
-            } text-center font-medium text-sm xs:text-xs`}
-          >
-            Win
+            {fixture.item1?.name || "Team 1"}
           </span>
         </button>
 
@@ -109,18 +104,9 @@ const BetPredictionSelector: React.FC<BetPredictionSelectorProps> = ({
               selectedPrediction === "LOSE"
                 ? activeButtonText
                 : inactiveButtonText
-            } text-center text-sm xs:text-xs font-medium`}
+            } text-center text-sm xs:text-xs font-medium line-clamp-2`}
           >
-            {fixture.item2?.name?.split(" ")[0] || "Team 2"}
-          </span>
-          <span
-            className={`${
-              selectedPrediction === "LOSE"
-                ? activeButtonText
-                : inactiveButtonText
-            } text-center font-medium text-sm xs:text-xs`}
-          >
-            Win
+            {fixture.item2?.name || "Team 2"}
           </span>
         </button>
       </div>
