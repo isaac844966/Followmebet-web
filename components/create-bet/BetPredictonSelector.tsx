@@ -44,7 +44,7 @@ const BetPredictionSelector: React.FC<BetPredictionSelectorProps> = ({
         <p className="w-full text-center text-base xs:text-sm font-medium">2</p>
       </div>
       <div
-        className={`flex justify-between px-2 xs:px-1 py-3 xs:py-2 rounded-lg ${cardBackground} `}
+        className={`flex justify-between px-2 xs:px-1 py-3 xs:py-2 rounded-lg ${cardBackground}`}
       >
         {/* WIN */}
         <button
@@ -60,7 +60,7 @@ const BetPredictionSelector: React.FC<BetPredictionSelectorProps> = ({
               selectedPrediction === "WIN"
                 ? activeButtonText
                 : inactiveButtonText
-            } text-center font-medium text-sm xs:text-xs line-clamp-2`}
+            } text-center font-medium text-sm xs:text-xs line-clamp-2 min-h-[2.5rem] flex items-center justify-center`}
           >
             {fixture.item1?.name || "Team 1"}
           </span>
@@ -82,7 +82,7 @@ const BetPredictionSelector: React.FC<BetPredictionSelectorProps> = ({
               selectedPrediction === "DRAW"
                 ? activeButtonText
                 : inactiveButtonText
-            } text-center font-medium text-sm xs:text-xs`}
+            } text-center font-medium text-sm xs:text-xs min-h-[2.5rem] flex items-center justify-center`}
           >
             Draw
           </span>
@@ -104,7 +104,7 @@ const BetPredictionSelector: React.FC<BetPredictionSelectorProps> = ({
               selectedPrediction === "LOSE"
                 ? activeButtonText
                 : inactiveButtonText
-            } text-center text-sm xs:text-xs font-medium line-clamp-2`}
+            } text-center font-medium text-sm xs:text-xs line-clamp-2 min-h-[2.5rem] flex items-center justify-center`}
           >
             {fixture.item2?.name || "Team 2"}
           </span>
